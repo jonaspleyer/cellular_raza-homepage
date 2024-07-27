@@ -266,10 +266,22 @@ fourth derivative bound to calculate the local and global truncation errors.
 The Lipschitz condition is given by
 
 $$\begin{equation}
-    |f(s) - f(t)| \leq L |s-t|
+    |f(s) - f(t)| \leq L_0 |s-t|
 \end{equation}$$
 
-In our case, we can use 
+In our case, the Lipschitz constant for $f(x)$ could be taken to be indentiaclly $0$.
+This would introduce a constant global error in the limit $L_0\rightarrow 0$.
+However, due to numerical uncertainties in even addition operations, we opt to take the more
+conservative approach and choose $L_0 = \alpha$.
+
+We calculate Lipschitz-constant $L_1$ for $g(y)$ given by equation $(2)$.
+
+$$\begin{align}
+    |g(y)-g(z)| &= \left|\alpha y\left(1-\frac{y}{y_\text{max}}\right) - \alpha z\left(1-\frac{z}{y_\text{max}}\right) \right|\\\\
+                &=\alpha |y-z|\left|\left(1 - \frac{y+z}{y_\text{max}}\right) \right|\\\\
+                &\leq|y-z|\text{max}\left(1-\frac{2y_0}{y_\text{max}},1-\frac{2y(t_\text{max})}{y_\text{max}}\right)\\\\
+    L_1         &= \text{max}\left(1-\frac{2y_0}{y_\text{max}},1-\frac{2y(t_\text{max})}{y_\text{max}}\right)
+\end{align}$$
 
 ```rust {filename="contact_reactions.rs", linenos=table, linenostart=324}
     // ...
