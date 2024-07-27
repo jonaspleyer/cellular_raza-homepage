@@ -277,35 +277,32 @@ In our case, we can use
     // Estimate upper bound on local and global truncation error
     let lipschitz_constant = nalgebra::vector![
         (n_agents - 1) as f64 * production,
-        y0[1] / (t_max - t0)
-            * (1.0 / (1.0 + q * (-production * (n_agents - 1) as f64 * t0).exp())
-                - 1.0 / (1.0 + q * (-production * (n_agents - 1) as f64 * (t_max - t0)).exp()))
-            .abs()
-            .max(10.0 * std::f64::EPSILON)
+        (n_agents - 1) as f64
+            * production
+            * (upper_limit - 2.0 * y0[1])
+                .abs()
+                .max((upper_limit - 2.0 * exact_solution_derivative(t_max, 0)[1]).abs())
+            / upper_limit
     ];
-    let fourth_derivative_bound = |t: f64| -> nalgebra::Vector2<f64> {
-        nalgebra::vector![
-            // This should be zero but due to machine precision we need to insert something here.
-            // Since we are doing multiple operations such as add, multiply etc. we need more than
-            // the minimal amount of precision
-            80.0 * f64::EPSILON,
-            exact_solution_derivative((t - 2.0 * dt).min(t0), 4)[1]
-        ]
-    };
+    let fourth_derivative_bound = exact_solution_derivative(t_max, 4)[1];
 
     // Calculate upper bound on local and global truncation error
-    let local_truncation_error = |t: f64| -> nalgebra::Vector2<f64> {
-        &fourth_derivative_bound(t) * (3f64 / 8.0 * dt.powi(4))
-    };
+    let local_truncation_error = nalgebra::vector![
+        n_agents as f64
+            * (y0[0] + (n_agents - 1) as f64 * production * (t_max - t0))
+            * f64::EPSILON,
+        fourth_derivative_bound * (3f64 / 8.0 * dt.powi(4))
+    ];
     let global_truncation_error = |t: f64| -> nalgebra::Vector2<f64> {
-        nalgebra::Vector2::from([
-            ((lipschitz_constant[0] * t).exp() - 1.0) * local_truncation_error(t)[0]
+        let res = nalgebra::Vector2::from([
+            ((lipschitz_constant[0] * (t - t0)).exp() - 1.0) * local_truncation_error[0]
                 / dt
                 / lipschitz_constant[0],
-            ((lipschitz_constant[1] * t).exp() - 1.0) * local_truncation_error(t)[1]
+            ((lipschitz_constant[1] * (t - t0)).exp() - 1.0) * local_truncation_error[1]
                 / dt
                 / lipschitz_constant[1],
-        ])
+        ]);
+        res
     };
 
     // ...
@@ -314,7 +311,7 @@ In the final step, we use the already defined function `` to generate results fr
 and compare them with the exact known results.
 Their difference has to be within the margin of the calculated global truncation error $e$.
 
-```rust {filename="contact_reactions.rs", linenos=table, linenostart=358}
+```rust {filename="contact_reactions.rs", linenos=table, linenostart=355}
     // ...
 
     // Obtain solutions from cellular_raza
@@ -354,7 +351,7 @@ Their difference has to be within the margin of the calculated global truncation
 In the last step, we also added a function `save_results` which exports all generated results to a
 `.csv` file which.
 
-```rust {filename="contact_reactions.rs", linenos=table, linenostart=393}
+```rust {filename="contact_reactions.rs", linenos=table, linenostart=390}
 #[allow(unused)]
 fn save_results(
     results: Vec<(
@@ -387,7 +384,7 @@ fn save_results(
 Equipped with this function `compare_results`, we can now use it for a collection of configurations
 to test the solver.
 
-```rust {filename="contact_reactions.rs", linenos=table, linenostart=421}
+```rust {filename="contact_reactions.rs", linenos=table, linenostart=418}
 #[test]
 fn test_config0() {
     // Simulation parameters
