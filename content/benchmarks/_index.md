@@ -12,7 +12,7 @@ title: Benchmarks
     >}}
     {{< card
         link="2024-07-thread-scaling"
-        title="Thread Scaling (Amdahl's Law)"
+        title="Multithreading Performance of the Cell Sorting Example (Amdahl's Law)"
         subtitle="We analyze scaling with multiple threads using the `chili` backend and the `cell-sorting` simulation."
         image="thread_scaling.png"
     >}}
