@@ -14,6 +14,7 @@ For feature requests, please use [github's issue tracker](https://www.github.com
 ### Simulation Flow
 - [ ] Make it multi-scale: varying time-steps for portions of simulation
     - [ ] Find user Interface for time input
+      Time-Scales per concept or per concept-group
 
 ### CellAgent (concepts + backend)
 - [x] mechanics via force interactions
@@ -29,14 +30,15 @@ For feature requests, please use [github's issue tracker](https://www.github.com
 ### Domain (concepts + backend)
 - [ ] Environment Fluid Dynamics
     - [x] PDE Diffusion
-    - [ ] Lattice Boltzmann
-    - [ ] Particles
+    - [ ] Lattice Boltzmann (optional)
+    - [ ] Particles (optional)
 - [x] Better concepts for domain decomposition
     - [x] Test currently proposed new design
     - [x] Efficiently implement this new concept and benchmark
 - [ ] Evaluate usage of associated types for some concepts
     - [ ] `CellularReactions` concept
     - [x] `Domain` concept
+- [ ] Parallelize decomposition of standard CartesianCuboid Domain
 
 ### Overall Design
 - [x] Parallelization of default backend
