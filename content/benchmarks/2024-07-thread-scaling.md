@@ -75,4 +75,4 @@ Available: https://www.amd.com/en/support/downloads/drivers.html/processors/ryze
 [4]
 Intel® Core™ i7-12700H Processor.
 [Online].
-Available: https://ark.intel.com/content/www/us/en/ark/products/132228/intel-core-i7-12700h-processor-24m-cache-up-to-4-70-ghz.html 
+Available: https://ark.intel.com/content/www/us/en/ark/products/132228/intel-core-i7-12700h-processor-24m-cache-up-to-4-70-ghz.html
