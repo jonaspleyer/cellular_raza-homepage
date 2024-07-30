@@ -4,6 +4,18 @@ type: docs
 weight: 100
 ---
 
+## cellular_raza 0.0.13
+_30th July 2024_
+- Write advanced tests for contact reactions and solvers
+- Added Ron storage option
+- Restructured and simplified storage solutions
+- Improve (but also change parameters) CLI for benchmarks
+- use new `circ_buffer` crate in chili backend
+- bufixes for contact reactions
+- move homepage to separate repository
+- new function to create timestepper `from_partial_save_freq`
+- update nalgebra to version "0.33"
+
 ## cellular_raza 0.0.12
 _13th July 2024_
 - Implement concepts for contact reactions
