@@ -89,7 +89,7 @@ species.
     <source src="/showcase/cell_sorting/movie.mp4" type="video/mp4">
 </video>
 
-![](/showcase/cell_sorting/0000006000.png)
+![](/showcase/cell_sorting/0000010000.png)
 
 ## Code
 

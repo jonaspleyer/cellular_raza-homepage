@@ -31,7 +31,7 @@ title: Showcase
     {{<
         card link="cell-sorting"
         title="3D Cell-Sorting"
-        image="/showcase/cell_sorting/0000006000.png"
+        image="/showcase/cell_sorting/0000010000.png"
         subtitle="Low-parametric autonomous cell-sorting in 3 dimensions"
     >}}
 {{< /cards >}}
