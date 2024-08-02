@@ -348,9 +348,18 @@ $S_\text{3960X}=45.05$ and $S_\text{12700H}=34.72$.
 
 ## Scaling of Simulation Size
 
+**TODO**
+
 ![Scaling of the total simulation size.](figures/sim-size-scaling.png){ width=100% }
 
 # Discussion
+
+We have shown that `cellular_raza` can be applied in a wide variety of contexts.
+It can also serve as a numerical backend for the development of python packages.
+We have assessed the multithreaded performance of the implemented algorithms and shown that
+sufficiently large simulations can be efficiently parallelized on various machines.
+The underlying assumptions predict a linear growth in computational demand with linearly growing
+problem size which has been confirmed by our analysis.
 
 <!-- Single dollars ($) are required for inline mathematics e.g. $f(x) = e^{\pi/x}$
 
