@@ -25,41 +25,96 @@ bibliography: paper.bib
 
 # Summary
 
+`cellular_raza` is a library that allows users to define fully-customized cellular agents in order
+to run numerical simulations.
+It formulates simulation aspects in the form of rust traits.
+*TODO CITATION*
+Cellular agents implement a subset of these simulation aspects and `cellular_raza` provides generic
+methods to numerically solve the system and store results.
+It also comes with predefined building blocks for agents and their physical domain to quickly
+construct new simulations bottom-up.
+Furthermore, `cellular_raza` has been used with the `pyo3` and `maturin` packages to handily create
+python bindings and act as a numerical backend to a python package.
+
 # Statement of need
 
 Agent-based models are common in cellular biology and many tools have been developed so far
 to asses specific questions in specialized fields [@Pleyer2023].
-While these tools have proven to be effective in their specialized field,
+While these tools have proven to be effective for targeted research questions,
 they often lack the ability to be applied in a more generic context.
 In order to combat this issue and build up models from first principles without any assumptions on
-the complexity or underlying abstraction level of the model, we developed `cellular_raza`.
+the underlying complexity or abstraction level, we developed `cellular_raza`.
 
+- *TODO CITATIONS*
 
 # State of field
 ## Generic agent-based modelling toolkits
 There exists a wide variety of many general-purpose agent-based simulation toolkits which are being
 actively applied in a different fields of study [@Abar2017].
+- *TODO CITATIONS*
 These tools are often able to define agents bottom-up and can be a good choice if they allow for the
 desired cellular representation.
 However, they lack the explicit forethough to be applied in cellular systems and often implement
 global rules rather than individual-based ones.
+- *TODO CITATIONS*.
 
 ## Cellular agent-based frameworks
 In our previous efforts [@Pleyer2023] we have assessed the overall state of modelling toolkits for
 individual-based cellular simulations.
 In this mini-review, we focussed on modelling frameworks, which provide a complete workflow.
 The resulting frameworks are all crafted for specific use-cases
-and thus lack extendability and may require a large amount of parameters specific to their domain
-of usage but which are often not known in practice.
-This creates a cost in terms of parameters and the ability to interpret results.
+and may require a large amount of parameters specific to their domain of usage.
+These parameters are often not known in practice and are hard to determine experimentally.
+This creates problems for the extendability of the software and the ability to properly interpret
+results.
 
-We can further reduce this number by only investigating frameworks which provide a significant level
-of flexibility and customizability in their definition of cell-agents.
-Chaste allows to reuse individual components of their simulation code such as ODE and PDE solvers.
-Biocellion has support for different cell shapes such as spheres and cylinders but acknowledge
-that their current approach lacks flexibility in subcellular description.
+We can further reduce the number of modeling frameworks by only considering ones which provide a
+significant level of flexibility and customizability in their definition of cell-agents.
+Chaste allows to reuse individual components of their simulation code such as ODE
+and PDE solvers.
+- *TODO CITATION* 
+Biocellion has support for different cell shapes such as spheres and cylinders but acknowledges
+that their current approach lacks flexibility in the subcellular description.
 
-# Internals
+- *TODO CITATION*
+- *TODO check which other frameworks to consider*
+
+# Underlying Assumptions and Internals
+
+## List of Simulation Aspects
+
+| Aspect | Description | Depends on |
+| --- | --- | --- |
+| **Cellular Agent** | | |
+| `Position` | Spatial representation of the cell | |
+| `Velocity` | Spatial velocity of the cell | |
+| `Mechanics` | Calculates the next increment from given force, velocity and position. | `Position` and `Velocity` |
+| `Interaction` | Calculates force acting between agents. Also reacts to neighbours. | `Position` and `Velocity` |
+| `Cycle` | Changes core properties of the cell. Responsible for cell-division and death. | |
+| `Intracellular` | Intracellular representation of the cell. | |
+| `Reactions` | Intracellular reactions | `Intracellular` |
+| `ReactionsExtra` | Couples intra- & extracellular reactions | `DomainReactions` |
+| `ReactionsContact` | Models reactions between cells purely by contact | `Position`, `Intracellular` |
+| **Simulation Domain** | | |
+| `Domain` | Represents the physical simulation domain. | |
+| `DomainMechanics` | Apply boundary conditions to agents. | `Position`, `Velocity` |
+| `DomainForce` | Apply a spatially-dependent force onto the cell. | `Mechanics` |
+| `DomainReactions` | Calculate extracellular reactions and effects such as diffusion. | `ReactionsExtra` |
+| **Other** | | |
+| `Controller` | Externally apply changes to the cells. | |
+
+## Spatially Localized Interactions
+
+One of the most fundamental assumptions within `cellular_raza` is that each and every interaction is
+of finite range.
+This means that cellular agents only interact with their nearest neighbour and close environment.
+Any long-ranged interactions must be the result of a collection of short-ranged interactions.
+This assumption enables us to split the simulation domain into chunks and process them individually
+although some communication is needed in order to deal with boundary conditions.
+In practice, this means that any interaction force should be given a cutoff.
+It also means that any interactions which need to be evaluated between agents should in theory scale
+linearly with the number of agents $\mathcal{O}(n_\text{agents})$.
+
 ## Code Structure
 
 `cellular_raza` consists of multiple crates working in tandem.
@@ -78,347 +133,172 @@ table below.
 | `core` | Intermediate-High | Contains numerical solvers, storage handlers and more to actually solve a given system. |
 | `building_blocks` | Intermediate | Predefined components of cell-agents and domains which can be put together to obtain a full simulation. |
 | `examples` | Application | Showcases and introductions to different simulation approaches. |
-| `benchmarke` | Application | Performance testing of various configurations. |
+| `benchmarks` | Application | Performance testing of various configurations. |
 
 ## Backends
 
 To numerically solve a fully specified system, `cellular_raza` provides backends.
-The [chili](chili) backend is the default backend while the [cpu-os-threads](cpu-os-threads)
-backend was the first backend which is being phased out gradually at the moment.
-
 The functionality offered by a backend is the most important factor in determining the workflow of
 the user and how a given simulation is executed.
 Currently, we provide the default `chili` backend but hope to extend this collection in the future.
+Backends may choose to purposefully restrict themselves to a subset of simulation aspects or a
+particular implementation in order to improve performance.
 
 ### Chili
 
-The `chili` backend generates source code by extensively using
+The `chili` backend is the default choice for any new simulation.
+It generates source code by extensively using
 [macros](https://doc.rust-lang.org/reference/macros-by-example.html) and
 [generics](https://doc.rust-lang.org/reference/items/generics.html).
 Afterwards, the generated code is compiled and run.
 
 Every backend function is implemented generically by hand.
-We use trait bounds to enforce correct usage of every involved type.
-The generated code is restricted to structs and derivations of their components functionality.
-To obatin a fully working simulation, the `chili` backend combines these generic methods,
+We use [trait bounds](https://doc.rust-lang.org/rust-by-example/generics/bounds.html) to enforce
+correct usage of every involved type.
+The generated code is restricted to methods of structs and derivations of their components
+functionality.
+To obatin a fully working simulation, the `chili` backend combines these generic methods with
 user-provided and generated types.
-By employing this scheme, we leverage the strong type-system and Rusts language-specific safety to
-avoid pitfalls which a purely macro-based approach would yield.
+The `run_simulation!` macro generates code depending on which type of simulation aspect is activated
+by the user.
+By employing this combined scheme of generics and macros, we leverage the strong type-system and
+Rusts language-specific safety to avoid pitfalls which a purely macro-based approach would yield.
 
 ### Other Backends
-`cellular_raza` also comes with the `cpu_os_threads` backend which is in the midst of being
-deprecated and only serves for some legacy usecases.
-In the future, we hope to add a dedicated backend named `cara` for solving on the GPU
-(Graphical Processing Unit).
 
-<!-- 1. Code Generation
-    1. Derive macros
-    2. Main run macros
-    3. Templating
-2. Compilation
-    1. Rust compiler compatibility checking
-    2. LLVM Optimization
-    3. Static dispatch (generics)
-3. Execution
-    1. Save points
-    2. Parallelization
-    3. Sender-Receiver Channels
-    4. Update Steps
-        1. Step 1 (Mechanics Exchange Information)
-        2. Step 2 (Mechanics Calculate Forces)
-        3. Step 3 (Mechanics Update + Send Cells)
-        4. Step 4 (Mechanics Receive Cells)
--->
-
-# Underlying Assumptions
-## Spatially Localized Interactions
-One of the most fundamental assumptions within `cellular_raza` is that each and every interaction is
-of finite range.
-This means that cellular agents only interact with their nearest neighbour and close environment.
-Any long-ranged interactions must be the result of a collection of short-ranged interactions.
-This assumption enables us to split the simulation domain into chunks and process them individually
-although some communication is needed in order to deal with boundary conditions.
-In practice, this means that any interaction force should be given a cutoff.
-It also means that any interactions which need to be evaluated between agents should in theory scale
-linearly with the number of agents $\mathcal{O}(n_\text{agents})$.
+`cellular_raza` also comes with the `cpu_os_threads` backend which was the first backend created.
+It is in the midst of being deprecated and only serves for some legacy usecases.
+In the future, we hope to add a dedicated backend named `cara` to leverage GPU-accelerated
+(Graphical Processing Unit) algorithms.
 
 # Examples
+
+All presented examples can be viewed at the [showcase](https://cellular-raza.com/showcase) section
+of the [cellular-raza.com](https://cellular-raza.com) homepage.
+
 ## Cell Sorting
 Cell Sorting is a naturally occurring phenomenon which drives many biological processes.
+*TODO CITATION*
 While the underlying biological reality can be quite complex, it is rather simple to describe such
 a system in its most basic form.
-The underlying principle is that interactions between cells are specific.
+The responsible principle is that the `Interaction` between cells are specific to their species.
+In our example, we consider two distinct species represented by soft spheres which physically
+attract each other at close proximity if their species is identical.
 
-## Mathematical Description
-
-We assume that cells are spherical objects which interact via force potentials.
-
-\begin{align}
-    \sigma &= \frac{r}{R_i + R_j}\\
-    V(r) &= V_0 \left(\frac{1}{3\sigma^3} - \frac{1}{\sigma}\right)
-\end{align}
-
-The values $R_i,R_j$ are the radii of the cells ($i\neq j$) interacting with each other.
-For simplification, we can assume that they are identical $R_i=R_j=R$.
-
-Furthermore, we assume that the equation of motion is given by
-
-\begin{equation}
-    \partial^2_t x = F - \lambda \partial_t x
-\end{equation}
-
-where the first term is the usual force term $F = - \nabla V$ obtained by differentiating the
-given potential and the second term is a damping term which arises due to the cells being immersed
-inside a viscuous fluid.
-
-{{< callout type="info" >}}
-Note that we opted to omit the mass factor on the left-hand side of the previous equation.
-This means, that units of $V_0$ and $\lambda$ are changing and they incorporate this property.
-{{< /callout >}}
-
-We can assume that interactions between cells are restricted to close ranges and thus enforce a
-cutoff $\xi$ for the interaction where the resulting force is identical to zero.
-
-\begin{equation}
-    V(r) = \begin{cases}
-        V_0 \left(\frac{1}{3\sigma^3} - \frac{1}{\sigma}\right) &\text{ if } r \leq \xi \\
-        0 &\text{ else }
-    \end{cases}
-\end{equation}
-
-
-We further assume that cells of different species do not attract each other.
-To describe this behaviour, we set $V(r)=0$ when $r>R_i+R_j$ and both cells have distince species
-type.
+We initially place cells randomly inside a cube with reflective boundary conditions.
+In the final snapshot, we can clearly see the phase-separation between the different species.
 
 ![Cell Sorting - Start](figures/cell_sorting_start.png){ width=50% }
 ![Cell Sorting - End](figures/cell_sorting_end.png){ width=50% }
-
-## Bacterial Branching
-To model the spatial mechanics of elongated bacteria, we represent them as a collection of
-auxiliary vertices $\{\vec{v}_i\}$ which are connected by springs in ascending order.
-Furthermore, we assume that the cells are flexible described by their stiffness property.
-A force $\vec{F}$ interacting between cellular agents determines the radius (thickness) of the
-rods and an attractive component can model adhesion between cells.
-
-### Mechanics
-In principle we can assign individual lengths $\{l_i\}$ and strengths $\{\gamma\}_i$ to each
-spring.
-The internal force acting on vertex $\vec{v}_i$ can be divided into 2 contributions coming from
-the 2 springs pulling on it.
-In the case when $i=0,N_\text{vertices}$, this is reduced to only one internal component.
-We denote with $\vec{c}_{i}$ the connection between two vertices
-\begin{align}
-    \vec{c}_i = \vec{v}_{i}-\vec{v}_{i-1}
-\end{align}
-and can write down the resulting force
-\begin{align}
-    \vec{F}_{i,\text{springs}} =
-        &-\gamma_i\left(1 - \frac{l_i}{\left|\vec{c}_i\right|}\right)
-        \vec{c}_i\\
-        &+ \gamma_{i+1}\left(1 - \frac{l_{i+1}}{\left|\vec{c}_{i+1}\right|}\right)
-        \vec{c}_{i+1}
-\end{align}
-
-In addition to springs between individual vertices $\vec{v}_i$, we assume that each angle at a
-vertex between two other is subject to a stiffening force.
-Assuming that $\alpha_i$ is the angle between the connections and
-$\vec{d}_i=\vec{c}_i/|\vec{c}_i|$ is the normalized connection,
-we can write down the forces acting on vertices $\vec{v}_i,\vec{v}_{i-1},\vec{v}_{i+1}$
-\begin{align}
-    \vec{F}_{i,\text{stiffness}} &= \eta_i\left(\pi-\alpha_i\right)
-        \frac{\vec{d}_i - \vec{d}_{i+1}}{|\vec{d}_i-\vec{d}_{i+1}|}\\
-    \vec{F}_{i-1,\text{stiffness}} &= -\frac{1}{2}\vec{F}_{i,\text{stiffness}}\\
-    \vec{F}_{i+1,\text{stiffness}} &= -\frac{1}{2}\vec{F}_{i,\text{stiffness}}
-\end{align}
-where $\eta_i$ is the angle stiffness at vertex $\vec{v}_i$.
-We can see that the stiffening force does not move the overall center of the cell in space.
-The total force is the sum of external and internal forces.
-$\begin{equation}
-    \vec{F}_{i,\text{total}} = \vec{F}_{i,\text{springs}}+ \vec{F}_{i,\text{stiffness}} + \vec{F}_{i,\text{external}}
-\end{equation}$
-and are integrated via
-\begin{align}
-    \partial_t^2 \vec{x} &= \partial\vec{x} + D\vec{\xi}\\
-    \partial_t\vec{x} &= \vec{F}_\text{total}
-\end{align}
-where $D$ is the diffusion constant and  $\vec{\xi}$ is the wiener process (compare with
-[brownian motion](/docs/cellular_raza_building_blocks/struct.Brownian3D.html)).
-
-<!--
-### Interaction
-When calculating forces acting between the cells, we can use a simplified model to circumvent the
-numerically expensive integration over the complete length of the rod.
-Given a vertex $\vec{v}_i$ on one cell, we calculate the closest point $\vec{p}$ on the polygonal
-line given by the vertices $\{\vec{w}_j\}$ of the interacting cell.
-Furthermore we determine the value $q\in[0,1]$ such that
-$\begin{equation}
-    \vec{p} = (1-q)\vec{w}_j + q\vec{w}_{j+1}
-\end{equation}$
-for some specific $j$.
-The force is then calculated between the points $\vec{v}_i$ and $\vec{p}_i$ and acts on the
-vertex $\vec{w}_i,\vec{w}_{i+1}$ with relative strength $(1-q)$ and $q$.
-\begin{align}
-    \vec{F}_{i,\text{External}} = \vec{F}(\vec{v}_i,\vec{p})
-\end{align}
-For this example, we reused the interaction shape of the [cell-sorting](/showcase/cell-sorting)
-example ignoring the species aspect.
-
-### Cycle
-To simulate proliferation, we introduce a growth term for the spring lengths $l_i$
-$\begin{equation}
-    \partial_t l_i = \mu
-\end{equation}$
-which will increase the length of the cell indefenitely unless we impose a condition for the
-[division event](/internals/concepts/cell/cycle).
-We define a threshold (in our case double of the original length) for the total length of the
-cell at which it divides.
-To construct a new cell, we cannot simply copy the existing one twice, but we also need to adjust
-internal parameters in the process.
-The following actions need to be taken for the old and new agent.
-
-1. Assign a new growth rate (pick randomly from uniform distribution in $[0.8\mu_0,1.2\mu_0]$
-   where $\mu_0$ is some fixed value)
-2. Assign new positions
-    1. Calculate new spring lengths
-    $\tilde{l}_i = l_i\left(\frac{1}{2} - \frac{r}{\sum\limits_i l_i}\right)$
-    2. Calculate middle of old cell
-    $\vec{m} = \frac{1}{N_\text{vertices}}\sum\limits_i\vec{v}_i$
-    3. Calculate positions of new vertices $\vec{w}_i$
-    \begin{align}
-        q_i &= \frac{i}{N_\text{vertices}}\\
-        \vec{w}_{i,\text{new},\pm} &= (1-q_i)\vec{m} + q_i(\vec{v}_{\pm\text{start}} - \vec{m})
-    \end{align}
-
-![Bacterial Branching](figures/cells_at_iter_0000099000.png){ width=50% }
-
-## Free Vertex Model
-
-Vertex models are a very popular choice in describing multicellular systems.
-They are actively being used in great variety such as to describe mechanical properties of plant
-cells or organoid structures of epithelial cells.
-
-## Mathematical Description
-In this model, we are only concerned with cellular forces and their representation in space.
-One single cell-agent can be described by a collection of (ordered) vertices which in turn also
-allows for a dual description in terms of edges.
-
-$\begin{align}
-    \{\vec{v}_i\}_{i=0\dots n}\\
-    \vec{v}_i = \begin{bmatrix}v_{i,0}\\v_{i,1}\end{bmatrix}
-\end{align}$
-
-In the following text, we assume that vertices are always ordered (clockwise or anti-clockwise)
-and this ordering is identical for every cell in our simulation.
-
-### Mechanics
-Every vertex is connected to its next neighbours in order via springs with an associated length
-$d$ and spring constant $\gamma$.
-The potential used to calculate the force $F_i$ acting along the edges of the cell between vertex
-$i$ and $i+1$ is given by
-
-\begin{align}
-    \vec{F}_{\text{edges},i} &= - \gamma \left(|\vec{v}_i - \vec{v}_{i+1}| - d\right)
-    \frac{\vec{v}_i - \vec{v}_{i+1}}{|\vec{v}_i - \vec{v}_{i+1}|}\\
-    %V_\text{edges} &= \sum\limits_{i=0}^n \frac{\gamma}{2}\left(d_i - d\right)^2
-\end{align}
-
-where $d_i = |\vec{v}_i - \vec{v}_{i+1}|$ is the distance between individual vertices.
-
-From the length of the individual edges, we can determine the total 2D volume $V$ of the cell when
-the equilibrium configuration of a perfect hexagon is reached.
-
-$\begin{equation}
-    V = d^2\sum\limits_{i=0}^{n-1}\frac{1}{2\sin(\pi/n)}
-\end{equation}$
-
-However, since the individual vertices are mobile, we require an additional mechanism which
-simulates a central pressure $P$ depending on the currently measured volume $\tilde{V}$.
-This area can be calculated by summing over the individual areas of the triangles given by
-two adjacent vertices and the center point $\vec{c}=\sum_i\vec{v}_i/(n+1)$.
-They can be calculated by using the parallelogramm formula
-
-\begin{align}
-    \tilde{V}_i &=
-    \det\begin{vmatrix}
-        \vec{v}_{i+1} - \vec{c} & \vec{v}_i - \vec{c}
-    \end{vmatrix}\\
-    &= \det\begin{pmatrix}
-        (\vec{v}_{i+1} - \vec{c})_0 & (\vec{v}_{i} - \vec{c})_0\\
-        (\vec{v}_{i+1} - \vec{c})_1 & (\vec{v}_{i} - \vec{c})_1
-    \end{pmatrix}\\
-    \tilde{V} &= \sum\limits_{i=0}^{n-1}\tilde{V}_i
-\end{align}
-
-The resulting force then points from the center of the cell $\vec{c}$ towards the
-individual vertices $\vec{v}_i$.
-
-\begin{align}
-    \vec{F}_{\text{pressure},i} = P\left(V-\tilde{V}\right)\frac{\vec{v}_i - \vec{c}}{|\vec{v}_i - \vec{c}|}
-\end{align}
-
-These mechanical considerations alone are enough to yield perfect hexagonal configurations for
-individual cells without any interactions.
-If we also take into account an external force acting on the cell, the total force acting on the
-individual vertices $\vec{v}_i$ can be calculated via
-
-\begin{equation}
-    \vec{F}_{\text{total},i} = \vec{F}_{\text{external},i} + \vec{F}_{\text{edges},i}
-        + \vec{F}_{\text{pressure},i}
-\end{equation}
-
-### Interaction
-Cell-agents are interacting via forces $\vec{F}(\vec{p},\vec{q})$ which are dependent on two points
-$\vec{p}$ and $\vec{q}$ in either cell.
-The mechanical model we are currently using does not fully capture the essence of these cellular
-interactions.
-In principle, we would have to calculate the total force $\vec{F}'$ by integrating over all points
-either inside the cell or on its boundary but for the sake of simplicity we consider a different
-approach.
-Let us denote the vertices of the two cells in question with $\{\vec{v}_i\}$ and
-$\{\vec{w}_j\}$.
-
-#### Case 1: Outside Interaction
-In this case, we assume that the vertex $\vec{v}_i$ in question is not inside the other cell.
-We make the simplified assumption that each vertex $\vec{v}_i$ is interacting with the closest
-point on the outer edge of the other cell.
-Given these sets of vertices, we calculate for each vertex $\vec{v}_i$ the closest
-point
-$\begin{equation}\vec{p} = (1-q)\vec{w}_j + q\vec{w}_{j+1}\end{equation}$
-(assuming that we set $\vec{w}_{j+1}=\vec{w}_1$ when $j=N_\text{vertices}$)
-on the edge and then the force acting on this vertex can be calculated
-$\begin{equation}\vec{F}_{\text{outside},i} = \vec{F}(\vec{v}_i, \vec{p})\end{equation}$
-by applying $\vec{F}$ on them.
-The force acting on the other cell acts on the vertices $j$ and $j+1$ with relative strength $1-q$
-and $q$ respectively.
-\begin{alignat}{5}
-&\vec{F}_{\text{outside},j} &=& - &(1-q)&\vec{F}(\vec{v}_i,\vec{p})\\
-&\vec{F}_{\text{outside},j+1} &=& &-q&\vec{F}(\vec{v}_i,\vec{p})
-\end{alignat}
-
-{{<callout type="info" >}}
-In the actual implementation of this approach, we additionally use a bounding box around each cell
-to quickly identify if a given vertex is outside the other cell.
-{{< /callout >}}
-
-#### Case 2: Inside Interaction
-In the second case, a vertex of the other cell $\vec{w}_j$ has managed to move inside.
-Here, a different force $\vec{W}$ acts which is responsible for pushing the vertex outwards.
-The force is calculated between the center of our cell
-$\begin{equation}\vec{v}_c = \frac{1}{N_\text{vertices}}\sum\limits_i \vec{v}_i\end{equation}$
-and the external vertex in question.
-The force which is calculated this way acts in equal parts on all vertices.
-\begin{alignat}{5}
-&\vec{F}_{\text{inside},j} &=& \frac{1}{N_\text{vertices}}\vec{W}(\vec{v}_c,\vec{w}_j)\\
-&\vec{F}_{\text{inside},i} &=&
-\end{alignat}
--->
-![Free Vertex Model](figures/vertex-snapshot_00010050.png){ width=50% }
+\begin{figure}[!h]
+    \centering
+    \caption{
+        The initial random placement of cells reorders into a phase-separated spatial pattern.
+    }
+\end{figure}
 
 ## Bacterial Rods
 
-![Bacterial Rods](figures/bacterial-rods-initial.png){ width=50% }
-![Bacterial Rods](figures/bacterial-rods-intermediate.png){ width=50% }
+Many bacterial species are of elongated shape
+*TODO CITATION*
+which grows asymmetrically in the direction of elongation during the growth phase of the cell.
+To model this behaviour, we describe the physical `Mechanics` of one cell as a collection of multiple
+vertices $\vec{v}_i$ which are connected by edges.
+The edges are modelled as springs and their relative angle at each connecting vertex introduces a
+stiffening force which is proportional to the angle difference $\alpha-180°$.
+The `Interaction` of two cells is implemented via a force potential which acts between every vertex
+and the closest point on the other cells edges.
+The potential that of a soft-sphere with a short-ranged adherent force.
+
+In addition, the cell `Cycle` introduces growth of the bacteria until it reaches a threshold and
+divides in the middle into two new cells.
+The growth is downregulated by an increasing number of neighboring cells.
+This can also be accomplished by the `Interaction` simulation aspect.
+It is an phenomenological but effective choice to model the gradual transition into the stationary
+phase of the bacterial colony.
+
+Initially, the cells are placed inside the left-hand side of an elongated box with
+reflective boundary conditions.
+The cells are colored continuously from green for fast growth to blue for dormant cells.
+This setup is reminiscent of a mother machine continuously producing new bacteria.
+*TODO CITATION*
+
+![Bacterial Rods](figures/0000000040.png){ width=50% }
+![Bacterial Rods](figures/0000022000.png){ width=50% }
+\begin{figure}[!h]
+    \centering
+    \caption{
+        The bacteria extend from the initial placement in the left side towards the right side.
+        Their elongated shape and the confined space favour the orientation facing along the growth
+        direction.
+    }
+\end{figure}
+
+## Branching of _Bacillus Subtilis_
+Spatio-temporal patterns of bacterial growth such as in _Bacillus Subtilis_ have been studied for
+numerous years [@kawasakiModelingSpatioTemporalPatterns1997; @matsushitaInterfaceGrowthPattern1998].
+They are typically described by a system of PDEs (Partial Differential Equations) which contain
+non-spatial and spatial contributions.
+describing intracellular reactions and cell-cycle and spatial
+contributions (typically via Diffusion processes) which describe diffusion of nutrients and
+movement of the cells.
+
+With `cellular_raza` we can clearly distinguish between these simulation aspects.
+We describe the `Mechanics` and physical `Interaction` of the cells as soft spheres.
+Extracellular reactions (`DomainReactions`) in the simulation domain are modeled by Diffusion
+which is coupled via an uptake term (`ReactionsExtra`) to the cells intracellular `Reactions`.
+During its life `Cycle`, the cell grows continuously and divides upon reaching a threshold.
+
+The initial placement of the cells is inside of a centered square.
+From there, cells start consuming nutrients and growing outwards towards the nutrient-rich area.
+Cells are colored bright purple while they are actively growing and dividing while dark cells are
+not subject to growth anymore.
+The outer domain is colored by the intensity of present nutrients.
+A lighter color indicates that more nutrients are available while a dark color signifies a lack
+thereof.
+The two snapshots show the state after 28% of the total simulation time and at the final simulation
+step.
+The diffusivity of the nutrient and the growth rate of the bacteria are the governing criteria for
+the shape of the pattern.
+
+![Bacterial Branching](figures/cells_at_iter_0000028000.png){ width=50% }
+![Bacterial Branching](figures/cells_at_iter_0000099000.png){ width=50% }
+\begin{figure}[!h]
+    \centering
+    \caption{
+        The bacterial colony grows outwards towards the nutrient-rich parts of the domain thus
+        forming branches in the process.
+    }
+\end{figure}
+
+## Trichome Patterning in _Arabidopsis Thaliana_
+Trichomes are hairs consisting of a single cell which can be seen developing on the surface of
+leaves of _Arabidopsis Thaliana_.
+Their specialization from regular epithelial cells is determined by a pattern which can be
+described by coupling the intracellular reactions of multiple cells to each other.
+We assume that cells are immobile but exchange the 'trichome-promoting factor TRANSPARENT TESTA
+GLABRA1' (TTGL) [@Bouyer2008] via their connecting cell wall.
+
+We descibe the intracellular gene reulatory network as an Ordinary
+Differntial Equation (ODE) via the `Intracellular` simulation aspect and couple cells to each other
+with the `ReactionsContact` aspect.
+We restrict the reactions via contact to only neighbouring cells exchange TTGL which is particularly
+simple to determine for a static tissue.
+The combined reactions represent a diffusion-driven Turing instability [@Turing1952] which when
+given randomized initial values generates peaks that lead to the observed differentiation of the
+trichome hairs.
+
+There is an ongoing effort [@Pleyer2024jonaspleyer] to use `cellular_raza` as a simulation backend
+while generating python bindings with the `pyo3` and `maturin` crates.
+
+![cr_trichome](figures/cr_trichome_start.png){ width=50% }
+![cr_trichome](figures/cr_trichome_end.png){ width=50% }
+\begin{figure}[!h]
+    \caption{
+        The reaction network produces a pattern of regular peaks that ultimately lead to the
+        differentiation and growth of trichomes.
+    }
+\end{figure}
 
 # Performance
 ## Multithreading
@@ -482,7 +362,7 @@ You can also use plain \LaTeX for equations
 \end{equation}
 and refer to \autoref{eq:fourier} from text.-->
 
-# Citations
+<!-- # Citations -->
 
 <!-- Citations to entries in paper.bib should be in
 [rMarkdown](http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html)
