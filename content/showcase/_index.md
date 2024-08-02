@@ -10,12 +10,12 @@ title: Showcase
         image="/showcase/bacterial-rods/intermediate.png"
         subtitle="A mechanical model of elongated bacteria such as E.Coli growing inside a narrow box."
     >}}
-    {{<
+    <!-- {{<
         card link="autophagy-protein-clustering"
         title="Autophagy Protein Clustering"
         image="/showcase/autophagy-protein-clustering/with-avidity/snapshot_00040000.png"
         subtitle="ATG11 and ATG19 Particles phase-separate and form Clusters on the surface of a Cargo which initiate the autophagy process."
-    >}}
+    >}} -->
     {{<
         card link="free-motile-vertex-model"
         title="Free Motile Vertex Model"
