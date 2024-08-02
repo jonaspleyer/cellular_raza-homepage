@@ -10,4 +10,6 @@ output.mp4
 
 # Generated files by cargo doc
 static/docs
+static/internals/*-gource.mp4
+static/internals/scc-table.html
 static/internals/cellular_raza-development-gource.webm
