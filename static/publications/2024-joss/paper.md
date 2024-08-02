@@ -40,7 +40,11 @@ bindings and can act as a numerical backend to a python package.
 Agent-based models are common in cellular biology and many tools have been developed so far
 to asses specific questions in specialized fields [@Pleyer2023].
 While these tools have proven to be effective for targeted research questions,
-they often lack the ability to be applied in a more generic context.
+they often lack the ability to be applied for multiple distinct use-cases in a more generic context.
+However, core functionalities such as numerical solvers, storage solutions, domain decomposition
+methods and functions to construct these simulations could be shared between models if written in
+a generic fashion.
+
 In order to combat this issue and build up models from first principles without any assumptions on
 the underlying complexity or abstraction level, we developed `cellular_raza`.
 
@@ -49,19 +53,21 @@ the underlying complexity or abstraction level, we developed `cellular_raza`.
 # State of field
 ## Generic agent-based modelling toolkits
 There exists a wide variety of many general-purpose agent-based simulation toolkits which are being
-actively applied in a different fields of study [@Abar2017].
-- *TODO CITATIONS*
+actively applied in a different fields of study [@Abar2017; @Datseries2022; @Wilensky:1999].
 These tools are often able to define agents bottom-up and can be a good choice if they allow for the
 desired cellular representation.
 However, they lack the explicit forethough to be applied in cellular systems and often implement
 global rules rather than individual-based ones.
-- *TODO CITATIONS*.
+Furthermore, since they are required to solve a wider range of problems they are not able to make
+assumptions on the type of agent or the nature of their interactions and thus miss out on possible
+performance optimizations.
 
 ## Cellular agent-based frameworks
 In our previous efforts [@Pleyer2023] we have assessed the overall state of modelling toolkits for
 individual-based cellular simulations.
-In this mini-review, we focussed on modelling frameworks, which provide a complete workflow.
-The resulting frameworks are all crafted for specific use-cases
+In this mini-review, we focussed on agent-based modelling frameworks, which provide a complete
+workflow.
+The inspected frameworks are all crafted for specific use-cases
 and may require a large amount of parameters specific to their domain of usage.
 These parameters are often not known in practice and are hard to determine experimentally.
 This creates problems for the extendability of the software and the ability to properly interpret
