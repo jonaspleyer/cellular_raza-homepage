@@ -4,6 +4,12 @@ title: Showcase
 ---
 
 {{< cards >}}
+    <!-- {{<
+        card link="cr_trichome"
+        title=`cr_trichome`
+        image="/showcase/cr_trichome/cr_trichome_end.png"
+        subtitle="Turing Patterns on the leaf of Arabidopsis Thaliana"
+    >}} -->
     {{<
         card link="bacterial-rods"
         title="Soft Bacterial Rods"
