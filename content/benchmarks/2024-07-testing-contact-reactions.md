@@ -1,5 +1,5 @@
 ---
-title: Accuracy Testing of Contact Reactions 1
+title: Accuracy Testing of Contact Reactions
 date: 2024-07-23
 math: true
 ---

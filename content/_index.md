@@ -34,7 +34,7 @@ parameter introduced.
 {{< cards >}}
     {{< card
         link="/benchmarks/2024-07-testing-contact-reactions"
-        title="Accuracy Testing of Contact Reactions 1"
+        title="Accuracy Testing of Contact Reactions"
         subtitle="We compare the solvers of `cellular_raza` with analytical results with estimates for the local and global truncation error."
         image="/benchmarks/contact_reactions/contact_reactions-config0.png"
     >}}
