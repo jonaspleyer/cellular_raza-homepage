@@ -9,6 +9,7 @@
 \usepackage{hyperref}       % hyperlinks
 \usepackage{url}            % simple URL typesetting
 \usepackage{booktabs}       % professional-quality tables
+\usepackage{amsmath}
 \usepackage{amsfonts}       % blackboard math symbols
 \usepackage{nicefrac}       % compact symbols for 1/2, etc.
 \usepackage{microtype}      % microtypography
@@ -74,43 +75,117 @@ pdfkeywords={},
 
 \section{Properties of Individual-Based Descriptions in Multicellular Systems}
 \label{sec:properties}
+\begin{enumerate}
+    \item Stochastic -> Irreversible
+    \item Dissipative (take up energy, non-equilibrium, decrease entropy)
+\end{enumerate}
 
 \begin{table}
 	\caption{Aspects of cellular systems}
 	\centering
-	\begin{tabular}{lcl}
-		\toprule
+	\begin{tabular}{ll}
 		% \multicolumn{2}{c}{Part}                   \\
 		% \cmidrule(r){1-2}
-        Aspect                  &Type   &Examples\\
+		\toprule
+        Aspect                  &Examples\vspace{0.5em}\\
+        \it{(C) Cellular}\\
         \midrule
-        Spatial Representation  &C      &elongated rods, soft spheres, vertex-like\\
-        Intracellular Reactions &C      &signalling pathways,stress response\\
-        Movement                &C      &neighbour exchange, motility, chemotaxis, directed random walk\\
-        Cycle                   &C      &differentiation, division, (phased) death, mesenchymal-epithelial transition\\
+        Spatial Representation  &elongated rods, soft spheres, vertex-like\\
+        Intracellular Forces    &hexagonal shape\\
+        Intracellular Reactions &signalling pathways,stress response\\
+        Movement                &neighbour exchange, motility, chemotaxis, directed random walk\\
+        Cycle                   &differentiation, division, (phased) death, mesenchymal-epithelial transition\vspace{0.5em}\\
+        \it{(CC) Cell-Cell Interactions}\\
 		\midrule
-        Forces                  &CC     &adherent forces, friction, de-adhesion\\
-        Reactions via Contact   &CC     &communication between plant-cells via plasmodesmata, gap-junctions\\
-        Neighbour sensing       &CC     &effective abstraction\\
-        Fusion                  &CC     &homotypic, heterotypic\\
+        Interaction Forces      &adherent forces, friction, de-adhesion\\
+        Reactions via Contact   &communication between plant-cells via plasmodesmata, gap-junctions\\
+        Neighbour sensing       &phenomenological abstraction\\
+        Fusion                  &homotypic, heterotypic\vspace{0.5em}\\
+        \it{(DC) Domain-Cell Interactions}\\
         \midrule
-        External Forces         &DC     &blood flow near heart-valves, microfluidic devices\\
-        Extracellular Processes &D, DC  &diffusion of morphogens, transport of signalling molecules\\
+        External Forces         &blood flow, microfluidic devices\\
+        Extracellular Processes &diffusion of morphogens, transport of signalling molecules\vspace{0.5em}\\
+        \it{(O) Other}\\
+        \midrule
+        External Controller     &introduce drug, remove cells, refresh nutrients\\
 		\bottomrule
 	\end{tabular}
 	\label{tab:table}
 \end{table}
 
-\subsection{Intracellular Processes}
-\label{subsec:properties-cell}
+\section{Motivation}
+\label{subsec:motivation}
+In the previous section, we have determined aspects of cellular systems which we aim to describe
+with suitable abstractions.
+As we have already shown, these aspects can be grouped into 3 categories.
+The first category only considers a single cell by itself while the second and third consider
+interactions with other cells and the external environment respectively.
+Lastly, we allow an external controller to make changes to the experimental setup in accordance with
+the experimental reality.
+
+\subsection{Intracellular Representations and Processes}
+\label{subsec:abstractions-cell}
+\subsubsection{Mechanics - Spatial Representation, Intracellular Forces \& Movement}
+\label{subsubsec:abstractions-cell-mechanics}
+\subsubsection{Intracellular Reactions}
+\label{subsubsec:abstractions-cell-reactions}
+\subsubsection{Cycle}
+\label{subsubsec:abstractions-cell-cycle}
 
 \subsection{Cell-Cell Interactions}
-\label{subsec:properties-cell-cell}
+\label{subsec:abstractions-cell-cell}
 \subsubsection{Forces}
-\label{subsec:properties-cell-cell-forces}
+\label{subsec:abstractions-cell-cell-forces}
+Forces acting between cells are often described in terms of interaction potentials $V(x_i, x_j)$
+where $x_i,x_j$ are the position of two cells.
+\begin{equation}
+    F_i = \nabla_{x_i}V(x_i, x_j)
+\end{equation}
+If $V$ only depends on the difference between the two positions $x_i-x_j$, we obtain an
+antisymmetric expression in $i,j$.
+\begin{align}
+    F_i &= \nabla_{x_i}V(x_i-x_j)\\
+    &= -\nabla_{x_j}V(x_i-x_j)
+\end{align}
+However, this assumption is only valid for point-like objects without any additional structure.
+Consider the example where a cell is represented by two points $(p_1, p_2)$ which are connected with
+a spring of length $l$ and strength $D$.
+This may be a simplified model for an elongated bacteria.
+We can write down the force contribution from intracellular forces
+\begin{align}
+    F_{\text{intra},i} = \begin{bmatrix}
+        - D (|p_1-p_2|-l)\\
+        D (|p_1-p_2|-l)
+    \end{bmatrix}
+\end{align}
+We can assume that the two vertices of one cell $p_{1,i},p_{2,j}$ are interacting with both vertices
+of the other.
+This reslts in a force term of the form
+\begin{align}
+    F_{\text{extra},i} &= \begin{bmatrix}
+        F(p_{1,i}, p_{1,j}) + F(p_{1,i}, p_{2,j})\\
+        F(p_{2,i}, p_{1,j}) + F(p_{2,i}, p_{2,j})
+    \end{bmatrix}\\
+    F_{\text{extra},j} &= \begin{bmatrix}
+        F(p_{1,j}, p_{1,i}) + F(p_{1,j}, p_{2,i})\\
+        F(p_{2,j}, p_{1,i}) + F(p_{2,j}, p_{2,i})
+    \end{bmatrix}
+\end{align}
+and thus we can clearly see that $F_{\text{extra},i}\neq - F_{\text{extra},j}$ even if
+$F(a,b)=-F(b,a)$.
+This means that we have to rely on a method which calculates both the forces acting on cell $i$ and
+$j$ simultanously.
+To be able to model friction forces (although rare) we additionally take the velocity $v_i$ into
+account.
+Further, we allow additional information $\sigma_i$ to be exchanged between the cells during their
+interaction (ie. species specific).
+We take this as the basis for calculating forces between cells.
+\begin{equation}
+    (F_i, F_j) = F(x_i, x_j, v_i, v_j, \sigma_i, \sigma_j)
+\end{equation}
 
 \subsection{Domain-Cell Interactions}
-\label{subsec:properties-domain-cell}
+\label{subsec:abstractions-domain-cell}
 
 % \subsection{Citations}
 % Citations use \verb+natbib+. The documentation may be found at
