@@ -15,10 +15,10 @@ parameter introduced.
 
 {{< cards >}}
     {{<
-        card link="/showcase/free-motile-vertex-model"
-        title="Free Motile Vertex Model"
-        image="/showcase/free-motile-vertex-model/cells_at_iter_0000100000.png"
-        subtitle="Cells Self-Organizing to Tissue-Like structure"
+        card link="/showcase/bacterial-rods"
+        title="Soft Bacterial Rods"
+        image="/showcase/bacterial-rods/intermediate.png"
+        subtitle="A mechanical model of elongated bacteria such as E.Coli growing inside a narrow box."
     >}}
     {{<
         card link="/showcase/cell-sorting"
