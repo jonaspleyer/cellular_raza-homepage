@@ -118,6 +118,11 @@ Our hypothesis of $\mathcal{O}(N)$ scaling will hold true of any contributions o
 negligible compared to the first-order.
 However, it is clear that with increasing the number of agents $N$, we expect the second-order
 contribution to gain in relevance as well.
+Furthermore, we can not rule out constant contributions $c_0$ due to fixed computational costs in
+creating and stopping the simulation although we exptect these contributions to be of neglibile
+magnitude compared to the computational overhead of calculating interactions.
+In addition, we also compare the estimated value of the parameter $p_2$ with the null-hypothesis
+$0$ using the calculated variance $\sigma_2$ obtained by the fitting algorithm.
 
 ## Results
 
@@ -147,14 +152,21 @@ first-order $c_1 = p_1 N$ is confirmed by comparing at every measured datapoint.
 The largest contributions of $c_2$ occur at the last measured datapoint and are negligible for
 setups [\[2\]](#references) and [\[3\]](#references).
 Setup [\[4\]](#references) shows a larger contribution at its last respective datapoint.
-We also saw deviations from expected results when testing the
+The obtained results show deviations of
+$1.098\times 10^{-13}\sigma_2$ for setup [\[2\]](#references),
+$1.838\times 10^{0}\sigma_2$ for setup [\[3\]](#references) and
+$7.199\times 10^{0}\sigma_2$ for setup [\[4\]](#references) to the null-hypothesis of $p_2=0$.
+The first two results are within the $3\sigma_2$ interval of the exptected value while the last
+setup does show a difference.
+However, we also saw deviations from expected results when testing the
 [multithreading performance](/benchmarks/2024-07-thread-scaling) with this setup.
 
 ```bash
 =============================================
-| Fitting summary for 12700H @2GHz with polynomial of order 3
+| Fitting summary for 12700H @2GHz with polynomial of order 2
 |--------------------------------------------
 | Coefficients:  p2=1.294e-25 p1=5.050e-05 p0=4.562e-02
+| Variance:      s2=1.179e-12 s1=1.561e-06 s0=1.536e-01
 | Effects at n_agents=327680:
 | Contribution at n_agents=        80:  c2=8.2806e-22 c1=4.0397e-03 c0=4.5615e-02
 | Relative                              r2=      0.0% r1=      8.1% r0=     91.9%
@@ -173,9 +185,10 @@ We also saw deviations from expected results when testing the
 | Contribution at n_agents=   1310720:  c2=2.2228e-13 c1=6.6187e+01 c0=4.5615e-02
 | Relative                              r2=      0.0% r1=     99.9% r0=      0.1%
 =============================================
-| Fitting summary for 3960X @2GHz with polynomial of order 3
+| Fitting summary for 3960X @2GHz with polynomial of order 2
 |--------------------------------------------
 | Coefficients:  p2=4.346e-14 p1=5.276e-05 p0=5.072e-16
+| Variance:      s2=2.365e-14 s1=4.963e-07 s0=6.876e-01
 | Effects at n_agents=5242880:
 | Contribution at n_agents=        80:  c2=2.7813e-10 c1=4.2210e-03 c0=5.0725e-16
 | Relative                              r2=      0.0% r1=    100.0% r0=      0.0%
@@ -198,9 +211,10 @@ We also saw deviations from expected results when testing the
 | Contribution at n_agents=  20971520:  c2=1.9113e+01 c1=1.1065e+03 c0=5.0725e-16
 | Relative                              r2=      1.7% r1=     98.3% r0=      0.0%
 =============================================
-| Fitting summary for 3700X @2GHz with polynomial of order 3
+| Fitting summary for 3700X @2GHz with polynomial of order 2
 |--------------------------------------------
 | Coefficients:  p2=3.010e-12 p1=5.067e-05 p0=2.014e-10
+| Variance:      s2=4.181e-13 s1=5.536e-07 s0=5.447e-02
 | Effects at n_agents=327680:
 | Contribution at n_agents=        80:  c2=1.9262e-08 c1=4.0533e-03 c0=2.0135e-10
 | Relative                              r2=      0.0% r1=    100.0% r0=      0.0%
