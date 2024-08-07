@@ -2,6 +2,8 @@
 title: Backends
 type: docs
 weight: 10
+sidebar:
+    open: true
 ---
 
 To numerically solve a fully specified system, `cellular_raza` provides backends.
