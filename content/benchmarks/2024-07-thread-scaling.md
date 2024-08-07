@@ -85,11 +85,21 @@ relative performance scaling.
 | AMD Ryzen Threadripper 3960X [\[3\]](##references) | @2000MHz | 3200MT/s | 280W |
 | Intel Core i7-12700H [\[4\]](#references) | @2000MHz | 4800MT/s | 45W |
 
+<br>
+<div style="text-align: center;">
+    <p>Table 1: Fit parameters for quadratic approximation of scaling behaviour.</p>
+</div>
+
 ## Results
 
 ![](thread_scaling.png)
 
-We fit equation $(1)$ and obtain the parameter $p$ from which the theoretical
+<br>
+<div style="text-align: center;">
+    <p>Figure 1: Performance results for increasing number of utilized threads.</p>
+</div>
+
+We fit [equation $(1)$](#theory) and obtain the parameter $p$ from which the theoretical
 maximal speedup $S$ can be calculated via
 
 $$\begin{equation}
