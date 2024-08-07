@@ -4,15 +4,87 @@ date: 2024-07-28
 math: true
 ---
 
-## Theory
+<style>
+table {
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+}
+</style>
+
+## Local Interactions
+
+For interactions with infinite range the computational complexity [\[1\]](#references) of
+calculating all interactions between every agent growths quadratic with the number of agents
+$\mathcal{O}(N^2)$.
+This can be seen when writing down the most simplistic implementation of calculating interaction
+forces.
+
+```rust
+for i in 0..n_agents {
+    for j in 0..i {
+        // Calculate interactions between agents i and j
+    }
+}
+```
+The double for-loop iterates over all agents inside the simulation and thus results in
+$N(N-1)/2=0.5(N^2-N)$ total iterations.
+
+{{< callout type="info" >}}
+All complexity-related considerations are equally valid for symmetrical and non-symmetrical
+interactions.
+None-symmetrical interactions (ie. $F(x_i, x_j) \neq F(x_j, x_i)$ introduce an additional constant
+factor of $2$ on the computational demand but do not change the scaling behaviour.
+{{< /callout >}}
+
+`cellular_raza` was designed bottom-up with the assumption that all interactions between cellular
+agents are local.
+This means we can assume that a single cell interacts only with others which are within a certain
+proximity defined by the type of interaction.
+This behaviour allows us to [decompose](/docs/cellular_raza_concepts/trait.Domain.html) the Domain
+into multiple voxels which contain cells.
+The size of the voxels is determined by the length of the interaction between the cells.
+This means, we only need to calculate interactions between every cell in one voxel and all
+neighbouring voxels.
+We assume that every voxel contains an average of $n_c$ cells per voxel with $N_v$ number of voxels
+and $N_n$ number of neighbouring voxels.
+The total complexity is then $\mathcal{O}(N_v n_c^2 N_n)$ where we can substitute the total number
+of cells $N=N_vn_c$ to obtain
 
 $$\begin{equation}
-    f(x) = a + bx + cx^2
+    \mathcal{O}(N N_n n_c).
 \end{equation}$$
 
-## Simulation Setup
+The parameters $N_N,n_c$ can be assumed to be constant when fixing overall cell-density or at least
+capped from above and thus, we expect a linear scaling $\mathcal{O}(N)$ in the properly decomposed
+approach.
 
-## Hardware
+This graph illustrates how interactions between cells are calculated when assuming a rectangular
+decomposition scheme.
+
+```
+       │       │       │       │       │       │
+───────┼───────┼───────┼───────┼───────┼───────┼──────     Interactions
+       │       │    c2 │       │ c5    │       │            c1 <-> c2
+       │ c1    │       │       │       │       │            c2 <-> c3
+───────┼───────┼───────┼───────┼───────┼───────┼──────      c4 <-> c3
+       │       │       │       │       │ c6    │            c3 <-> c5
+       │       │       │   c3  │       │       │            c5 <-> c6
+───────┼───────┼───────┼───────┼───────┼───────┼──────
+       │       │     c4│       │       │       │
+       │       │       │       │       │       │
+───────┼───────┼───────┼───────┼───────┼───────┼──────
+       │       │       │       │       │       │
+```
+
+## Testing Setup & Hardware
+
+To test the expected linear scaling, we run the [cell-sorting](/showcase/cell-sorting) example for
+increasing number of agents and domain size while keeping all other parameters identical.
+Every simulation run was performed utilizing just one thread and 5 samples were taken per datapoint.
+To validate our results, we tested 3 distinct hardware configurations shown in [Table 1](#hardware).
+These resemble setups for a higher-end laptop [\[2\]](#references), a performance-oriented
+workstation [\[3\]](#references) and a regular desktop [\[4\]](#references)
 
 | CPU | Fixed Clockspeed | Memory Frequency | TDP |
 | --- | --- | --- | --- |
@@ -20,98 +92,163 @@ $$\begin{equation}
 | AMD Ryzen Threadripper 3960X [\[3\]](##references) | @2000MHz | 3200MT/s | 280W |
 | AMD Ryzen 3700X [\[4\]](#references) | @2200MHz | 3200MT/s | 65W |
 
+<br>
+<div style="text-align: center">
+    <p>Table 1: Overview of the tested hardware configurations</p>
+</div>
+<br>
+
+To quantitatively assess if the expected scaling of $\mathcal{O}(N)$ is satisfied, we fit a
+quadratic curve of the form
+
+$$\begin{equation}
+    R(N) = p_2N^2 + p_1N + p_0
+\end{equation}$$
+
+with non-negative parameters $p_i$ to the generated performance results.
+We then calculate the individual contributions of the terms and compare them at all measured points.
+
+$$\begin{align}
+    c_2 &= p_2N^2\\\\
+    c_1 &= p_1N\\\\
+    c_0 &= p_0
+\end{align}$$
+
+Our hypothesis of $\mathcal{O}(N)$ scaling will hold true of any contributions of second-order are
+negligible compared to the first-order.
+However, it is clear that with increasing the number of agents $N$, we expect the second-order
+contribution to gain in relevance as well.
+
 ## Results
+
+[Figure 1](#results) shows a double-logarithmic plot of the calculated runtimes with their fits.
+[Table 2](#results) displays the calculated parameters of the quadratic formula in
+[equation $(2)$](#testing-setup--hardware).
 
 ![](/benchmarks/sim-size-scaling.png)
 
-| Processor | $a$ | $b$ | $c$ |
-| --- | --- | --- | --- |
-| 12700H | $0.04562$ | $5.05\times 10^{-5}$ | $1.294\times 10^{-25}$ |
-| 3960X | $5.072\times 10^{-16}$ | $5.267\times 10^{-5}$ | $4.346\times 10^{-14}$ |
-| 3700X | $8.772\times 10^{-21}$ | $3.306\times 10^{-5}$ | $2.948\times 10^{-10}$ |
+<div style="text-align: center;">
+    <p>Figure 1: Performance results for increasing problem sizes.</p>
+</div>
+
+| Processor | $p_2$                    | $p_1$                 | $p_0$                  |
+| --------- | ------------------------ |---------------------- | ---------------------- |
+| 12700H    | $1.294\times 10^{-25}$   | $5.050\times 10^{-5}$ | $4.562\times 10^{-2}$  |
+| 3960X     | $4.346\times 10^{-14}$   | $5.267\times 10^{-5}$ | $5.072\times 10^{-16}$ |
+| 3700X     | $3.010\times 10^{-12}$   | $5.067\times 10^{-5}$ | $2.014\times 10^{-10}$ |
+
+<br>
+<div style="text-align: center;">
+    <p>Table 2: Fit parameters for quadratic approximation of scaling behaviour.</p>
+</div>
+
+Our hypothesis that the second-order contribution $c_2 = p_2 N^2$ is much smaller than the
+first-order $c_1 = p_1 N$ is confirmed by comparing at every measured datapoint.
+The largest contributions of $c_2$ occur at the last measured datapoint and are negligible for
+setups [\[2\]](#references) and [\[3\]](#references).
+Setup [\[4\]](#references) shows a larger contribution at its last respective datapoint.
+We also saw deviations from expected results when testing the
+[multithreading performance](/benchmarks/2024-07-thread-scaling) with this setup.
 
 ```bash
 =============================================
 | Fitting summary for 12700H @2GHz with polynomial of order 3
 |--------------------------------------------
-| Coefficients:  p2=1.294e-25 p1=5.05e-05 p0=0.04562
+| Coefficients:  p2=1.294e-25 p1=5.050e-05 p0=4.562e-02
 | Effects at n_agents=327680:
-| Contribution at n_agents=        80:  c2=1.0000e+00 c1=1.0040e+00 c0=1.0467e+00
-| Relative                              r2=     32.8% r1=     32.9% r0=     34.3%
-| Contribution at n_agents=       320:  c2=1.0000e+00 c1=1.0163e+00 c0=1.0467e+00
-| Relative                              r2=     32.6% r1=     33.2% r0=     34.2%
-| Contribution at n_agents=      1280:  c2=1.0000e+00 c1=1.0668e+00 c0=1.0467e+00
-| Relative                              r2=     32.1% r1=     34.3% r0=     33.6%
-| Contribution at n_agents=      5120:  c2=1.0000e+00 c1=1.2950e+00 c0=1.0467e+00
-| Relative                              r2=     29.9% r1=     38.8% r0=     31.3%
-| Contribution at n_agents=     20480:  c2=1.0000e+00 c1=2.8128e+00 c0=1.0467e+00
-| Relative                              r2=     20.6% r1=     57.9% r0=     21.5%
-| Contribution at n_agents=     81920:  c2=1.0000e+00 c1=6.2596e+01 c0=1.0467e+00
-| Relative                              r2=      1.5% r1=     96.8% r0=      1.6%
-| Contribution at n_agents=    327680:  c2=1.0000e+00 c1=1.5353e+07 c0=1.0467e+00
-| Relative                              r2=      0.0% r1=    100.0% r0=      0.0%
-| Contribution at n_agents=   1310720:  c2=1.0000e+00 c1=5.5556e+28 c0=1.0467e+00
-| Relative                              r2=      0.0% r1=    100.0% r0=      0.0%
+| Contribution at n_agents=        80:  c2=8.2806e-22 c1=4.0397e-03 c0=4.5615e-02
+| Relative                              r2=      0.0% r1=      8.1% r0=     91.9%
+| Contribution at n_agents=       320:  c2=1.3249e-20 c1=1.6159e-02 c0=4.5615e-02
+| Relative                              r2=      0.0% r1=     26.2% r0=     73.8%
+| Contribution at n_agents=      1280:  c2=2.1198e-19 c1=6.4636e-02 c0=4.5615e-02
+| Relative                              r2=      0.0% r1=     58.6% r0=     41.4%
+| Contribution at n_agents=      5120:  c2=3.3917e-18 c1=2.5854e-01 c0=4.5615e-02
+| Relative                              r2=      0.0% r1=     85.0% r0=     15.0%
+| Contribution at n_agents=     20480:  c2=5.4268e-17 c1=1.0342e+00 c0=4.5615e-02
+| Relative                              r2=      0.0% r1=     95.8% r0=      4.2%
+| Contribution at n_agents=     81920:  c2=8.6829e-16 c1=4.1367e+00 c0=4.5615e-02
+| Relative                              r2=      0.0% r1=     98.9% r0=      1.1%
+| Contribution at n_agents=    327680:  c2=1.3893e-14 c1=1.6547e+01 c0=4.5615e-02
+| Relative                              r2=      0.0% r1=     99.7% r0=      0.3%
+| Contribution at n_agents=   1310720:  c2=2.2228e-13 c1=6.6187e+01 c0=4.5615e-02
+| Relative                              r2=      0.0% r1=     99.9% r0=      0.1%
 =============================================
 | Fitting summary for 3960X @2GHz with polynomial of order 3
 |--------------------------------------------
 | Coefficients:  p2=4.346e-14 p1=5.276e-05 p0=5.072e-16
 | Effects at n_agents=5242880:
-| Contribution at n_agents=        80:  c2=1.0000e+00 c1=1.0042e+00 c0=1.0000e+00
-| Relative                              r2=     33.3% r1=     33.4% r0=     33.3%
-| Contribution at n_agents=       320:  c2=1.0000e+00 c1=1.0170e+00 c0=1.0000e+00
-| Relative                              r2=     33.1% r1=     33.7% r0=     33.1%
-| Contribution at n_agents=      1280:  c2=1.0000e+00 c1=1.0699e+00 c0=1.0000e+00
-| Relative                              r2=     32.6% r1=     34.9% r0=     32.6%
-| Contribution at n_agents=      5120:  c2=1.0000e+00 c1=1.3102e+00 c0=1.0000e+00
-| Relative                              r2=     30.2% r1=     39.6% r0=     30.2%
-| Contribution at n_agents=     20480:  c2=1.0000e+00 c1=2.9464e+00 c0=1.0000e+00
-| Relative                              r2=     20.2% r1=     59.6% r0=     20.2%
-| Contribution at n_agents=     81920:  c2=1.0003e+00 c1=7.5365e+01 c0=1.0000e+00
-| Relative                              r2=      1.3% r1=     97.4% r0=      1.3%
-| Contribution at n_agents=    327680:  c2=1.0047e+00 c1=3.2260e+07 c0=1.0000e+00
+| Contribution at n_agents=        80:  c2=2.7813e-10 c1=4.2210e-03 c0=5.0725e-16
 | Relative                              r2=      0.0% r1=    100.0% r0=      0.0%
-| Contribution at n_agents=   1310720:  c2=1.0775e+00 c1=1.0831e+30 c0=1.0000e+00
+| Contribution at n_agents=       320:  c2=4.4501e-09 c1=1.6884e-02 c0=5.0725e-16
 | Relative                              r2=      0.0% r1=    100.0% r0=      0.0%
-| Contribution at n_agents=   5242880:  c2=3.3021e+00 c1=1.3763e+120 c0=1.0000e+00
+| Contribution at n_agents=      1280:  c2=7.1201e-08 c1=6.7537e-02 c0=5.0725e-16
 | Relative                              r2=      0.0% r1=    100.0% r0=      0.0%
-| Contribution at n_agents=  20971520:  c2=1.9982e+08 c1=inf c0=1.0000e+00
-| Relative                              r2=      0.0% r1=      nan% r0=      0.0%
+| Contribution at n_agents=      5120:  c2=1.1392e-06 c1=2.7015e-01 c0=5.0725e-16
+| Relative                              r2=      0.0% r1=    100.0% r0=      0.0%
+| Contribution at n_agents=     20480:  c2=1.8228e-05 c1=1.0806e+00 c0=5.0725e-16
+| Relative                              r2=      0.0% r1=    100.0% r0=      0.0%
+| Contribution at n_agents=     81920:  c2=2.9164e-04 c1=4.3223e+00 c0=5.0725e-16
+| Relative                              r2=      0.0% r1=    100.0% r0=      0.0%
+| Contribution at n_agents=    327680:  c2=4.6662e-03 c1=1.7289e+01 c0=5.0725e-16
+| Relative                              r2=      0.0% r1=    100.0% r0=      0.0%
+| Contribution at n_agents=   1310720:  c2=7.4660e-02 c1=6.9157e+01 c0=5.0725e-16
+| Relative                              r2=      0.1% r1=     99.9% r0=      0.0%
+| Contribution at n_agents=   5242880:  c2=1.1946e+00 c1=2.7663e+02 c0=5.0725e-16
+| Relative                              r2=      0.4% r1=     99.6% r0=      0.0%
+| Contribution at n_agents=  20971520:  c2=1.9113e+01 c1=1.1065e+03 c0=5.0725e-16
+| Relative                              r2=      1.7% r1=     98.3% r0=      0.0%
 =============================================
-| Fitting summary for 3700X @2.2GHz with polynomial of order 3
+| Fitting summary for 3700X @2GHz with polynomial of order 3
 |--------------------------------------------
-| Coefficients:  p2=2.948e-10 p1=3.306e-05 p0=8.772e-21
-| Effects at n_agents=5120:
-| Contribution at n_agents=        80:  c2=1.0000e+00 c1=1.0026e+00 c0=1.0000e+00
-| Relative                              r2=     33.3% r1=     33.4% r0=     33.3%
-| Contribution at n_agents=       320:  c2=1.0000e+00 c1=1.0106e+00 c0=1.0000e+00
-| Relative                              r2=     33.2% r1=     33.6% r0=     33.2%
-| Contribution at n_agents=      1280:  c2=1.0005e+00 c1=1.0432e+00 c0=1.0000e+00
-| Relative                              r2=     32.9% r1=     34.3% r0=     32.9%
-| Contribution at n_agents=      5120:  c2=1.0078e+00 c1=1.1844e+00 c0=1.0000e+00
-| Relative                              r2=     31.6% r1=     37.1% r0=     31.3%
-| Contribution at n_agents=     20480:  c2=1.1316e+00 c1=1.9681e+00 c0=1.0000e+00
-| Relative                              r2=     27.6% r1=     48.0% r0=     24.4%
+| Coefficients:  p2=3.010e-12 p1=5.067e-05 p0=2.014e-10
+| Effects at n_agents=327680:
+| Contribution at n_agents=        80:  c2=1.9262e-08 c1=4.0533e-03 c0=2.0135e-10
+| Relative                              r2=      0.0% r1=    100.0% r0=      0.0%
+| Contribution at n_agents=       320:  c2=3.0818e-07 c1=1.6213e-02 c0=2.0135e-10
+| Relative                              r2=      0.0% r1=    100.0% r0=      0.0%
+| Contribution at n_agents=      1280:  c2=4.9310e-06 c1=6.4853e-02 c0=2.0135e-10
+| Relative                              r2=      0.0% r1=    100.0% r0=      0.0%
+| Contribution at n_agents=      5120:  c2=7.8895e-05 c1=2.5941e-01 c0=2.0135e-10
+| Relative                              r2=      0.0% r1=    100.0% r0=      0.0%
+| Contribution at n_agents=     20480:  c2=1.2623e-03 c1=1.0376e+00 c0=2.0135e-10
+| Relative                              r2=      0.1% r1=     99.9% r0=      0.0%
+| Contribution at n_agents=     81920:  c2=2.0197e-02 c1=4.1506e+00 c0=2.0135e-10
+| Relative                              r2=      0.5% r1=     99.5% r0=      0.0%
+| Contribution at n_agents=    327680:  c2=3.2316e-01 c1=1.6602e+01 c0=2.0135e-10
+| Relative                              r2=      1.9% r1=     98.1% r0=      0.0%
+| Contribution at n_agents=   1310720:  c2=5.1705e+00 c1=6.6409e+01 c0=2.0135e-10
+| Relative                              r2=      7.2% r1=     92.8% r0=      0.0%
 ```
-<!-- 
-| Datapoint | 0th order | 1st order | 2nd order |
-| --- | --- | --- | --- |
-| $p_1$ |
-| $p_2$ |
-| $p_3$ |
-| $p_4$ |
-| $p_4$ |
-| $p_5$ |
-| $p_6$ |
-| $p_7$ |
-| $p_8$ |
-| $p_9$ |
--->
 
 ## Discussion
-Compared to other recent developments [\[5\]](#references)
+
+We have shown that the implemented
+[domain decomposition](/docs/cellular_raza_concepts/trait.Domain.html) of `cellular_raza` behaves
+as exptected and delivers a $\mathcal{O}(N)$ linear scaling in terms of total problem size.
+The absolute performance affecting the total runtime of each simulation is highly dependent on the
+specified cellular interactions.
+However, this will not change the shape of the calculated curve but rather only its slope.
+
+In the [cell-sorting](/showcase/cell-sorting) example we combined multiple components of
+`cellular_raza` such as the decomposition method implemented by the
+[`CartesianCuboid3`](/docs/cellular_raza_building_blocks/struct.CartesianCuboid3New.html) struct and
+the solving components used by the [chili](/internals/backends/chili) backend.
+Of these two choices, the domain decomposition will affect calculated results most significantly.
+We expect that a hexagonal decomposition in the two-dimensional case will lead superior results
+due to a reduced number of only $6$ neighbours compared to the cuboid approaches $8$ neighbouring
+voxels.
+
+A linear scaling with the number of agents (considering a fixed density) is highly relevant for
+single large-scale simulations.
+Other recently developed tools [\[5,6\]](#references) do not exhibit this behaviour and will thus
+require exponentially more computational time in order to solve larger simulations.
 
 ## References
+
+[1]
+D. E. Knuth, “Big Omicron and big Omega and big Theta,”
+ACM SIGACT News, vol. 8, no. 2. Association for Computing Machinery (ACM), pp. 18–24, Apr. 1976.
+doi: [10.1145/1008328.1008329](https://doi.org/10.1145/1008328.1008329).
 
 [2]
 Intel® Core™ i7-12700H Processor.
@@ -132,4 +269,11 @@ Available: https://www.amd.com/en/product/8446
 C. Borau, R. Chisholm, P. Richmond, and D. Walker,
 “An agent-based model for cell microenvironment simulation using FLAMEGPU2,”
 Computers in Biology and Medicine, vol. 179. Elsevier BV, p. 108831,
-Sep. 2024. doi: 10.1016/j.compbiomed.2024.108831.
+Sep. 2024. doi:
+[10.1016/j.compbiomed.2024.108831](https://doi.org/10.1016/j.compbiomed.2024.108831).
+
+[6]
+R. Vetter, S. V. M. Runser, and D. Iber,
+“PolyHoop: Soft particle and tissue dynamics with topological transitions,”
+Computer Physics Communications, vol. 299, p. 109128, Jun. 2024,
+doi: [10.1016/j.cpc.2024.109128](https://doi.org/10.1016/j.cpc.2024.109128).
