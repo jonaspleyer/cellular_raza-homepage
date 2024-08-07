@@ -147,6 +147,20 @@ The code for this simulation and the visualization can be found in the
 folder of `cellular_raza`.
 
 ## References
-\[1\] R. M. H. Merks, M. Guravage, D. Inzé, and G. T. S. Beemster, “VirtualLeaf: An Open-Source Framework for Cell-Based Modeling of Plant Tissue Growth and Development      ,” Plant Physiology, vol. 155, no. 2. Oxford University Press (OUP), pp. 656–666, Feb. 01, 2011. [doi: 10.1104/pp.110.167619](https://doi.org/10.1104/pp.110.167619).<br>
-\[2\] A. G. Fletcher, M. Osterfield, R. E. Baker, and S. Y. Shvartsman, “Vertex Models of Epithelial Morphogenesis,” Biophysical Journal, vol. 106, no. 11. Elsevier BV, pp. 2291–2304, Jun. 2014. [doi: 10.1016/j.bpj.2013.11.4498](https://doi.org/10.1016/j.bpj.2013.11.4498).<br>
-\[3\] D. L. Barton, S. Henkes, C. J. Weijer, and R. Sknepnek, “Active Vertex Model for cell-resolution description of epithelial tissue mechanics,” PLOS Computational Biology, vol. 13, no. 6. Public Library of Science (PLoS), p. e1005569, Jun. 30, 2017. [doi: 10.1371/journal.pcbi.1005569](https://doi.org/10.1371/journal.pcbi.1005569).
+[1]
+R. M. H. Merks, M. Guravage, D. Inzé, and G. T. S. Beemster,
+“VirtualLeaf: An Open-Source Framework for Cell-Based Modeling of Plant Tissue Growth and Development”
+Plant Physiology, vol. 155, no. 2. Oxford University Press (OUP), pp. 656–666, Feb. 01, 2011.
+[doi: 10.1104/pp.110.167619](https://doi.org/10.1104/pp.110.167619).
+
+[2]
+A. G. Fletcher, M. Osterfield, R. E. Baker, and S. Y. Shvartsman,
+“Vertex Models of Epithelial Morphogenesis,”
+Biophysical Journal, vol. 106, no. 11. Elsevier BV, pp. 2291–2304, Jun. 2014.
+[doi: 10.1016/j.bpj.2013.11.4498](https://doi.org/10.1016/j.bpj.2013.11.4498).
+
+[3]
+D. L. Barton, S. Henkes, C. J. Weijer, and R. Sknepnek,
+“Active Vertex Model for cell-resolution description of epithelial tissue mechanics,”
+PLOS Computational Biology, vol. 13, no. 6. Public Library of Science (PLoS), p. e1005569, Jun. 30, 2017.
+[doi: 10.1371/journal.pcbi.1005569](https://doi.org/10.1371/journal.pcbi.1005569).
