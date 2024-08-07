@@ -243,6 +243,19 @@ The absolute performance affecting the total runtime of each simulation is highl
 specified cellular interactions.
 However, this will not change the shape of the calculated curve but rather only its slope.
 
+One important effect in measuring the runtime is cache-size of the respective processor and size of
+the simulation.
+Modern processors contain multiple levels of caches (L1, L2, L3) in order to store intermediate
+values and speed up computations.
+If a larger chunk of agents is able to fit inside the lower levels of cache, this will greatly
+improve runtime performance.
+
+Another influence could result from context-switches and interrupts by the scheduler of the
+underlying operating system [\[5\]](#references).
+These operations break the execution of the program and thus introduce further overhead.
+The number of interrupts and context-switches can be estimated to be proportional ot the execution
+time and introduces an overhead proportional to the total amount of these events.
+
 In the [cell-sorting](/showcase/cell-sorting) example we combined multiple components of
 `cellular_raza` such as the decomposition method implemented by the
 [`CartesianCuboid3`](/docs/cellular_raza_building_blocks/struct.CartesianCuboid3New.html) struct and
@@ -252,10 +265,11 @@ We expect that a hexagonal decomposition in the two-dimensional case will lead s
 due to a reduced number of only $6$ neighbours compared to the cuboid approaches $8$ neighbouring
 voxels.
 
-A linear scaling with the number of agents (considering a fixed density) is highly relevant for
-single large-scale simulations.
-Other recently developed tools [\[5,6\]](#references) do not exhibit this behaviour and will thus
-require exponentially more computational time in order to solve larger simulations.
+Linear scaling with the number of agents (considering a fixed density) is highly relevant in order
+to further develop the existing tool and make it properly suitable for HPC solutions and to run
+large-scale simulations.
+Other recently developed tools [\[6,7\]](#references) do not exhibit this behaviour and will thus
+require exponentially more computational time with linearly increasing problem size.
 
 ## References
 
@@ -280,13 +294,19 @@ AMD Ryzen™ 7 3700X.
 Available: https://www.amd.com/en/product/8446
 
 [5]
+F. M. David, J. C. Carlyle, and R. H. Campbell,
+“Context switch overheads for Linux on ARM platforms,”
+Proceedings of the 2007 workshop on Experimental computer science. ACM, Jun. 13, 2007.
+doi: [10.1145/1281700.1281703](https://doi.org/10.1145/1281700.1281703).
+
+[6]
 C. Borau, R. Chisholm, P. Richmond, and D. Walker,
 “An agent-based model for cell microenvironment simulation using FLAMEGPU2,”
 Computers in Biology and Medicine, vol. 179. Elsevier BV, p. 108831,
 Sep. 2024. doi:
 [10.1016/j.compbiomed.2024.108831](https://doi.org/10.1016/j.compbiomed.2024.108831).
 
-[6]
+[7]
 R. Vetter, S. V. M. Runser, and D. Iber,
 “PolyHoop: Soft particle and tissue dynamics with topological transitions,”
 Computer Physics Communications, vol. 299, p. 109128, Jun. 2024,
