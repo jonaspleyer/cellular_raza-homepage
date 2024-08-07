@@ -7,7 +7,7 @@ title: Benchmarks
     {{< card
         link="/benchmarks/2024-07-sim-size-scaling"
         title="Problem Size Scaling of the Cell Sorting Example"
-        subtitle=""
+        subtitle="We compare Runtime performance for an increasing problem size."
         image="/benchmarks/sim-size-scaling.png"
     >}}
     {{< card
