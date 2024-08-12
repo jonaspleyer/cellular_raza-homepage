@@ -60,7 +60,7 @@ movie() {
     --file-filter "(cellular_raza-homepage|cellular_raza_book|cellular_raza-book|cellular_raza-benchmarks|benchmark_results)" \
     --output-ppm-stream - \
     cellular_raza \
-    | ffmpeg -y -r 60 -f image2pipe -pix_fmt yuv420p -c:v libx264 -y -vcodec ppm -i - -b 65536K output.mp4
+    | ffmpeg -y -r 60 -f image2pipe -pix_fmt yuv420p -c:v h264 -y -vcodec ppm -i - -b 65536K output.mp4
     # Compress the movie
     ffmpeg -i output.mp4 -pix_fmt yuv420p -y cellular_raza-development-gource.mp4
     # Move it to the hompage folder
