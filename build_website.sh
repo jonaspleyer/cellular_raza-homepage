@@ -80,6 +80,10 @@ scc_table() {
         cellular_raza
 }
 
+todo_table() {
+    ./static/internals/todo-table-generate.sh > ./static/internals/todo-table.html
+}
+
 usage() {
     echo "Usage: $0 [OPTIONS]"
     echo "Options:"
@@ -87,9 +91,10 @@ usage() {
     echo " -d --doc         Generate rust documentation"
     echo " -w --website     Build website"
     echo " -m --movie       Generate Movie of cellular_raza development"
-    echo "    --scc         Create scc table"
+    echo "    --scc         Create a scc table in ./static/internals/scc-table.html"
+    echo "    --todo        Create a table of todos in the ./static/internals/todo-table.html"
     echo " -u --upload      Upload to server"
-    echo " -a --all         Do a full build with upload. Same as -d -w -u"
+    echo " -a --all         Do a full build with upload. Same as -d -w -u --scc --todo"
 }
 
 upload() {
@@ -128,10 +133,15 @@ handle_options() {
                 scc_table
                 exit 0
                 ;;
+            --todo)
+                todo_table
+                exit 0
+                ;;
             -a | --all)
                 generate_docs
                 build_website
                 scc_table
+                todo_table
                 upload
                 exit 0
                 ;;
