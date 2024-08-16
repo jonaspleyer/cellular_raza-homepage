@@ -14,16 +14,17 @@ This approach allows us to have a greater amount of modularity and flexibility t
 simulation tools.
 
 ```mermaid
-graph TB
-    concepts --> core
-    concepts --> building_blocks
-    concepts -.-> examples
-    core --> examples
-    core --> benchmarks
-    building_blocks --> examples
-    building_blocks --> benchmarks
-    concepts -.-> benchmarks
+graph BT
+    examples -.-> concepts
+    examples --> core
+    examples --> building_blocks
+    benchmarks --> core
+    benchmarks --> building_blocks
+    benchmarks -.-> concepts
+    core --> concepts
+    building_blocks --> concepts
 ```
+
 These crates act on varying levels of abstraction to yield a fully working numerical simulation.
 Since `cellular_raza` functions on different levels of abstraction, we try to indicate this in the
 table below.
