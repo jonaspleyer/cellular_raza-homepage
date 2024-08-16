@@ -1,6 +1,6 @@
 ---
 title: ⏳ Time
-weight: 20
+weight: 50
 ---
 
 Every simulation requires a handler for the time configuration.

@@ -1,6 +1,6 @@
 ---
 title: 📦 Storage
-weight: 30
+weight: 40
 ---
 
 `cellular_raza` assumes that every cell-agent and domain component can be serialed via the
