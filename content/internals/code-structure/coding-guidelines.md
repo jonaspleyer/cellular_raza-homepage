@@ -9,7 +9,8 @@ We are happy with every helping hand, be it for finding bugs, fixing documentati
 developing the functionality of `cellular_raza`.
 The code is hosted on [github](https://github.com/jonaspleyer/cellular_raza) where pull requests
 can be opened to contribute.
-We have compiled a list of [open problems](#open-problems) to get started.
+We have compiled a list of [TODOs](/internals/code-structure/todo) to get started.
+Below, are some considerations to take when contributing to the codebase.
 
 ## Performance & Optimizations
 During the development of `cellular_raza` multiple choices have guided the design.
@@ -37,9 +38,3 @@ Their documentation is contained in the original crate under the `crate::derive`
 Since the rust compiler can not run checks on the proc-macro itself, it most important to provide
 extensive compilation and runtime tests and document the functionality of these macros as best as
 possible.
-
-## Open Problems
-This is a list of open known problems as documented by simple `TODO` markers in code.
-The order does not give any hints about the importance of the individual problems.
-
-{{< load_table file_name = "/static/internals/todo-table.html" >}}
