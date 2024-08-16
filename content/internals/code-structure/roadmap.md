@@ -12,9 +12,6 @@ For feature requests, please use [github's issue tracker](https://www.github.com
 
 ## The way to version 0.1
 ### Simulation Flow
-- [ ] Make it multi-scale: varying time-steps for portions of simulation
-    - [ ] Find user Interface for time input
-      Time-Scales per concept or per concept-group
 
 ### CellAgent (concepts + backend)
 - [x] mechanics via force interactions
@@ -35,8 +32,8 @@ For feature requests, please use [github's issue tracker](https://www.github.com
 - [x] Better concepts for domain decomposition
     - [x] Test currently proposed new design
     - [x] Efficiently implement this new concept and benchmark
-- [ ] Evaluate usage of associated types for some concepts
-    - [ ] `CellularReactions` concept
+- [x] Evaluate usage of associated types for some concepts
+    - [x] `CellularReactions` concept
     - [x] `Domain` concept
 - [ ] Parallelize decomposition of standard CartesianCuboid Domain
 
@@ -46,15 +43,16 @@ For feature requests, please use [github's issue tracker](https://www.github.com
 - [x] Stabilize the new `chili` backend
 
 ## Planned for the Future
+- [ ] Make it multi-scale: varying time-steps for portions of simulation
+    - [ ] Find user Interface for time input
+      Time-Scales per concept or per concept-group
 - [ ] Complete Deserialization of Simulation
-    - [ ] Restart Simulation from Snapshot with identical binary output
-- [ ] Custom (adaptive) time steppers
-- [ ] Proper error handling with strategies
 - [ ] Export Formats other then 1:1 storage through (de)serialization (such as vtk files for paraview)
-- [ ] Csv file storage support
-- [ ] Julia Bindings
+- [ ] Improve Python bindings for some predefined models (using [pyo3](https://github.com/PyO3))
+- [ ] Proper error handling with strategies
 
 ## Possible Directions
 - [ ] Purely GPU powered Backend (probably restricted generics)
-- [x] Python bindings for some predefined models
-- [ ] Larger than memory simulations by using `sled` on disk
+- [ ] Custom (adaptive) time steppers
+- [ ] Larger-than-memory simulations by using `sled`
+- [ ] Julia Bindings
