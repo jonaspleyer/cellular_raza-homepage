@@ -1,6 +1,8 @@
 ---
 title: 🌶️ chili
 weight: 10
+sidebar:
+    open: true
 ---
 
 > A modular, reusable, general purpose backend
