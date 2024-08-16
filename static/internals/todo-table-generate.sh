@@ -20,7 +20,6 @@ lines=( "${lines[@]/%:*/}" )
 file_out='
 <table id="todo-table" style="width: 100%;">
     <thead><tr>
-        <th></th>
         <th>File</th>
         <th>Line</th>
         <th>Todo</th>
@@ -31,7 +30,6 @@ file_out='
 for i in ${!files[@]}; do
     file_out+="
 <tr>
-    <td>$i</td>
     <td><a href='https://github.com/jonaspleyer/cellular_raza/blob/master/${files[$i]}#L${lines[$i]}'>
         ${files[$i]}
     </a></td>
