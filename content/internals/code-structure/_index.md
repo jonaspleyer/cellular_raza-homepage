@@ -1,9 +1,9 @@
 ---
-linkTitle: "Internals"
-cascade:
-    type: docs
-prev: /
-next: internals/folder/
+title: Code Structure
+type: docs
+weight: 30
+sidebar:
+    open: true
 ---
 
 # Structure
@@ -45,7 +45,7 @@ flowchart LR
 # Development
 
 
-<video src="cellular_raza-development-gource.mp4" controls style="width: minmax(100%, 1280px);">
+<video src="/internals/cellular_raza-development-gource.mp4" controls style="width: minmax(100%, 1280px);">
 </video>
 
 {{< load_table file_name = "/static/internals/scc-table.html" >}}
