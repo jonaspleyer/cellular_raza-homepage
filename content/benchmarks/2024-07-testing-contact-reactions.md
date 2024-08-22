@@ -235,14 +235,16 @@ With this upper bound on the local truncation error we can construct a new funct
 that this upper bound is fulfilled.
 We begin by writing down a general formula for the nth drivative of the exact solution to the
 logistic curve ODE problem as given above.
+Notice that we deliberately use arguments for initial values and formulate the solution for the
+most general case.
 
 ```rust {filename="contact_reactions.rs", linenos=table, linenostart=299}
 fn compare_results(
     production: f64,
-    y0: [f64; 2],
+    y0_first: [f64; 2],
     upper_limit: f64,
     n_agents: usize,
-    t0: f64,
+    t0_first: f64,
     dt: f64,
     save_interval: usize,
     t_max: f64,
@@ -250,19 +252,21 @@ fn compare_results(
 ) -> Result<(), SimulationError> {
     // Define exact solution
     let q = (upper_limit - y0[1]) / y0[1];
-    let exact_solution_derivative = |t: f64, n_deriv: i32| -> nalgebra::Vector2<f64> {
-        let linear_growth = if n_deriv == 0 {
-            y0[0] + (n_agents - 1) as f64 * production * (t - t0)
-        } else {
-            0.0
+    let exact_solution_derivative =
+        |t: f64, y0: [f64; 2], t0: f64, n_deriv: i32| -> nalgebra::Vector2<f64> {
+            let q = (upper_limit - y0[1]) / y0[1];
+            let linear_growth = if n_deriv == 0 {
+                y0[0] + (n_agents - 1) as f64 * production * (t - t0)
+            } else {
+                0.0
+            };
+            let logistic_curve = (1..n_deriv).product::<i32>() as f64
+                * upper_limit
+                * q.powi(n_deriv)
+                * (1.0 + q * (-production * (n_agents - 1) as f64 * (t - t0)).exp())
+                    .powi(-(n_deriv + 1));
+            nalgebra::Vector2::from([linear_growth, logistic_curve])
         };
-        let logistic_curve = (1..n_deriv).product::<i32>() as f64
-            * upper_limit
-            * q.powi(n_deriv)
-            * (1.0 + q * (-production * (n_agents - 1) as f64 * (t - t0)).exp())
-                .powi(-(n_deriv + 1));
-        nalgebra::Vector2::from([linear_growth, logistic_curve])
-    };
 
     // ...
 ```
@@ -289,7 +293,7 @@ $$\begin{align}
     L_1         &= \text{max}\left(1-\frac{2y_0}{y_\text{max}},1-\frac{2y(t_\text{max})}{y_\text{max}}\right)
 \end{align}$$
 
-```rust {filename="contact_reactions.rs", linenos=table, linenostart=324}
+```rust {filename="contact_reactions.rs", linenos=table, linenostart=325}
     // ...
 
     // Estimate upper bound on local and global truncation error
@@ -297,26 +301,28 @@ $$\begin{align}
         (n_agents - 1) as f64 * production,
         (n_agents - 1) as f64
             * production
-            * (upper_limit - 2.0 * y0[1])
-                .abs()
-                .max((upper_limit - 2.0 * exact_solution_derivative(t_max, 0)[1]).abs())
+            * (upper_limit - 2.0 * y0_first[1]).abs().max(
+                (upper_limit
+                    - 2.0 * exact_solution_derivative(t_max, y0_first, t0_first, 0)[1])
+                    .abs()
+            )
             / upper_limit
     ];
-    let fourth_derivative_bound = exact_solution_derivative(t_max, 4)[1];
+    let fourth_derivative_bound = exact_solution_derivative(t_max, y0_first, t0_first, 4)[1];
 
     // Calculate upper bound on local and global truncation error
     let local_truncation_error = nalgebra::vector![
         n_agents as f64
-            * (y0[0] + (n_agents - 1) as f64 * production * (t_max - t0))
+            * (y0_first[0] + (n_agents - 1) as f64 * production * (t_max - t0_first))
             * f64::EPSILON,
         fourth_derivative_bound * (3f64 / 8.0 * dt.powi(4))
     ];
     let global_truncation_error = |t: f64| -> nalgebra::Vector2<f64> {
         let res = nalgebra::Vector2::from([
-            ((lipschitz_constant[0] * (t - t0)).exp() - 1.0) * local_truncation_error[0]
+            ((lipschitz_constant[0] * (t - t0_first)).exp() - 1.0) * local_truncation_error[0]
                 / dt
                 / lipschitz_constant[0],
-            ((lipschitz_constant[1] * (t - t0)).exp() - 1.0) * local_truncation_error[1]
+            ((lipschitz_constant[1] * (t - t0_first)).exp() - 1.0) * local_truncation_error[1]
                 / dt
                 / lipschitz_constant[1],
         ]);
@@ -328,17 +334,21 @@ $$\begin{align}
 In the final step, we use the already defined function `` to generate results from `cellular_raza`
 and compare them with the exact known results.
 Their difference has to be within the margin of the calculated global truncation error $e$.
+Note that we only start comparing after the first 3 initial steps which are performed by solvers
+of lower orders (Euler and Adams-Bashforth 2nd) due to insufficient information about increments
+of previous integration steps.
+Afterwards, we use the numerically calculated value at $t=t_0 + 2\Delta t$ as the new initial value.
 
-```rust {filename="contact_reactions.rs", linenos=table, linenostart=355}
+```rust {filename="contact_reactions.rs", linenos=table, linenostart=358}
     // ...
 
     // Obtain solutions from cellular_raza
     let solutions_cr = run_cellular_raza(
         production,
-        y0,
+        y0_first,
         upper_limit,
         n_agents,
-        t0,
+        t0_first,
         dt,
         save_interval,
         t_max,
@@ -346,17 +356,24 @@ Their difference has to be within the margin of the calculated global truncation
 
     // Compare the results
     let mut results = vec![];
-    for (t, res_cr) in solutions_cr {
-        let res_ex = exact_solution_derivative(t, 0);
-        let e_global = global_truncation_error(t);
-        let e_local = local_truncation_error(t);
-        for r in res_cr.iter() {
-            let d0 = (r[0] - res_ex[0]).abs();
-            let d1 = (r[1] - res_ex[1]).abs();
-            assert!(d0 < e_global[0]);
-            assert!(d1 < e_global[1]);
+    let mut t0 = t0_first;
+    let mut y0 = y0_first;
+    for (n_run, (t, res_cr)) in solutions_cr.into_iter().enumerate() {
+        if n_run < 3 {
+            t0 = t;
+            y0 = res_cr[0];
+        } else {
+            let res_ex = exact_solution_derivative(t, y0, t0, 0);
+            let e_global = global_truncation_error(t);
+            let e_local = local_truncation_error;
+            for r in res_cr.iter() {
+                let d0 = (r[0] - res_ex[0]).abs();
+                let d1 = (r[1] - res_ex[1]).abs();
+                assert!(d0 < e_global[0]);
+                assert!(d1 < e_global[1]);
+            }
+            results.push((t, res_ex, e_global, e_local, res_cr));
         }
-        results.push((t, res_ex, e_global, e_local, res_cr));
     }
 
     #[cfg(not(debug_assertions))]
@@ -369,7 +386,7 @@ Their difference has to be within the margin of the calculated global truncation
 In the last step, we also added a function `save_results` which exports all generated results to a
 `.csv` file which.
 
-```rust {filename="contact_reactions.rs", linenos=table, linenostart=390}
+```rust {filename="contact_reactions.rs", linenos=table, linenostart=400}
 #[allow(unused)]
 fn save_results(
     results: Vec<(
@@ -402,7 +419,7 @@ fn save_results(
 Equipped with this function `compare_results`, we can now use it for a collection of configurations
 to test the solver.
 
-```rust {filename="contact_reactions.rs", linenos=table, linenostart=418}
+```rust {filename="contact_reactions.rs", linenos=table, linenostart=428}
 #[test]
 fn test_config0() {
     // Simulation parameters
@@ -410,9 +427,9 @@ fn test_config0() {
     let y0 = [1.0, 2.0];
     let upper_limit = 12.0;
     let t0 = 3.0;
-    let dt = 0.21;
-    let save_interval = 2;
-    let t_max = 20.000001;
+    let dt = 0.01;
+    let save_interval = 50;
+    let t_max = 20.0;
     let n_agents = 2;
     compare_results(
         production,
