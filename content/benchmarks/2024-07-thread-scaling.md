@@ -1,6 +1,6 @@
 ---
 title: Multithreading Performance of the Cell Sorting Example (Amdahl's Law)
-date: 2024-07-28
+date: 2024-07-20
 math: true
 ---
 
