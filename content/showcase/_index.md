@@ -11,6 +11,12 @@ title: Showcase
         subtitle="Turing Patterns on the leaf of Arabidopsis Thaliana"
     >}} -->
     {{<
+        card link="bacterial-branching"
+        title="Branching Patterns of Bacillus Subtilis"
+        image="/showcase/bacterial-branching/bacteria_cells_at_iter_0000088000.png"
+        subtitle=""
+    >}}
+    {{<
         card link="bacterial-rods"
         title="Soft Bacterial Rods"
         image="/showcase/bacterial-rods/intermediate.png"
