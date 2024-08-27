@@ -41,56 +41,28 @@ $$\\begin{align}
 ### Implementation in `cellular_raza`
 To model them with `cellular_raza` we define a new agent type `ContactCell`.
 
-```rust {filename="contact_reactions.rs", linenos=table, linenostart=197}
-use cellular_raza::building_blocks::*;
-use cellular_raza::concepts::*;
-use cellular_raza::core::{backend::chili::*, storage::*, time::*};
+{{< codeFromFile
+    file="cellular_raza/cellular_raza/tests/contact_reactions.rs"
+    filename="contact_reactions.rs"
+    start="197"
+    end="210"
+>}}
 
-use serde::{Deserialize, Serialize};
-
-#[derive(CellAgent, Clone, Debug, Deserialize, Serialize)]
-struct ContactCell {
-    intracellular: nalgebra::Vector2<f64>,
-    alpha0: f64,
-    upper_limit: f64,
-    #[Position]
-    mechanics: NewtonDamped1DF32,
-}
-```
 Notice that the `mechanics: NewtonDamped1DF32` component only serves as the positional information
 such that we can use the predefined
-[`CartesianCuboid`](/docs/cellular_raza_building_blocks/struct.CartesianCuboid.html) as the simulation domain.
+[`CartesianCuboid`](/docs/cellular_raza_building_blocks/struct.CartesianCuboid.html) as the
+simulation domain.
 Furthermore, we implement the required concepts
 [`Intracellular`](/docs/cellular_raza_concepts/trait.Intracellular.html),
 [`ReactionsContact`](/docs/cellular_raza_concepts/trait.ReactionsContact.html) as follows.
 
-```rust {filename="contact_reactions.rs", linenos=table, linenostart=211}
-impl Intracellular<nalgebra::Vector2<f64>> for ContactCell {
-    fn get_intracellular(&self) -> nalgebra::Vector2<f64> {
-        self.intracellular
-    }
-    fn set_intracellular(&mut self, intracellular: nalgebra::Vector2<f64>) {
-        self.intracellular = intracellular;
-    }
-}
 
-impl ReactionsContact<nalgebra::Vector2<f64>, nalgebra::Vector1<f32>> for ContactCell {
-    fn calculate_contact_increment(
-        &self,
-        own_intracellular: &nalgebra::Vector2<f64>,
-        ext_intracellular: &nalgebra::Vector2<f64>,
-        _own_pos: &nalgebra::Vector1<f32>,
-        _ext_pos: &nalgebra::Vector1<f32>,
-        _rinf: &(),
-    ) -> Result<(nalgebra::Vector2<f64>, nalgebra::Vector2<f64>), CalcError> {
-        let calculate_incr = |y: f64| -> f64 { self.alpha0 * y * (1.0 - y / self.upper_limit) };
-        let own_dr = [self.alpha0, calculate_incr(own_intracellular[1])].into();
-        let ext_dr = [self.alpha0, calculate_incr(ext_intracellular[1])].into();
-        Ok((own_dr, ext_dr))
-    }
-    fn get_contact_information(&self) -> () {}
-}
-```
+{{< codeFromFile
+    file="cellular_raza/cellular_raza/tests/contact_reactions.rs"
+    filename="contact_reactions.rs"
+    start="211"
+    end="235"
+>}}
 
 The [`ReactionsContact`](/docs/cellular_raza_concepts/trait.ReactionsContact.html) trait requires
 that agents interact with each other, meaning we have to at least insert 2 agents into the
@@ -109,71 +81,15 @@ We have named the variable of the individual agents accordingly.
 ### Solving the System
 Now we are ready to solve our system with the
 [`run_simulation!`](/docs/cellular_raza_core::backend::chili::run_simulation) macro.
-To test various configurations, we write a function which takes in all needed parameters to solve the system.
+To test various configurations, we write a function which takes in all needed parameters to solve
+the system.
 
-```rust {filename="contact_reactions.rs", linenos=table, linenostart=237}
-fn run_cellular_raza(
-    alpha0: f64,
-    y0: [f64; 2],
-    upper_limit: f64,
-    n_agents: usize,
-    t0: f64,
-    dt: f64,
-    save_interval: usize,
-    t_max: f64,
-) -> Result<Vec<(f64, Vec<[f64; 2]>)>, SimulationError> {
-    // Define initial values
-    let y0 = nalgebra::Vector2::from(y0);
-
-    // Agents
-    let agents = (0..n_agents).map(|_| ContactCell {
-        alpha0,
-        intracellular: y0,
-        upper_limit,
-        mechanics: NewtonDamped1DF32 {
-            pos: [0.5].into(),
-            vel: [0.0].into(),
-            damping_constant: 0.0,
-            mass: 0.0,
-        },
-    });
-
-    // Specify simulation domain, time and only store results intermediately in memory
-    let domain = CartesianCuboid::from_boundaries_and_n_voxels([0.0; 1], [1.0; 1], [1; 1])?;
-    let time = FixedStepsize::from_partial_save_freq(t0, dt, t_max, save_interval)?;
-    let storage = StorageBuilder::new().priority([StorageOption::Memory]);
-    let settings = Settings {
-        n_threads: 1.try_into().unwrap(),
-        show_progressbar: false,
-        storage,
-        time,
-    };
-
-    // Run full simulation and return storager to access results
-    let storager = run_simulation!(
-        agents: agents,
-        settings: settings,
-        domain: domain,
-        aspects: [ReactionsContact],
-    )?;
-
-    // Gather cellular_raza results
-    Ok(storager
-        .cells
-        .load_all_elements()?
-        .into_iter()
-        .map(|(iteration, elements)| {
-            (
-                t0 + iteration as f64 * dt,
-                elements
-                    .into_iter()
-                    .map(|(_, (cbox, _))| cbox.cell.get_intracellular().into())
-                    .collect(),
-            )
-        })
-        .collect())
-}
-```
+{{< codeFromFile
+    file="cellular_raza/cellular_raza/tests/contact_reactions.rs"
+    filename="contact_reactions.rs"
+    start="237"
+    end="297"
+>}}
 
 ### Comparing Results
 In order to meaningfully compare numerical results, we need an estimate for the local and global
@@ -238,38 +154,12 @@ logistic curve ODE problem as given above.
 Notice that we deliberately use arguments for initial values and formulate the solution for the
 most general case.
 
-```rust {filename="contact_reactions.rs", linenos=table, linenostart=299}
-fn compare_results(
-    production: f64,
-    y0_first: [f64; 2],
-    upper_limit: f64,
-    n_agents: usize,
-    t0_first: f64,
-    dt: f64,
-    save_interval: usize,
-    t_max: f64,
-    #[allow(unused)] save_filename: &str,
-) -> Result<(), SimulationError> {
-    // Define exact solution
-    let q = (upper_limit - y0[1]) / y0[1];
-    let exact_solution_derivative =
-        |t: f64, y0: [f64; 2], t0: f64, n_deriv: i32| -> nalgebra::Vector2<f64> {
-            let q = (upper_limit - y0[1]) / y0[1];
-            let linear_growth = if n_deriv == 0 {
-                y0[0] + (n_agents - 1) as f64 * production * (t - t0)
-            } else {
-                0.0
-            };
-            let logistic_curve = (1..n_deriv).product::<i32>() as f64
-                * upper_limit
-                * q.powi(n_deriv)
-                * (1.0 + q * (-production * (n_agents - 1) as f64 * (t - t0)).exp())
-                    .powi(-(n_deriv + 1));
-            nalgebra::Vector2::from([linear_growth, logistic_curve])
-        };
-
-    // ...
-```
+{{< codeFromFile
+    file="cellular_raza/cellular_raza/tests/contact_reactions.rs"
+    filename="contact_reactions.rs"
+    start="299"
+    end="328"
+>}}
 
 In the next step we calculate the Lipschitz-constants $L_0,L_1$ and use them together with the
 fourth derivative bound to calculate the local and global truncation errors.
@@ -293,44 +183,13 @@ $$\begin{align}
     L_1         &= \text{max}\left(1-\frac{2y_0}{y_\text{max}},1-\frac{2y(t_\text{max})}{y_\text{max}}\right)
 \end{align}$$
 
-```rust {filename="contact_reactions.rs", linenos=table, linenostart=325}
-    // ...
+{{< codeFromFile
+    file="cellular_raza/cellular_raza/tests/contact_reactions.rs"
+    filename="contact_reactions.rs"
+    start="299"
+    end="328"
+>}}
 
-    // Estimate upper bound on local and global truncation error
-    let lipschitz_constant = nalgebra::vector![
-        (n_agents - 1) as f64 * production,
-        (n_agents - 1) as f64
-            * production
-            * (upper_limit - 2.0 * y0_first[1]).abs().max(
-                (upper_limit
-                    - 2.0 * exact_solution_derivative(t_max, y0_first, t0_first, 0)[1])
-                    .abs()
-            )
-            / upper_limit
-    ];
-    let fourth_derivative_bound = exact_solution_derivative(t_max, y0_first, t0_first, 4)[1];
-
-    // Calculate upper bound on local and global truncation error
-    let local_truncation_error = nalgebra::vector![
-        n_agents as f64
-            * (y0_first[0] + (n_agents - 1) as f64 * production * (t_max - t0_first))
-            * f64::EPSILON,
-        fourth_derivative_bound * (3f64 / 8.0 * dt.powi(4))
-    ];
-    let global_truncation_error = |t: f64| -> nalgebra::Vector2<f64> {
-        let res = nalgebra::Vector2::from([
-            ((lipschitz_constant[0] * (t - t0_first)).exp() - 1.0) * local_truncation_error[0]
-                / dt
-                / lipschitz_constant[0],
-            ((lipschitz_constant[1] * (t - t0_first)).exp() - 1.0) * local_truncation_error[1]
-                / dt
-                / lipschitz_constant[1],
-        ]);
-        res
-    };
-
-    // ...
-```
 In the final step, we use the already defined function `` to generate results from `cellular_raza`
 and compare them with the exact known results.
 Their difference has to be within the margin of the calculated global truncation error $e$.
@@ -339,159 +198,40 @@ of lower orders (Euler and Adams-Bashforth 2nd) due to insufficient information 
 of previous integration steps.
 Afterwards, we use the numerically calculated value at $t=t_0 + 2\Delta t$ as the new initial value.
 
-```rust {filename="contact_reactions.rs", linenos=table, linenostart=358}
-    // ...
-
-    // Obtain solutions from cellular_raza
-    let solutions_cr = run_cellular_raza(
-        production,
-        y0_first,
-        upper_limit,
-        n_agents,
-        t0_first,
-        dt,
-        save_interval,
-        t_max,
-    )?;
-
-    // Compare the results
-    let mut results = vec![];
-    let mut t0 = t0_first;
-    let mut y0 = y0_first;
-    for (n_run, (t, res_cr)) in solutions_cr.into_iter().enumerate() {
-        if n_run < 3 {
-            t0 = t;
-            y0 = res_cr[0];
-        } else {
-            let res_ex = exact_solution_derivative(t, y0, t0, 0);
-            let e_global = global_truncation_error(t);
-            let e_local = local_truncation_error;
-            for r in res_cr.iter() {
-                let d0 = (r[0] - res_ex[0]).abs();
-                let d1 = (r[1] - res_ex[1]).abs();
-                assert!(d0 < e_global[0]);
-                assert!(d1 < e_global[1]);
-            }
-            results.push((t, res_ex, e_global, e_local, res_cr));
-        }
-    }
-
-    #[cfg(not(debug_assertions))]
-    save_results(results, save_filename);
-
-    Ok(())
-}
-```
+{{< codeFromFile
+    file="cellular_raza/cellular_raza/tests/contact_reactions.rs"
+    filename="contact_reactions.rs"
+    start="360"
+    end="398"
+>}}
 
 In the last step, we also added a function `save_results` which exports all generated results to a
 `.csv` file which.
 
-```rust {filename="contact_reactions.rs", linenos=table, linenostart=400}
-#[allow(unused)]
-fn save_results(
-    results: Vec<(
-        f64,
-        nalgebra::Vector2<f64>,
-        nalgebra::Vector2<f64>,
-        nalgebra::Vector2<f64>,
-        Vec<[f64; 2]>,
-    )>,
-    save_filename: &str,
-) {
-    use std::fs::File;
-    use std::io::prelude::*;
-    let mut file = File::create(save_filename).unwrap();
-    for (t, res_ex, e_global, e_local, res_cr) in results {
-        write!(
-            file,
-            "{},{},{},{},{},{},{}",
-            t, e_global[0], e_global[1], e_local[0], e_local[1], res_ex[0], res_ex[1]
-        )
-        .unwrap();
-        for r_cr in res_cr {
-            write!(file, ",{},{}", r_cr[0], r_cr[1]).unwrap();
-        }
-        writeln!(file, "").unwrap();
-    }
-}
-```
+{{< codeFromFile
+    file="cellular_raza/cellular_raza/tests/contact_reactions.rs"
+    filename="contact_reactions.rs"
+    start="400"
+    end="426"
+>}}
 
 Equipped with this function `compare_results`, we can now use it for a collection of configurations
 to test the solver.
 
-```rust {filename="contact_reactions.rs", linenos=table, linenostart=428}
-#[test]
-fn test_config0() {
-    // Simulation parameters
-    let production = 0.2;
-    let y0 = [1.0, 2.0];
-    let upper_limit = 12.0;
-    let t0 = 3.0;
-    let dt = 0.01;
-    let save_interval = 50;
-    let t_max = 20.0;
-    let n_agents = 2;
-    compare_results(
-        production,
-        y0,
-        upper_limit,
-        n_agents,
-        t0,
-        dt,
-        save_interval,
-        t_max,
-        "tests/contact_reactions-config0.csv",
-    )
-    .unwrap();
-}
-```
+{{< codeFromFile
+    file="cellular_raza/cellular_raza/tests/contact_reactions.rs"
+    filename="contact_reactions.rs"
+    start="428"
+    end="451"
+>}}
 
 The generated files can then be used by a small python script to create the plots seen below.
 
-```python {filename="plot.py", linenos=table}
-import matplotlib.pyplot as plt
-import numpy as np
-from glob import glob
-
-if __name__ == "__main__":
-    files = glob("tests/*.csv")
-
-    for file in files:
-        # One line in such a file has the following entries
-        # (
-        #   t,
-        #   gerror_bound0, gerror_bound1,
-        #   lerror_bound0, lerror_bound1,
-        #   res_exact0, res_exact_1,
-        #   res_cr0_0, res_cr1_0,
-        #   res_cr1_0, res_cr1_1,
-        #   ...
-        # )
-        results = np.genfromtxt(file, delimiter=",")
-
-        t = results[:,0]
-        gerror = results[:,2]
-        lerror = results[:,4]
-        res_exact = results[:,6]
-
-        fig, ax = plt.subplots()
-        for n in range(7, results.shape[1]):
-            if n % 2 == 0:
-                ax.plot(t, results[:,n], label="Solution {:1.0f}".format(n), linestyle="--")
-        ax.errorbar(
-            t,
-            res_exact,
-            gerror,
-            label="Analytical Solution",
-            linestyle=":",
-            color="k",
-            alpha=0.5
-        )
-        ax.set_title("cellular_raza/" + str(file))
-        ax.legend()
-        fig.tight_layout()
-        fig.savefig(file.replace(".csv", ".png"))
-```
+{{< codeFromFile
+    file="cellular_raza/cellular_raza/tests/plot.py"
+    filename="plot.py"
+    lang="python"
+>}}
 
 The full code can be found under
 [`cellular_raza/tests/contact_reactions.rs`](https://github.com/jonaspleyer/cellular_raza/tree/master/cellular_raza/tests/contact_reactions.rs).
