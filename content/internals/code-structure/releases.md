@@ -4,6 +4,19 @@ type: docs
 weight: 100
 ---
 
+## cellular_raza 0.1.0
+_28th August 2024 🎉 2 Year Anniversary 🎉_
+- changed calculation of random contribution in `Mechanics` trait
+    - Improved stochastic motion testing for Brownian and Langevin dynamics
+- Derive macros now support tuple structs
+- Implemented extracellular [reactions](/internals/concepts/domain/reactions)
+    - First example: bacterial branching
+- Add rayon as parallelization scheme
+- Improved error handling
+    - properly wind down simulation after encountering error
+    - first experimentation with error handlers
+- rename some trait functions and variables from `neighbour` to `neighbor`
+
 ## cellular_raza 0.0.13
 _30th July 2024_
 - Write advanced tests for contact reactions and solvers
