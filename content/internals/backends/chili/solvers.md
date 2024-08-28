@@ -1,5 +1,5 @@
 ---
-title: "Xapy"
+title: "Solvers"
 weight: 10
 math: true
 ---
