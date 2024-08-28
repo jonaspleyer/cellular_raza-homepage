@@ -96,5 +96,14 @@ _6th December 2023_
 - add readme files
 - minor bugfix for pyo3 binding generation in building blocks
 
+## cellular_raza 0.0.3
+_6th March 2023_
+
+## cellular_raza 0.0.2
+_22nd February 2023_
+
+## cellular_raza 0.0.1
+_13th December 2023_
+
 ## initial commit
 _27th August 2022_
