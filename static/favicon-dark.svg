@@ -40,14 +40,14 @@
       <circle
          r="43"
          fill="none"
-         stroke="black"
+         stroke="white"
          stroke-width="9"
          id="circle1" />
       <g
          id="cogs">
         <polygon
            id="cog"
-           stroke="black"
+           stroke="white"
            stroke-width="3"
            stroke-linejoin="round"
            points="46,3 51,0 46,-3" />
@@ -180,7 +180,7 @@
          id="mounts">
         <polygon
            id="mount"
-           stroke="black"
+           stroke="white"
            stroke-width="6"
            stroke-linejoin="round"
            points="-7,-42 0,-35 7,-42" />
@@ -237,12 +237,12 @@
      id="g40"
      transform="translate(2.4061774,-1.2074983)">
     <path
-       style="font-weight:bold;font-size:68px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';letter-spacing:0px;word-spacing:0px;stroke-width:1.6994"
+       fill="white"
        d="m 41.596254,71.637154 q -8.167968,0 -12.617187,-4.847657 -4.449219,-4.880859 -4.449219,-13.580078 0,-8.898437 4.482422,-13.845703 4.482422,-4.980469 12.716797,-4.980469 6.341797,0 10.492187,3.1875 4.150391,3.1875 5.212891,8.798829 l -9.396484,0.464843 q -0.398438,-2.755859 -1.992188,-4.382812 -1.59375,-1.660156 -4.515625,-1.660156 -7.205078,0 -7.205078,12.052734 0,12.417969 7.337891,12.417969 2.65625,0 4.449218,-1.660157 1.792969,-1.693359 2.22461,-5.013671 l 9.363281,0.43164 q -0.498047,3.685547 -2.65625,6.574219 -2.125,2.888672 -5.611328,4.482422 -3.486328,1.560547 -7.835938,1.560547 z"
        id="text39"
        aria-label="c" />
     <path
-       style="font-weight:bold;font-size:68px;line-height:1.25;font-family:'Liberation Sans';-inkscape-font-specification:'Liberation Sans';letter-spacing:0px;word-spacing:0px"
+       fill="white"
        d="M 58.814011,71.311523 V 43.819336 q 0,-2.955078 -0.09961,-4.914063 -0.06641,-1.992187 -0.166015,-3.519531 h 8.898437 q 0.09961,0.597656 0.265625,3.652344 0.166016,3.021484 0.166016,4.017578 h 0.132812 q 1.361328,-3.785156 2.423828,-5.3125 1.0625,-1.560547 2.523438,-2.291016 1.460937,-0.763671 3.652344,-0.763671 1.792968,0 2.888671,0.498046 v 7.802735 q -2.257812,-0.498047 -3.984375,-0.498047 -3.486328,0 -5.445312,2.822266 -1.925781,2.822265 -1.925781,8.367187 v 17.630859 z"
        id="text40"
        aria-label="r" />
