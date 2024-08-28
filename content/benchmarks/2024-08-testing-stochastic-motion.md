@@ -45,6 +45,95 @@ $$\\begin{equation}
         + \frac{2 d k_B T}{m\lambda}t
 \\end{equation}$$
 
+## Code
+
+To run the supplied test navigate to the `cellular_raza` folder containing the bundle of all
+dependencies and execute the tests in release mode.
+
+```bash
+git clone https://github.com/jonaspleyer/cellular_raza
+cd cellular_raza/cellular_raza
+cargo test -r
+```
+
+This will generate results stored in json format in the `out` directory.
+To visualize the results, use the provided [script](#plotScript).
+
+
+{{< details title="Set up Parameters and Settings" closed="true" >}}
+{{<
+    codeFromFile
+    file="cellular_raza/cellular_raza/tests/brownian_diffusion_constant_approx.rs"
+    start="1"
+    end="69"
+>}}
+{{< /details >}}
+
+{{<
+    codeFromFile
+    file="cellular_raza/cellular_raza/tests/brownian_diffusion_constant_approx.rs"
+    start="71"
+    end="107"
+>}}
+
+{{<
+    codeFromFile
+    file="cellular_raza/cellular_raza/tests/brownian_diffusion_constant_approx.rs"
+    start="109"
+    end="123"
+>}}
+
+{{<
+    codeFromFile
+    file="cellular_raza/cellular_raza/tests/brownian_diffusion_constant_approx.rs"
+    start="135"
+    end="168"
+>}}
+
+{{<
+    codeFromFile
+    file="cellular_raza/cellular_raza/tests/brownian_diffusion_constant_approx.rs"
+    start="170"
+    end="178"
+>}}
+
+{{< details title="Compare Langevin Results" closed="true" >}}
+{{<
+    codeFromFile
+    file="cellular_raza/cellular_raza/tests/brownian_diffusion_constant_approx.rs"
+    start="267"
+    end="297"
+>}}
+{{< /details >}}
+
+{{< details title="Macro to compare Langevin Results" closed="true" >}}
+{{<
+    codeFromFile
+    file="cellular_raza/cellular_raza/tests/brownian_diffusion_constant_approx.rs"
+    start="299"
+    end="349"
+>}}
+{{< /details >}}
+
+{{< details title="Example Test For Langevin Results" closed="true" >}}
+{{<
+    codeFromFile
+    file="cellular_raza/cellular_raza/tests/brownian_diffusion_constant_approx.rs"
+    start="351"
+    end="358"
+>}}
+{{< /details >}}
+
+<div id="plotScript">
+{{< details title="Script to plot results" closed="true" >}}
+{{<
+    codeFromFile
+    file="cellular_raza/cellular_raza/tests/plot_brownian_langevin.py"
+    lang="python"
+>}}
+{{< /details >}}
+</div>
+
 ## Results
 
 ## Discussion
