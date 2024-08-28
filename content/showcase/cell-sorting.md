@@ -97,3 +97,8 @@ The code for this simulation and the visualization can be found in the
 [examples](https://github.com/jonaspleyer/cellular_raza/tree/master/cellular_raza-examples/cell_sorting)
 folder of `cellular_raza`.
 
+{{< details title="Full Code" closed="true" >}}
+{{< codeFromFile
+    file="cellular_raza/cellular_raza-examples/cell_sorting/src/main.rs"
+>}}
+{{< /details >}}
