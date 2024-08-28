@@ -278,7 +278,7 @@ P. F. Verhulst,
 “Recherches mathématiques sur la loi d’accroissement de la population.”
 Nouveaux mémoires de l’Académie Royale des Sciences et Belles-Lettres de Bruxelles,
 vol. 18, pp. 14–54, 1845,
-[Online]. Available: [http://eudml.org/doc/182533](http://eudml.org/doc/182533)
+Available: [http://eudml.org/doc/182533](http://eudml.org/doc/182533)
 
 [2]
 E. Süli and D. F. Mayers,
@@ -297,5 +297,5 @@ Cambridge [Eng.]: [Cambridge University Press, 1883](https://search.worldcat.org
 G. Fasshauer,
 “Numerical Methods for Differential Equations/Computational Mathematics II,”
 2007,
-[Online]. Available: [http://www.math.iit.edu/~fass/478578_Chapter_2.pdf](http://www.math.iit.edu/~fass/478578_Chapter_2.pdf)
+Available: [http://www.math.iit.edu/~fass/478578_Chapter_2.pdf](http://www.math.iit.edu/~fass/478578_Chapter_2.pdf)
 
