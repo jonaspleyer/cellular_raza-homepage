@@ -1,19 +1,15 @@
 ---
 title: Getting Started
 weight: 10
+date: 2024-08-29
+math: true
 ---
 
-## Using Templates
-We provide two slightly different templates to quickly get started with running your first
-simulation.
-The [cell_sorting](https://github.com/jonaspleyer/cellular_raza-template) template is purely
-written in Rust while
-[cell_sorting-pyo3](https://github.com/jonaspleyer/cellular_raza-template-pyo3) provides Python
-bindings in addition.
-These templates can serve as a starting point but are not representative of the variability which
-`cellular_raza` offers (see [showcase](/showcase)).
+In this introduction we will desribe the basic way of using `cellular_raza`.
+We assume that the reader is already somewhat familiar with the Rust programming language and has
+installed the [cargo](https://doc.rust-lang.org/cargo/) package manager.
 
-## From Scratch
+## Simulation Code
 
 To create a new project from scratch, initialize an empty project with cargo and change to this directory.
 ```bash
@@ -23,8 +19,17 @@ cd my-new-project
 
 Afterwards add `cellular_raza` as a dependency.
 ```bash
-cargo add cellular_raza
+cargo add cellular_raza serde rand rand_chacha num
 ```
+
+Afterwards, we have the following structure of files.
+
+{{< filetree/container >}}
+    {{< filetree/folder name="src" >}}
+        {{< filetree/file name="main.rs" >}}
+    {{< /filetree/folder >}}
+    {{< filetree/file name="Cargo.toml" >}}
+{{< /filetree/container >}}
 
 For now, we only implement physical interactions via the
 [Mechanics](/internals/concepts/cell/mechanics) and
@@ -32,37 +37,212 @@ For now, we only implement physical interactions via the
 We can quickly build simulations by combining already existing [building_blocks](building-blocks)
 with the [CellAgent](/docs/cellular_raza-concepts/derive.CellAgent.html) derive macro.
 
-We begin by importing all necessary 
-```rust
-#[derive(Clone, CellAgent)]
-struct MyCell {
-    #[Mechanics]
-    mechanics: NewtonDamped3D,
-    #[Interaction]
-    interaction: MorsePotential,
-}
+### Imports
+
+We begin with some import statements which will be used later on.
+
+{{< codeFromFile
+    file="cellular_raza/cellular_raza-examples/getting-started/src/main.rs"
+    filename="cellular_raza-examples/getting-started/src/main.rs"
+    start="1"
+    end="5"
+>}}
+
+### Cellular Agent
+
+In the next step, we define the cellular agent.
+This simplistic example only considers two [cellular aspects](/internals/concepts):
+[`Mechanics`](/internals/concepts) and [`Interaction`](/internals/concepts).
+We describe the movement of cells via Newtonian dynamics with the
+[`NewtonDamped2D`](/docs/cellular_raza_building_blocks/struct.NewtonDamped2D.html) struct which
+assumes that cells can be represented as point-like particles in $d=2$ dimensions.
+They interact via forces given by the
+[`MorsePotential`](/docs/cellular_raza_building_blocks/struct.MorsePotential.html) struct.
+
+{{< codeFromFile
+    file="cellular_raza/cellular_raza-examples/getting-started/src/main.rs"
+    filename="cellular_raza-examples/getting-started/src/main.rs"
+    start="7"
+    end="13"
+>}}
+
+We define a struct which stores all necessary parameters of the system.
+This gives us a unified way to change parameters of the simulation.
+
+{{< callout type="info" >}}
+Note that this step is not strictly required but we highly recommond it.
+{{< /callout >}}
+
+{{< codeFromFile
+    file="cellular_raza/cellular_raza-examples/getting-started/src/main.rs"
+    filename="cellular_raza-examples/getting-started/src/main.rs"
+    start="15"
+    end="52"
+>}}
+
+In the next step we initialize all components of the simulation.
+We start by creating the cellular agents by using the values from the `Parameters` struct.
+Only the position is overwritten such that cells are placed inside the domain randomly.
+We chose the [`CartesianCuboid`](/docs/cellular_raza_building_blocks/struct.CartesianCuboid) struct
+as our domain and initialize it from the domain size and the interaction cutoff.
+
+Afterwards, the domain is set up.
+We split it apart in voxels which are at minimum the size of two times the interaction range of the
+[`MorsePotential`](/docs/cellular_raza_building_blocks/struct.MorsePotential) interaction.
+
+At last, we define start, end and time-increment together with the folder to store results.
+This folder will be automatically created.
+All properties are stored in the
+[`Settings`](/docs/cellular_raza_core/backend/chili/struct.Settings) struct.
+
+{{< codeFromFile
+    file="cellular_raza/cellular_raza-examples/getting-started/src/main.rs"
+    filename="cellular_raza-examples/getting-started/src/main.rs"
+    start="54"
+    end="92"
+>}}
+
+Finally, we can run the simulation.
+The [chili](/internals/backends/chili) backend uses the
+[`run_simulation`](/docs/cellular_raza_core/backend/chili/macro.run_simulation) to set up and run
+the specified simulation.
+We need to also tell our simulation which [aspects](/internals/concepts) to solve for.
+
+{{< codeFromFile
+    file="cellular_raza/cellular_raza-examples/getting-started/src/main.rs"
+    filename="cellular_raza-examples/getting-started/src/main.rs"
+    start="94"
+    end="101"
+>}}
+
+## Executing the Simulation
+
+Now we can use `cargo` to compile and execute the project in release mode with all possible
+optimizations.
+
+A progress bar will show up that indicates the progress and speed of execution.
+
+```
+$ cargo run -r
+    Finished `release` profile [optimized] target(s) in 0.40s
+     Running `my-new-project/target/release/cr_getting_started`
+ 81%|██████████████████████▊     | 80856/100000 [00:02, 28803.93it/s]
+
 ```
 
+During the simulation, results will be written to the `out` folder which contains information about
+every individual agent and the simulation domain.
+In the next step, we will see how to [visualize](#plotting-results) these results.
 
-We can now begin to write the main function of our program.
-To do this, open the file `src/main.rs` with your favourite text-editor.
-`cellular_raza` is divided into different [layers](AbstractionLayers.md) which are combined within a [backend](Backends.md).
-By default, we use the `cpu_os_threads` backend which can be loaded from `prelude.rs`.
-```rust
-use cellular_raza::prelude::*;
-```
+{{< filetree/container >}}
+    {{< filetree/folder name="out" >}}
+        {{< filetree/folder name="2024-09-02-T15-08-12" />}}
+        {{< filetree/folder name="2024-09-02-T15-11-03" />}}
+        {{< filetree/folder name="..." />}}
+    {{< /filetree/folder >}}
+{{< /filetree/container >}}
 
-<!--  Now we can use `cargo` to compile and execute the project in release mode with all possible optimizations
-```bash
-cargo run --releaseHH
-```
+## Visualization
+### Reading Results
 
-Execute the simulation in `--release` mode whenever performance is critical.
-Use the debug mode `cargo run` to find bugs in your simulation. -->
+To visualize the results spatially, we write a small python script.
+We utilize the [`numpy`](https://numpy.org/), [`matplotlib`](https://matplotlib.org/) and
+[`tqdm`](https://github.com/tqdm/tqdm) packages.
+Every other functionality is contained in the standard library of python.
 
-The following compilation process might take a while.
-Feel free to grab a water or coffee.
+We again start by importing the required functionalities.
+Their uses will become clear in just a moment.
+
+{{< codeFromFile
+    file="cellular_raza/cellular_raza-examples/getting-started/src/plotting.py"
+    filename="cellular_raza-examples/getting-started/src/plotting.py"
+    lang="python"
+    start="1"
+    end="9"
+>}}
+
+The results of the simulation have been saved in the popular `json` format.
+Cells and subdomains are stored in separate folders.
+
+{{< filetree/container >}}
+    {{< filetree/folder name="out" >}}
+        {{< filetree/folder name="2024-09-02-T15-08-12" >}}
+            {{< filetree/folder name="cells/json" />}}
+            {{< filetree/folder name="subdomains/json" />}}
+        {{< /filetree/folder >}}
+        {{< filetree/folder name="2024-09-02-T15-11-03" />}}
+        {{< filetree/folder name="..." />}}
+    {{< /filetree/folder >}}
+{{< /filetree/container >}}
+
+We define a couple of functions to load and store these results.
+Note that the only information related to the subdomains which is used for plotting is the total
+domain size which is fixed from the beginning.
+We can therefore load it once and need not to change it again.
+
+{{< codeFromFile
+    file="cellular_raza/cellular_raza-examples/getting-started/src/plotting.py"
+    filename="cellular_raza-examples/getting-started/src/plotting.py"
+    lang="python"
+    start="11"
+    end="31"
+>}}
+
+### Creating Snapshots
+
+It is usefull to define a new class for plotting the results.
+The `Plotter` class creates an fiure and axis when being initialized.
+It can reuse these variables when plotting multiple iterations in succession.
+This is being done by the `plot_iteration` method while `save_iteration` also stores the created
+figure in the path  where the results are stored in.
+
+{{< codeFromFile
+    file="cellular_raza/cellular_raza-examples/getting-started/src/plotting.py"
+    filename="cellular_raza-examples/getting-started/src/plotting.py"
+    lang="python"
+    start="33"
+    end="75"
+>}}
 
 
+### Generating Movie (Optional)
 
-<!-- TODO -->
+We can create a movie from the individual snapshots.
+To do this, we utilize `ffmpeg`
+
+{{< details title="Code" closed="true" >}}
+{{< codeFromFile
+    file="cellular_raza/cellular_raza-examples/getting-started/src/plotting.py"
+    filename="cellular_raza-examples/getting-started/src/plotting.py"
+    lang="python"
+    start="77"
+    end="89"
+>}}
+{{< /details >}}
+
+<br>
+<video src="movie.mp4" controls>
+
+### Main
+
+{{< codeFromFile
+    file="cellular_raza/cellular_raza-examples/getting-started/src/plotting.py"
+    filename="cellular_raza-examples/getting-started/src/plotting.py"
+    lang="python"
+    start="91"
+    end="95"
+>}}
+
+{{< filetree/container >}}
+    {{< filetree/folder name="out" >}}
+        {{< filetree/folder name="2024-09-02-T15-08-12" >}}
+            {{< filetree/folder name="cells" />}}
+            {{< filetree/folder name="snapshots" />}}
+            {{< filetree/folder name="subdomains" />}}
+            {{< filetree/file name="movie.mp4" >}}
+            {{< /filetree/folder >}}
+        {{< filetree/folder name="2024-09-02-T15-11-03" />}}
+        {{< filetree/folder name="..." />}}
+    {{< /filetree/folder >}}
+{{< /filetree/container >}}
+
