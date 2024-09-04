@@ -1,6 +1,5 @@
 ---
-title: Getting Started
-weight: 10
+title: Mechanics & Interaction
 date: 2024-08-29
 math: true
 ---
@@ -99,7 +98,7 @@ All properties are stored in the
     file="cellular_raza/cellular_raza-examples/getting-started/src/main.rs"
     filename="cellular_raza-examples/getting-started/src/main.rs"
     start="54"
-    end="92"
+    end="93"
 >}}
 
 Finally, we can run the simulation.
@@ -111,8 +110,8 @@ We need to also tell our simulation which [aspects](/internals/concepts) to solv
 {{< codeFromFile
     file="cellular_raza/cellular_raza-examples/getting-started/src/main.rs"
     filename="cellular_raza-examples/getting-started/src/main.rs"
-    start="94"
-    end="101"
+    start="95"
+    end="102"
 >}}
 
 ## Executing the Simulation
@@ -178,7 +177,7 @@ Cells and subdomains are stored in separate folders.
 We define a couple of functions to load and store these results.
 Note that the only information related to the subdomains which is used for plotting is the total
 domain size which is fixed from the beginning.
-We can therefore load it once and need not to change it again.
+We can therefore load it only once and need not to change it again.
 
 {{< codeFromFile
     file="cellular_raza/cellular_raza-examples/getting-started/src/plotting.py"
@@ -201,7 +200,7 @@ figure in the path  where the results are stored in.
     filename="cellular_raza-examples/getting-started/src/plotting.py"
     lang="python"
     start="33"
-    end="75"
+    end="74"
 >}}
 
 
@@ -215,23 +214,31 @@ To do this, we utilize `ffmpeg`
     file="cellular_raza/cellular_raza-examples/getting-started/src/plotting.py"
     filename="cellular_raza-examples/getting-started/src/plotting.py"
     lang="python"
-    start="77"
-    end="89"
+    start="76"
+    end="88"
 >}}
 {{< /details >}}
 
-<br>
-<video src="movie.mp4" controls>
+<div style="width: 100%; padding-top: 1em;">
+    <video controls style="margin-left: auto; margin-right: auto;">
+        <source src="/guides/getting-started/movie.mp4" type="video/mp4">
+    </video>
+</div>
 
 ### Main
+
+In our main function, we combine all the functionality defined above.
+
 
 {{< codeFromFile
     file="cellular_raza/cellular_raza-examples/getting-started/src/plotting.py"
     filename="cellular_raza-examples/getting-started/src/plotting.py"
     lang="python"
-    start="91"
-    end="95"
+    start="90"
 >}}
+
+After we have generated the snapshots and the movie, our folder structure now contains these
+additional files.
 
 {{< filetree/container >}}
     {{< filetree/folder name="out" >}}
