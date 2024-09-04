@@ -1,6 +1,6 @@
 ---
-title: Mechanics & Interaction
-date: 2024-08-29
+title: Getting Started
+weight: 10
 math: true
 ---
 
