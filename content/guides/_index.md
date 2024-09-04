@@ -10,10 +10,35 @@ For an introduction to cellular agent-based modeling, please refer to [wikipedia
 Although beneficial, we do not expect the reader of these guides to be familiar with any computational methods.
 
 ## Overview
+
+The guides in this section are designed to provide insights into different
+[cellular aspects](/internals/concepts/cell), [domain aspects](/internals/concepts/domain) and to
+teach how to construct simulations bottom-up.
+They are fully working examples of simulations executed with `cellular_raza`.
+
+However, we also provide [templates](/guides/templates) which can be used as starting points for the
+development of new simulations.
+
 | Guide | Description |
 | --- | --- |
-| [Getting Started](getting-started) | Step-by-step tutorial on how to write, run and visualize your first simulation |
-| [Predefined Cell Models](predefined-cell-models) | Use complete cell-models to run a simulation |
+| [Introduction](introduction) | General assumptions and setting of `cellular_raza` |
+| [Getting Started](getting-started) | Good first starting point. Learn the fundamentals of `cellular_raza` |
 | [Building Blocks](building-blocks) | Use predefined building blocks to combine them into a fully working simulation. |
-| [Physical Domain](physical-domain) | How does the [domain](/internals/concepts/domain) in which the cells live work? You will learn what responsibilities are taken over by the domain. |
-| [Python Bindings](python-bindings) | Learn how to easily generate Python bindings for your `cellular_raza` simulation. |
+| [Physical Domain](physical-domain) | Learn how to construct domains for your specific use. |
+| [Python Bindings](python-bindings) | Learn how to easily generate Python bindings |
+
+## Templates
+
+Templates provide an initial starting point to construct new simulations.
+They can be easily forked directly using github and extended for your own usecase.
+
+We provide two slightly different variants to build up a reliable simulation infrastructure.
+The [cellular_raza-template](https://github.com/jonaspleyer/cellular_raza-template) is purely
+written in Rust while
+[cellular_raza-template-pyo3](https://github.com/jonaspleyer/cellular_raza-template-pyo3) provides
+Python bindings in addition.
+Both templates automatically generate a working documentation which is hosted with the
+github-integrated services.
+
+While these templates can serve as a starting point but are not representative of the variability
+which `cellular_raza` offers (see [showcase](/showcase)).
