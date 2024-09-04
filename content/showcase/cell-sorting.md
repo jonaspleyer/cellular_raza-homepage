@@ -14,8 +14,8 @@ The underlying principle is that interactions between cells are specific.
 We assume that cells are spherical objects which interact via force potentials.
 
 $$\begin{align}
-    \sigma &= \frac{r}{R_i + R_j}\\\\
-    V(r) &= V_0 \left(\frac{1}{3\sigma^3} - \frac{1}{\sigma}\right)
+    \sigma_{i,j} &= \frac{r}{R_i + R_j}\\\\
+    U_{i,j}(r) &= V_0 \left(\frac{1}{3\sigma_{i,j}^3} - \frac{1}{\sigma_{i,j}}\right)
 \end{align}$$
 
 The values $R_i,R_j$ are the radii of the cells ($i\neq j$) interacting with each other.
@@ -48,7 +48,7 @@ $$
     \begin{cases}
         0 &\text{ if } r\geq\xi\\\\
         0 &\text{ if } s_i\neq s_j \text{ and } \sigma\geq 1\\\\
-        V(r) &\text{ else }
+        U_{i,j}(r) &\text{ else }
     \end{cases}.
 $$
 
