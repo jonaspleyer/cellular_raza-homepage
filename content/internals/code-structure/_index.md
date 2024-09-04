@@ -45,7 +45,6 @@ flowchart LR
 
 # Development
 
-
 <video src="/internals/cellular_raza-development-gource.mp4" controls style="width: minmax(100%, 1280px);">
 </video>
 

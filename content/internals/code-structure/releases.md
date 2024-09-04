@@ -24,7 +24,7 @@ _30th July 2024_
 - Restructured and simplified storage solutions
 - Improve (but also change parameters) CLI for benchmarks
 - use new `circ_buffer` crate in chili backend
-- bufixes for contact reactions
+- bugfixes for contact reactions
 - move homepage to separate repository
 - new function to create timestepper `from_partial_save_freq`
 - update nalgebra to version "0.33"
