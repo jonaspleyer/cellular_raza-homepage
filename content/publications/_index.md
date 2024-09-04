@@ -16,4 +16,4 @@ If you want to cite us now, please use our git repository:
 ## 2023
 
 15.10.2023<br>
-[Poster](2023-10-15-bwhpc-symposium-2023/) at the bwHPC Symposium 2023
+[Poster](2023-10-15-bwhpc-symposium-2023/) at the bwHPC Symposium 2023, Mannheim
