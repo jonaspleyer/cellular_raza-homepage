@@ -125,6 +125,19 @@ $$\\begin{alignat}{5}
 &\vec{F}\_{\text{inside},i} &=&
 \\end{alignat}$$
 
+### Cycle
+
+We introduce an additional mechanism by which every cells area grows linearly over time.
+The growth parameter is chosen from a uniform distribution initially.
+
+$$\\begin{equation}
+    \dot{V} = \alpha
+\\end{equation}$$
+
+By this process, cells will start to push on each other and thus expand the whole tissue structure.
+
+![](/showcase/semi-vertex-model/growth.png)
+
 ## Parameters
 | Parameter | Symbol | Value |
 | --------- | ------ | ----- |
