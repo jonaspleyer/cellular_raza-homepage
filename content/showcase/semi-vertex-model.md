@@ -1,5 +1,5 @@
 ---
-title: Free Motile Vertex Model
+title: Semi-Vertex Model
 date: 2024-04-11
 math: true
 ---

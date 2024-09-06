@@ -29,10 +29,10 @@ title: Showcase
         subtitle="ATG11 and ATG19 Particles phase-separate and form Clusters on the surface of a Cargo which initiate the autophagy process."
     >}} -->
     {{<
-        card link="free-motile-vertex-model"
-        title="Free Motile Vertex Model"
-        image="/showcase/free-motile-vertex-model/cells_at_iter_0000100000.png"
-        subtitle="Cells Self-Organizing to Tissue-Like structure"
+        card link="/showcase/semi-vertex-model"
+        title="Semi-Vertex Model"
+        image="/showcase/semi-vertex-model/snapshot-00000000000000020000.png"
+        subtitle="A vertex-based mechanial model which allows for gaps between cells."
     >}}
     {{<
         card link="pool-model"
