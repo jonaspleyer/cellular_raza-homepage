@@ -69,7 +69,7 @@ We define a struct which stores all necessary parameters of the system.
 This gives us a unified way to change parameters of the simulation.
 
 {{< callout type="info" >}}
-Note that this step is not strictly required but we highly recommond it.
+Note that this step is not strictly required but we highly recommend it.
 {{< /callout >}}
 
 {{< codeFromFile
