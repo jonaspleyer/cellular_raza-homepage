@@ -21,10 +21,10 @@ parameter introduced.
         subtitle="A mechanical model of elongated bacteria such as E.Coli growing inside a narrow box."
     >}}
     {{<
-        card link="/showcase/cell-sorting"
-        title="3D Cell-Sorting"
-        image="/showcase/cell_sorting/0000010000.png"
-        subtitle="Low-parametric autonomous cell-sorting in 3 dimensions"
+        card link="/showcase/semi-vertex-model"
+        title="Semi-Vertex Model"
+        image="/showcase/semi-vertex-model/snapshot-00000000000000020000.png"
+        subtitle="A vertex-based mechanial model which allows for gaps between cells."
     >}}
 {{< /cards >}}
 
