@@ -7,8 +7,8 @@ math: true
 <!-- TODO -->
 Vertex models are a very popular choice in describing multicellular systems.
 They are actively being used in great variety such as to describe mechanical properties of plant
-cells[<sup>1</sup>](#references) or organoid structures of epithelial
-cells[<sup>2,3</sup>](#references).
+cells [\[1\]](#references) or organoid structures of epithelial
+cells [\[2,3\]](#references).
 
 ## Mathematical Description
 In this model, we are only concerned with cellular forces and their representation in space.
