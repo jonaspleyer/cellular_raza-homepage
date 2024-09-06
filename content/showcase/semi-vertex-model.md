@@ -174,6 +174,32 @@ The movie below displays this progress very clearly.
 
 ## Code
 
+{{< details title="Cell Properties" closed="true" >}}
+{{< codeFromFile
+    file="cellular_raza/cellular_raza-examples/semi_vertex/src/cell_properties.rs"
+    filename="cellular_raza-examples/semi_vertex/src/cell_properties.rs"
+>}}
+{{< /details >}}
+{{< details title="Custom Domain" closed="true" >}}
+{{< codeFromFile
+    file="cellular_raza/cellular_raza-examples/semi_vertex/src/custom_domain.rs"
+    filename="cellular_raza-examples/semi_vertex/src/custom_domain.rs"
+>}}
+{{< /details >}}
+{{< details title="Main Simulation" closed="true" >}}
+{{< codeFromFile
+    file="cellular_raza/cellular_raza-examples/semi_vertex/src/main.rs"
+    filename="cellular_raza-examples/semi_vertex/src/main.rs"
+>}}
+{{< /details >}}
+{{< details title="Plotting" closed="true" >}}
+{{< codeFromFile
+    file="cellular_raza/cellular_raza-examples/semi_vertex/plot.py"
+    filename="cellular_raza-examples/semi_vertex/plot.py"
+    lang="python"
+>}}
+{{< /details >}}
+
 The code for this simulation and the visualization can be found in the
 [examples](https://github.com/jonaspleyer/cellular_raza/tree/master/cellular_raza-examples/semi_vertex)
 folder of `cellular_raza`.
