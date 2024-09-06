@@ -24,8 +24,6 @@ development of new simulations.
 | [Introduction](introduction) | General assumptions and setting of `cellular_raza` |
 | [Getting Started](getting-started) | Good first starting point. Learn the fundamentals of `cellular_raza` |
 | [Building Blocks](building-blocks) | Use predefined building blocks to combine them into a fully working simulation. |
-| [Physical Domain](physical-domain) | Learn how to construct domains for your specific use. |
-| [Python Bindings](python-bindings) | Learn how to easily generate Python bindings |
 
 ## Templates
 
