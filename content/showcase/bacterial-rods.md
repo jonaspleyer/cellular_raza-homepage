@@ -128,3 +128,23 @@ remaining space.
 ## Code
 The code is part of the examples and can be found in the official github repository under
 [bacterial-rods](https://github.com/jonaspleyer/cellular_raza/tree/master/cellular_raza-examples/bacterial_rods).
+
+{{< details title="Custom Domain" closed="true">}}
+{{< codeFromFile
+    file="cellular_raza/cellular_raza-examples/bacterial_rods/src/custom_domain.rs"
+    filename="cellular_raza-examples/bacterial_rods/src/custom_domain.rs"
+>}}
+{{< /details >}}
+{{< details title="Main Simulation" closed="true">}}
+{{< codeFromFile
+    file="cellular_raza/cellular_raza-examples/bacterial_rods/src/main.rs"
+    filename="cellular_raza-examples/bacterial_rods/src/main.rs"
+>}}
+{{< /details >}}
+{{< details title="Plotting" closed="true">}}
+{{< codeFromFile
+    file="cellular_raza/cellular_raza-examples/bacterial_rods/plotter.py"
+    filename="cellular_raza-examples/bacterial_rods/plotter.py"
+    lang="python"
+>}}
+{{< /details >}}
