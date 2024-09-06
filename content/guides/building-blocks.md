@@ -68,11 +68,6 @@ uses this approach.
     end="109"
 >}}
 
-
-The [`CellAgent`](/docs/cellular_raza_concepts/derive.CellAgent.html) derive macro generates code
-which implements the specified trait for the new struct.
-
-
 ## Domain & SubDomain
 
 We also provide the
