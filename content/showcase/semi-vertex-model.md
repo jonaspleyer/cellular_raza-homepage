@@ -141,6 +141,15 @@ By this process, cells will start to push on each other and thus expand the whol
 ## Parameters
 | Parameter | Symbol | Value |
 | --------- | ------ | ----- |
+| Area      | $V$    | $500$ |
+| Spring Tension | $\gamma$ | $2.0$ |
+| Central Pressure | $P$ | $0.5$ |
+| Interaction Range | $\beta$ | $0.5$ |
+| Potential Strength | $V_0$ | $10.0$ |
+| Damping | $\lambda$ | $0.2$ |
+| Domain Size | $L$ | $800$ |
+| Simulation Steps | $N_\text{step}$ | $20000$ |
+| Time Increment | $\Delta t$ | $0.005$ |
 
 
 ## Initial State
