@@ -14,7 +14,7 @@ title: Showcase
         card link="bacterial-branching"
         title="Branching Patterns of Bacillus Subtilis"
         image="/showcase/bacterial-branching/bacteria_cells_at_iter_0000088000.png"
-        subtitle=""
+        subtitle="Bacteria consume nutrients, grow divide and thus form a spatial pattern."
     >}}
     {{<
         card link="bacterial-rods"
