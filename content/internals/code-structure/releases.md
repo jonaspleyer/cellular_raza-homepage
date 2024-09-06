@@ -4,6 +4,11 @@ type: docs
 weight: 100
 ---
 
+{{< callout type="warn" >}}
+To this point, version numbers do not follow the [semver](https://semver.org/) specification.
+We are working towards this goal and will report our progress.
+{{< /callout >}}
+
 ## cellular_raza 0.1.0
 _28th August 2024 🎉 2 Year Anniversary 🎉_
 - changed calculation of random contribution in `Mechanics` trait
