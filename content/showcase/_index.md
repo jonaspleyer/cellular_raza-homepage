@@ -34,12 +34,12 @@ title: Showcase
         image="/showcase/semi-vertex-model/snapshot-00000000000000020000.png"
         subtitle="A vertex-based mechanial model which allows for gaps between cells."
     >}}
-    {{<
+    <!-- {{<
         card link="pool-model"
         title="Bacterial Pool Model"
         image="pool-model/snapshot_00012000.png"
         subtitle="Spatial version of Metabolism-Integrated Bacterial Model"
-    >}}
+    >}}-->
     {{<
         card link="cell-sorting"
         title="3D Cell-Sorting"

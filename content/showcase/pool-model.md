@@ -1,6 +1,7 @@
 ---
 title: Pool Model
 date: 2024-04-12
+draft: true
 ---
 
 ## Mathematical Description
