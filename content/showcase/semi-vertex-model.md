@@ -151,15 +151,25 @@ By this process, cells will start to push on each other and thus expand the whol
 | Simulation Steps | $N_\text{step}$ | $20000$ |
 | Time Increment | $\Delta t$ | $0.005$ |
 
+## Results
+### Initial State
 
-## Initial State
+Cells are placed in a perfect hexagonal grid such that edges and vertices align.
+The only distrinction between the cells is their varying growth factor as described earlier.
 
-![](/showcase/free-motile-vertex-model/cells_at_iter_0000100000.png)
+![](/showcase/semi-vertex-model/snapshot-00000000000000000050.png)
 
-## Results & Movie
+### Final State
+
+The cells have grown and pushed on each other thus creating small spaces in between them.
+The movie below displays this progress very clearly.
+
+![](/showcase/semi-vertex-model/snapshot-00000000000000020000.png)
+
+### Movie
 
 <video controls>
-    <source src="/showcase/free-motile-vertex-model/movie.mp4">
+    <source src="/showcase/semi-vertex-model/movie.mp4">
 </video>
 
 ## Code
