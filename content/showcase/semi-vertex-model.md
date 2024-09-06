@@ -87,8 +87,16 @@ interactions.
 In principle, we would have to calculate the total force $\vec{F}'$ by integrating over all points
 either inside the cell or on its boundary but for the sake of simplicity we consider a different
 approach.
+
 Let us denote the vertices of the two cells in question with $\\{\vec{v}_i\\}$ and
 $\\{\vec{w}_j\\}$.
+
+Given a vertex $v_i$ of the first cell and the other cells vertices $\\{w_j\\}$ we asses if the
+vertex $v_i$ is contained in the polygon $\\{w_j\\}$ and calculate either the inside or a outside
+interaction force.
+In this way, by iterating over all vertices $v_i$, we can calculate the total external force
+$\vec{F}_\text{external}$ as the sum of all individual contributions.
+The same procedure when switching $v_i$ and $w_j$ results in a symmetric interaction.
 
 #### Case 1: Outside Interaction
 In this case, we assume that the vertex $\vec{v}_i$ in question is not inside the other cell.
@@ -99,13 +107,13 @@ point
 $$\\begin{equation}\vec{p} = (1-q)\vec{w}_j + q\vec{w}\_{j+1}\\end{equation}$$
 (assuming that we set $\vec{w}\_{j+1}=\vec{w}\_1$ when $j=N\_\text{vertices}$)
 on the edge and then the force acting on this vertex can be calculated
-$$\\begin{equation}\vec{F}\_{\text{outside},i} = \vec{F}(\vec{v}_i, \vec{p})\\end{equation}$$
+$$\\begin{equation}\vec{F}\_{\text{outside},i} = \vec{V}(\vec{v}_i, \vec{p})\\end{equation}$$
 by applying $\vec{F}$ on them.
 The force acting on the other cell acts on the vertices $j$ and $j+1$ with relative strength $1-q$
 and $q$ respectively.
 $$\\begin{alignat}{5}
-&\vec{F}\_{\text{outside},j} &=& - &(1-q)&\vec{F}(\vec{v}_i,\vec{p})\\\\
-&\vec{F}\_{\text{outside},j+1} &=& &-q&\vec{F}(\vec{v}_i,\vec{p})
+&\vec{F}\_{\text{outside},j} &=& - &(1-q)&\vec{V}(\vec{v}_i,\vec{p})\\\\
+&\vec{F}\_{\text{outside},j+1} &=& &-q&\vec{V}(\vec{v}_i,\vec{p})
 \\end{alignat}$$
 
 {{<callout type="info" >}}
@@ -121,8 +129,8 @@ $$\\begin{equation}\vec{v}_c = \frac{1}{N\_\text{vertices}}\sum\limits_i \vec{v}
 and the external vertex in question.
 The force which is calculated this way acts in equal parts on all vertices.
 $$\\begin{alignat}{5}
-&\vec{F}\_{\text{inside},j} &=& \frac{1}{N\_\text{vertices}}\vec{W}(\vec{v}\_c,\vec{w}_j)\\\\
-&\vec{F}\_{\text{inside},i} &=&
+&\vec{F}\_{\text{inside},j} &=& &&\frac{1}{N\_\text{vertices}}\vec{W}(\vec{v}\_c,\vec{w}_j)\\\\
+&\vec{F}\_{\text{inside},i} &=&-&&\frac{1}{N\_\text{vertices}}\vec{W}(\vec{v}\_c,\vec{w}_j)
 \\end{alignat}$$
 
 ### Cycle
@@ -147,6 +155,7 @@ By this process, cells will start to push on each other and thus expand the whol
 | Interaction Range | $\beta$ | $0.5$ |
 | Potential Strength | $V_0$ | $10.0$ |
 | Damping | $\lambda$ | $0.2$ |
+| Growth Rate | $\alpha$ | $5.0$ |
 | Domain Size | $L$ | $800$ |
 | Simulation Steps | $N_\text{step}$ | $20000$ |
 | Time Increment | $\Delta t$ | $0.005$ |
@@ -155,7 +164,7 @@ By this process, cells will start to push on each other and thus expand the whol
 ### Initial State
 
 Cells are placed in a perfect hexagonal grid such that edges and vertices align.
-The only distrinction between the cells is their varying growth factor as described earlier.
+The only distrinction between the cells is their varying growth rate as described earlier.
 
 ![](/showcase/semi-vertex-model/snapshot-00000000000000000050.png)
 
