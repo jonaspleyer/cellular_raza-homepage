@@ -168,18 +168,17 @@ The only distrinction between the cells is their varying growth rate as describe
 
 ![](/showcase/semi-vertex-model/snapshot-00000000000000000050.png)
 
-### Final State
+### Movie
 
 The cells have grown and pushed on each other thus creating small spaces in between them.
-The movie below displays this progress very clearly.
-
-![](/showcase/semi-vertex-model/snapshot-00000000000000020000.png)
-
-### Movie
 
 <video controls>
     <source src="/showcase/semi-vertex-model/movie.mp4">
 </video>
+
+### Final State
+
+![](/showcase/semi-vertex-model/snapshot-00000000000000020000.png)
 
 ## Code
 
