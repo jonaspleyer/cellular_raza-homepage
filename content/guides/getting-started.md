@@ -52,9 +52,10 @@ We begin with some import statements which will be used later on.
 In the next step, we define the cellular agent.
 This simplistic example only considers two [cellular aspects](/internals/concepts):
 [`Mechanics`](/internals/concepts) and [`Interaction`](/internals/concepts).
-We describe the movement of cells via Newtonian dynamics with the
-[`NewtonDamped2D`](/docs/cellular_raza_building_blocks/struct.NewtonDamped2D.html) struct which
+We describe the movement of cells via Langevin dynamics with the
+[`Langevin2D`](/docs/cellular_raza_building_blocks/struct.Langevin2D.html) struct which
 assumes that cells can be represented as point-like particles in $d=2$ dimensions.
+Furthermore, every cell moves stochastically through space.
 They interact via forces given by the
 [`MorsePotential`](/docs/cellular_raza_building_blocks/struct.MorsePotential.html) struct.
 
