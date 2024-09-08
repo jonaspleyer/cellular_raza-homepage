@@ -19,6 +19,12 @@ The function $f(n,b)$ describes the nutrients consumption by the bacterial metab
 division.
 The parameter $\theta$ is the "gain" in bacterial mass per nutrient volume.
 
+One critique of these models is that the pattern will diffuse over the course of time, thus not
+creating a persistent pattern.
+This comes from modeling cellular motility via a diffusion equation.
+Howerver stable patterns could be achieved if an equilibrium state exists where cells remain at
+their locations.
+
 ## Mathematical Description
 ### Mechanics & Interaction
 
