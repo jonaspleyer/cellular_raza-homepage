@@ -53,6 +53,7 @@ The volumeo f cell $c$ is given by $V_c$.
 The parameter $u$ is the uptake rate of the nutrient while $\alpha$ describes the consumption of the
 nutrient by the cellular metabolism resulting in an increase of the volume $V_c$.
 In contrast, $\sigma$ degrades the intracellular nutrients 
+<<<<<<< HEAD
 After reaching $90\\%$ of the maximum volume $V_\text{max}$ the cell divides into two equally sized
 cells with volume $V_\text{max}/2$.
 The gain θ is approximately given by $\theta\approx \log(2) \alpha u/ (u + \alpha)$.
