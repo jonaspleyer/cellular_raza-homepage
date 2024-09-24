@@ -3,7 +3,7 @@ title: Branching Patterns of Bacillus Subtilis
 math: true
 ---
 
-The underlying mechanisms were inspired by bacterial patterns such as the ones found in
+This simulation was inspired by the bacterial patterns first mathematically described in
 [\[1,2\]](#references).
 These patterns can be described by considering two variables: the spatial-temporal distribution $n$
 of the available nutrient and the bacterial population density $b$.
@@ -15,21 +15,21 @@ $$\\begin{alignat}{5}
     \dot{b} &= d&&\nabla^2b &+ \theta &f(n, b)
 \\end{alignat}$$
 
-The function $f(n,b)$ describes the nutrients consumption by the bacterial metabolism, growth and
-division.
-The parameter $\theta$ is the "gain" in bacterial mass per nutrient volume.
+The function $f(n,b)$ describes the nutrient consumption by the bacterial metabolism.
+The parameter $\theta$ is the "gain" in bacterial mass per nutrient volume resulting from growth
+and division.
 
 One critique of these models is that the pattern will diffuse over the course of time, thus not
 creating a persistent pattern.
 This comes from modeling cellular motility via a diffusion equation.
-Howerver stable patterns could be achieved if an equilibrium state exists where cells remain at
+However stable patterns could be achieved if an equilibrium state exists where cells remain at
 their locations.
 
 ## Mathematical Description
 ### Mechanics & Interaction
 
-We represent cells as soft spheres with the interaction potential as in the
-[cell-sorting](/showcase/cell-sorting) example but omitting the species-specificity.
+We represent cells as soft spheres with the
+[MorsePotential](/docs/cellular_raza_building_blocks/struct.MorsePotential.html).
 
 ### Intra- & extracellular Reactions
 
@@ -53,7 +53,7 @@ The volumeo f cell $c$ is given by $V_c$.
 The parameter $u$ is the uptake rate of the nutrient while $\alpha$ describes the consumption of the
 nutrient by the cellular metabolism resulting in an increase of the volume $V_c$.
 In contrast, $\sigma$ degrades the intracellular nutrients 
-After reaching $90\%$ of the maximum volume $V_\text{max}$ the cell divides into two equally sized cells with volume $V_\text{max}/2$.
+After reaching $90\\%$ of the maximum volume $V_\text{max}$ the cell divides into two equally sized cells with volume $V_\text{max}/2$.
 The gain θ is approximately given by $\theta\approx \log(2) \alpha u/ (u + \alpha)$.
 If the uptake rate is very large the gain is limited by
 the nutrient processing rate $\alpha$ (the nutrient metabolism), but in the case where the nutrient

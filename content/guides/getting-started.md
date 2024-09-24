@@ -84,11 +84,8 @@ In the next step we initialize all components of the simulation.
 We start by creating the cellular agents by using the values from the `Parameters` struct.
 Only the position is overwritten such that cells are placed inside the domain randomly.
 We chose the [`CartesianCuboid`](/docs/cellular_raza_building_blocks/struct.CartesianCuboid) struct
-as our domain and initialize it from the domain size and the interaction cutoff.
-
-Afterwards, the domain is set up.
-We split it apart in voxels which are at minimum the size of two times the interaction range of the
-[`MorsePotential`](/docs/cellular_raza_building_blocks/struct.MorsePotential) interaction.
+as our domain and initialize it from the domain size and the interaction cutoff of the
+[`MorsePotential`](/docs/cellular_raza_building_blocks/struct.MorsePotential).
 
 At last, we define start, end and time-increment together with the folder to store results.
 This folder will be automatically created.
@@ -104,9 +101,9 @@ All properties are stored in the
 
 Finally, we can run the simulation.
 The [chili](/internals/backends/chili) backend uses the
-[`run_simulation`](/docs/cellular_raza_core/backend/chili/macro.run_simulation) to set up and run
-the specified simulation.
-We need to also tell our simulation which [aspects](/internals/concepts) to solve for.
+[`run_simulation`](/docs/cellular_raza_core/backend/chili/macro.run_simulation) macro to set up and
+run the specified simulation.
+Also, we need to tell our simulation which [aspects](/internals/concepts) to solve for.
 
 {{< codeFromFile
     file="cellular_raza/cellular_raza-examples/getting-started/src/main.rs"
@@ -191,7 +188,7 @@ We can therefore load it only once and need not to change it again.
 ### Creating Snapshots
 
 It is usefull to define a new class for plotting the results.
-The `Plotter` class creates an fiure and axis when being initialized.
+The `Plotter` class creates a figure and axis when being initialized.
 It can reuse these variables when plotting multiple iterations in succession.
 This is being done by the `plot_iteration` method while `save_iteration` also stores the created
 figure in the path  where the results are stored in.
