@@ -28,8 +28,8 @@ their locations.
 ## Mathematical Description
 ### Mechanics & Interaction
 
-We represent cells as soft spheres with the
-[MorsePotential](/docs/cellular_raza_building_blocks/struct.MorsePotential.html).
+We represent cells as soft spheres with the same interaction potential as in the
+[cell-sorting](/showcase/cell-sorting) example but omitting the species-specificity.
 
 ### Intra- & extracellular Reactions
 
