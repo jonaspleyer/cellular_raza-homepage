@@ -32,7 +32,7 @@ title: Showcase
         card link="/showcase/semi-vertex-model"
         title="Semi-Vertex Model"
         image="/showcase/semi-vertex-model/snapshot-00000000000000020000.png"
-        subtitle="A vertex-based mechanial model which allows for gaps between cells."
+        subtitle="A vertex-based mechanical model which allows for gaps between cells."
     >}}
     <!-- {{<
         card link="pool-model"
