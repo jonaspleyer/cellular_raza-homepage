@@ -19,7 +19,7 @@ title: Showcase
     {{<
         card link="bacterial-rods"
         title="Soft Bacterial Rods"
-        image="/showcase/bacterial-rods/intermediate.png"
+        image="/showcase/bacterial-rods/0000023000.png"
         subtitle="A mechanical model of elongated bacteria such as E.Coli growing inside a narrow box."
     >}}
     <!-- {{<
