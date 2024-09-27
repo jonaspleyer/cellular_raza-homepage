@@ -228,8 +228,8 @@ The cells are colored continuously from green for fast growth to blue for dorman
 This setup is reminiscent of a mother machine continuously producing new bacteria.
 *TODO CITATION*
 
-![Bacterial Rods](figures/0000000040.png){ width=50% }
-![Bacterial Rods](figures/0000022000.png){ width=50% }
+![Bacterial Rods](figures/bacterial-rods-0000000040.png){ width=50% }
+![Bacterial Rods](figures/bacterial-rods-0000023000.png){ width=50% }
 \begin{figure}[!h]
     \centering
     \caption{
@@ -296,9 +296,9 @@ trichome hairs.
 There is an ongoing effort [@Pleyer2024jonaspleyer] to use `cellular_raza` as a simulation backend
 while generating python bindings with the `pyo3` and `maturin` crates.
 
-![cr_trichome](figures/cr_trichome_start.png){ width=50% }
-![cr_trichome](figures/cr_trichome_end.png){ width=50% }
-\begin{figure}[!h]
+![](figures/snapshot-00000000000000000050.png){ width=50% }
+![](figures/snapshot-00000000000000020000.png){ width=50% }
+<!-- \begin{figure}[!h]
     \caption{
         The reaction network produces a pattern of regular peaks that ultimately lead to the
         differentiation and growth of trichomes.
