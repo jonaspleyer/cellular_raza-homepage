@@ -4,7 +4,8 @@ date: 2024-01-10
 math: true
 ---
 
-Cell Sorting is a naturally occuring phenomenon which drives many biological processes.
+Cell Sorting is a naturally occuring phenomenon which drives many biological processes
+[\[1,2\]](#references).
 While the underlying biological reality can be quite complex, it is rather simple to describe such
 a system in its most basic form.
 The underlying principle is that interactions between cells are specific.
@@ -102,3 +103,19 @@ folder of `cellular_raza`.
     file="cellular_raza/cellular_raza-examples/cell_sorting/src/main.rs"
 >}}
 {{< /details >}}
+
+## References
+
+[1] M. S. Steinberg,
+“Reconstruction of Tissues by Dissociated Cells,”
+Science, vol. 141, no. 3579.
+American Association for the Advancement of Science (AAAS),
+pp. 401–408, Aug. 02, 1963.
+doi: [10.1126/science.141.3579.401](https://doi.org/10.1126/science.141.3579.401).
+
+[2] F. Graner and J. A. Glazier,
+“Simulation of biological cell sorting using a two-dimensional extended Potts model,”
+Physical Review Letters, vol. 69, no. 13.
+American Physical Society (APS),
+pp. 2013–2016, Sep. 28, 1992.
+doi: [10.1103/physrevlett.69.2013](https://doi.org/10.1103/physrevlett.69.2013).

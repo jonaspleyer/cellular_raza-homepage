@@ -4,14 +4,22 @@ date: 2024-06-05
 math: true
 ---
 
+Bacteria exist in many physical shapes such as spheroidal, rod-shaped or spiral
+[\[1,2\]](#references).
+We set out to define a simple yet effective coarse-grained mechanical cellular model to describe
+the motion of rod-shaped bacteria.
+
 ## Mathematical Description
-To model the spatial mechanics of elongated bacteria, we represent them as a collection of
-auxiliary vertices $\\{\\vec{v}\_i\\}$ which are connected by springs in ascending order.
+
+To model the spatial mechanics of elongated bacteria [\[3\]](#references), we represent them as a
+collection of auxiliary vertices $\\{\\vec{v}\_i\\}$ which are connected by springs in ascending
+order.
 Furthermore, we assume that the cells are flexible described by their stiffness property.
 A force $\vec{F}$ interacting between cellular agents determines the radius (thickness) of the
 rods and an attractive component can model adhesion between cells.
 
 ### Mechanics
+
 In principle we can assign individual lengths $\\{l_i\\}$ and strengths $\\{\gamma\\}\_i$ to each
 spring.
 The internal force acting on vertex $\\vec{v}\_i$ can be divided into 2 contributions coming from
@@ -148,3 +156,23 @@ The code is part of the examples and can be found in the official github reposit
     lang="python"
 >}}
 {{< /details >}}
+
+## References
+
+<!-- TODO maybe find better citaions here -->
+
+[1] A. Zapun, T. Vernet, and M. G. Pinho,
+“The different shapes of cocci,” FEMS Microbiology Reviews, vol. 32, no. 2.
+Oxford University Press (OUP), pp. 345–360, Mar. 2008.
+doi: [10.1111/j.1574-6976.2007.00098.x](https://doi.org/10.1111%2Fj.1574-6976.2007.00098.x)
+
+[2] K. D. Young,
+“The Selective Value of Bacterial Shape,” Microbiology and Molecular Biology Reviews, vol. 70, no. 3.
+American Society for Microbiology, pp. 660–703, Sep. 2006.
+doi: [10.1128/mmbr.00001-06](https://doi.org/10.1128/mmbr.00001-06).
+
+[3] C. Billaudeau et al.,
+“Contrasting mechanisms of growth in two model rod-shaped bacteria,”
+Nature Communications, vol. 8, no. 1.
+Springer Science and Business Media LLC, Jun.
+07, 2017. [doi: 10.1038/ncomms15370](https://doi.org/10.1038/ncomms15370).
