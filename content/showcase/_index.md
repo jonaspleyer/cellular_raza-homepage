@@ -6,7 +6,7 @@ title: Showcase
 {{< cards >}}
     <!-- {{<
         card link="cr_trichome"
-        title=`cr_trichome`
+        title="cr_trichome - Modeling Patterns on Arabidopsis Thaliana Leaves"
         image="/showcase/cr_trichome/cr_trichome_end.png"
         subtitle="Turing Patterns on the leaf of Arabidopsis Thaliana"
     >}} -->
