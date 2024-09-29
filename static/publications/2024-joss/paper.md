@@ -75,13 +75,11 @@ results.
 
 We can further reduce the number of modeling frameworks by only considering ones which provide a
 significant level of flexibility and customizability in their definition of cell-agents.
-Chaste allows to reuse individual components of their simulation code such as ODE
+Chaste [@Cooper2020] allows to reuse individual components of their simulation code such as ODE
 and PDE solvers.
-- *TODO CITATION* 
-Biocellion has support for different cell shapes such as spheres and cylinders but acknowledges
-that their current approach lacks flexibility in the subcellular description.
+Biocellion [@Kang2014] has support for different cell shapes such as spheres and cylinders but
+acknowledges that their current approach lacks flexibility in the subcellular description.
 
-- *TODO CITATION*
 - *TODO check which other frameworks to consider*
 
 # Underlying Assumptions and Internals
@@ -178,12 +176,12 @@ In the future, we hope to add a dedicated backend named `cara` to leverage GPU-a
 
 # Examples
 
-All presented examples can be viewed at the [showcase](https://cellular-raza.com/showcase) section
-of the [cellular-raza.com](https://cellular-raza.com) homepage.
+All presented examples with more in-depth descriptions as well as the used code can be viewed at
+[cellular-raza.com/showcase](https://cellular-raza.com/showcase).
 
 ## Cell Sorting
-Cell Sorting is a naturally occurring phenomenon which drives many biological processes.
-*TODO CITATION*
+
+Cell sorting is a naturally occurring phenomenon which drives many biological processes [@Steinberg1963; @Graner1992].
 While the underlying biological reality can be quite complex, it is rather simple to describe such
 a system in its most basic form.
 The responsible principle is that the `Interaction` between cells are specific to their species.
@@ -204,11 +202,9 @@ In the final snapshot, we can clearly see the phase-separation between the diffe
 
 ## Bacterial Rods
 
-Many bacterial species are of elongated shape
-*TODO CITATION*
-which grows asymmetrically in the direction of elongation during the growth phase of the cell.
-To model this behaviour, we describe the physical `Mechanics` of one cell as a collection of multiple
-vertices $\vec{v}_i$ which are connected by edges.
+Bacteria come in various forms [@Zapun2008; @Young2006] such an elongated shape [@Billaudeau2017] which grows asymmetrically in the direction of elongation during the growth phase of the cell.
+To model this behaviour, we describe the physical `Mechanics` of one cell as a collection of
+multiple vertices $\vec{v}_i$ which are connected by edges.
 The edges are modelled as springs and their relative angle at each connecting vertex introduces a
 stiffening force which is proportional to the angle difference $\alpha-180°$.
 The `Interaction` of two cells is implemented via a force potential which acts between every vertex
@@ -225,8 +221,6 @@ phase of the bacterial colony.
 Initially, the cells are placed inside the left-hand side of an elongated box with
 reflective boundary conditions.
 The cells are colored continuously from green for fast growth to blue for dormant cells.
-This setup is reminiscent of a mother machine continuously producing new bacteria.
-*TODO CITATION*
 
 ![Bacterial Rods](figures/bacterial-rods-0000000040.png){ width=50% }
 ![Bacterial Rods](figures/bacterial-rods-0000023000.png){ width=50% }
@@ -276,81 +270,90 @@ the shape of the pattern.
     }
 \end{figure}
 
-## Trichome Patterning in _Arabidopsis Thaliana_
-Trichomes are hairs consisting of a single cell which can be seen developing on the surface of
-leaves of _Arabidopsis Thaliana_.
-Their specialization from regular epithelial cells is determined by a pattern which can be
-described by coupling the intracellular reactions of multiple cells to each other.
-We assume that cells are immobile but exchange the 'trichome-promoting factor TRANSPARENT TESTA
-GLABRA1' (TTGL) [@Bouyer2008] via their connecting cell wall.
+## Semi-Vertex Model for Epithelial and Plant Cells
 
-We descibe the intracellular gene reulatory network as an Ordinary
-Differntial Equation (ODE) via the `Intracellular` simulation aspect and couple cells to each other
-with the `ReactionsContact` aspect.
-We restrict the reactions via contact to only neighbouring cells exchange TTGL which is particularly
-simple to determine for a static tissue.
-The combined reactions represent a diffusion-driven Turing instability [@Turing1952] which when
-given randomized initial values generates peaks that lead to the observed differentiation of the
-trichome hairs.
+Vertex models are a very popular choice in describing multicellular systems.
+They are actively being used in great variety such as to describe mechanical properties of plant
+cells [@Merks2011] or organoid structures of epithelial cells [@Fletcher2014; @Barton2017].
 
-There is an ongoing effort [@Pleyer2024jonaspleyer] to use `cellular_raza` as a simulation backend
-while generating python bindings with the `pyo3` and `maturin` crates.
+This model represents cells as a polygonal collection of vertices which are connected by springs.
+In addition, an inside pressure pushes vertices outwards of the cell until the desired total cell
+area is achieved.
+These mechanisms by themselves create perfect hexagonal cells.
+The cell itself is able to move around freely but interacts via an attractive force with other
+cells.
+In the case that two polygons overlap, a repulsive force acts between them.
+The interacting forces can lead to deviations in the otherwise perfect hexagonal shape.
 
 ![](figures/snapshot-00000000000000000050.png){ width=50% }
 ![](figures/snapshot-00000000000000020000.png){ width=50% }
-<!-- \begin{figure}[!h]
+\begin{figure}[!h]
     \caption{
-        The reaction network produces a pattern of regular peaks that ultimately lead to the
-        differentiation and growth of trichomes.
+        Cells are placed in a perfect hexagonal grid such that edges and vertices align.
+        Their growth rates are chosen from a uniform distribution.
+        During growth they push on each other thus creating small spaces in between them as the
+        collection expands.
     }
 \end{figure}
 
 # Performance
+
+We present two separate performance benchmarks assessing the computational efficacy of our code.
+The interested reader can find more details in the documentation under
+[cellular-raza.com/benchmarks/2024-07-sim-size-scaling](https://cellular-raza.com/benchmarks/2024-07-sim-size-scaling).
+
 ## Multithreading
 One measure of multithreaded performance is to calculate the possible theoretical speedup
-given by Amdahl's law [@Rodgers1985]
+given by Amdahl's law [@Rodgers1985] $T(n)$ and its upper limit $S=1/(1-p)$
 
-\begin{equation}
-    T(n) = T_0\frac{1}{(1-p) + \frac{p}{n}}
+\begin{align}
+    T(n) &= T_0\frac{1}{(1-p) + \frac{p}{n}}
     \label{eq:amdahls-law}
-\end{equation}
+\end{align}
 
 where $n$ is the number of used parallel threads and $p$ is the proportion of execution time which
 benefits from parallelization.
 
 Measuring the performance of any simulation will be highly dependent on the specific cellular 
 properties and complexity.
-To measure the performance of `cellular_raza`, we chose the cell sorting example which is the one
-containing minimal complexity of all the aforementioned example simulations.
+We chose the cell sorting example which contains minimal complexity in terms of calculating
+interaction between cellular agents.
 Any computational overhead which is intrinsic to `cellular_raza` and not related to the chosen
 example would thus be more likely to manifest in performance results.
 The total runtime of the simulation is of no relevance since we are only concerned with relative
 speedup upon using additional resources.
-In addition, we fixed the frequency of each processor, to circumvent power-dependent behaviour.
-While it is well known that other aspects such as cache-size and memory latency can have an impact
-on absolute performance, they should however not introduce any significant deviations in terms of
-relative performance scaling.
+In addition, we fixed the frequency of each processor, to account for power-dependent effects.
 
 This benchmark was run on three distinct hardware configurations.
-
-![Amdahl's law with increasing amounts of CPU resources.\label{fig:thread-scaling}](figures/thread_scaling.png){ width=100% }
-
 We fit equation \autoref{eq:amdahls-law} and obtain the parameter $p$ from which the theoretical
-maximal speedup $S$ can be calculated via
+maximal speedup $S$ can be calculated.
 
-\begin{equation}
-    S = \frac{1}{1-p}
-    \label{eq:amdahls-law-theoretical-speedup}
-\end{equation}
-
-and thus from figure\autoref{fig:thread-scaling} obtain the values $S_\text{3700X}=13.64$,
-$S_\text{3960X}=45.05$ and $S_\text{12700H}=34.72$.
+Thus we obtain the values $S_\text{3700X}=13.64$, $S_\text{3960X}=45.05$ and
+$S_\text{12700H}=34.72$.
 
 ## Scaling of Simulation Size
 
-**TODO**
+Since we consider only locally finite interactions between agents, we are able to make optimizations
+which lead to a linear instead of quadratic scaling in the case of fixed-density.
+We set out to test this hypothesis and measure the numerical complexity of calculating interactions
+between increasing cellular agents.
+To do so, we again chose the cell-sorting example for its minimal intrinsic computational overhead
+and gradually increased the number of cellular agents and domain size while keeping their density
+constant.
+Afterwards, we fit the resulting datapoints with a quadratic formula.
+It is easily recognizable that the observed scaling agrees with the expected results.
 
-![Scaling of the total simulation size.](figures/sim-size-scaling.png){ width=100% }
+\begin{figure}
+    \begin{minipage}{0.5\textwidth}
+        \includegraphics{figures/thread_scaling.png}
+        \caption{Amdahl's law with increasing amounts of CPU resources.}
+        \label{fig:thread-scaling}
+    \end{minipage}%
+    \begin{minipage}{0.5\textwidth}
+        \includegraphics{figures/sim-size-scaling.png}
+        \caption{Scaling of the total simulation size.}
+    \end{minipage}
+\end{figure}
 
 # Discussion
 
