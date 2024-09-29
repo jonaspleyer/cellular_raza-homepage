@@ -6,8 +6,8 @@
            version="5.3.1"
            xsi:schemaLocation="http://www.crossref.org/schema/5.3.1 http://www.crossref.org/schemas/crossref5.3.1.xsd">
   <head>
-    <doi_batch_id>20240929T005910-4541cf6459deb9412378cb63b3f448041ccdbf13</doi_batch_id>
-    <timestamp>20240929005910</timestamp>
+    <doi_batch_id>20240929T010449-4541cf6459deb9412378cb63b3f448041ccdbf13</doi_batch_id>
+    <timestamp>20240929010449</timestamp>
     <depositor>
       <depositor_name>JOSS Admin</depositor_name>
       <email_address>admin@theoj.org</email_address>
