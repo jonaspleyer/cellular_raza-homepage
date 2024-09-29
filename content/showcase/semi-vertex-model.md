@@ -164,7 +164,7 @@ By this process, cells will start to push on each other and thus expand the whol
 ### Initial State
 
 Cells are placed in a perfect hexagonal grid such that edges and vertices align.
-The only distrinction between the cells is their varying growth rate as described earlier.
+The only distinction between the cells is their varying growth rate as described earlier.
 
 ![](/showcase/semi-vertex-model/snapshot-00000000000000000050.png)
 
