@@ -64,9 +64,7 @@ In total, we are left with only 4 parameters to describe our system.
 | Damping Constant | $\lambda$ | $2\text{min}^{-1}$ |
 | Interaction Range | $\xi$ | $1.5 R_i$ |
 
-## Initial State
-
-The following table shows the configuration used to solve the system.
+The following table shows additional values which are used to initialize the system.
 In total, 1600 cells with random initial positions and zero velocity were placed inside the domain.
 
 | Property | Symbol | Value |
@@ -79,16 +77,24 @@ In total, 1600 cells with random initial positions and zero velocity were placed
 
 This results in a total time of $2000\text{min}=33.33\text{h}$.
 
+## Results
+
+### Initial State
+
+Cells are initially placed randomly inside the cuboid simulation domain.
+
 ![](/showcase/cell_sorting/0000000020.png)
 
-## Result & Movie
-
-After the simulation has finished, the cells have self-organized into connected regions of the same
-species.
+### Movie
 
 <video controls>
     <source src="/showcase/cell_sorting/movie.mp4" type="video/mp4">
 </video>
+
+### Final State
+
+After the simulation has finished, the cells have self-organized into connected regions of the same
+species.
 
 ![](/showcase/cell_sorting/0000010000.png)
 
@@ -101,6 +107,7 @@ folder of `cellular_raza`.
 {{< details title="Full Code" closed="true" >}}
 {{< codeFromFile
     file="cellular_raza/cellular_raza-examples/cell_sorting/src/main.rs"
+    filename="cellular_raza-examples/cell_sorting/src/main.rs"
 >}}
 {{< /details >}}
 
