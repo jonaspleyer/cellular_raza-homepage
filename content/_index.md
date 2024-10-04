@@ -18,7 +18,7 @@ parameter introduced.
         card link="/showcase/bacterial-rods"
         title="Soft Bacterial Rods"
         image="/showcase/bacterial-rods/0000023000.png"
-        subtitle="A mechanical model of elongated bacteria such as E.Coli growing inside a narrow box."
+        subtitle="A mechanical model of elongated bacteria such as _E.Coli_ growing inside a narrow box."
     >}}
     {{<
         card link="/showcase/semi-vertex-model"

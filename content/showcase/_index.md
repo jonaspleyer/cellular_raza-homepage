@@ -12,15 +12,15 @@ title: Showcase
     >}} -->
     {{<
         card link="bacterial-branching"
-        title="Branching Patterns of Bacillus Subtilis"
+        title="Bacterial Branching Patterns"
         image="/showcase/bacterial-branching/bacteria_cells_at_iter_0000088000.png"
-        subtitle="Bacteria consume nutrients, grow divide and thus form a spatial pattern."
+        subtitle="A growth model of _Bacillus Subtilis_ which forms spatial patterns."
     >}}
     {{<
         card link="bacterial-rods"
         title="Soft Bacterial Rods"
         image="/showcase/bacterial-rods/0000023000.png"
-        subtitle="A mechanical model of elongated bacteria such as E.Coli growing inside a narrow box."
+        subtitle="A mechanical model of elongated bacteria such as _E.Coli_ growing inside a narrow box."
     >}}
     <!-- {{<
         card link="autophagy-protein-clustering"

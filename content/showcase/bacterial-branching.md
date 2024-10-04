@@ -1,5 +1,5 @@
 ---
-title: Branching Patterns of Bacillus Subtilis
+title: Bacterial Branching Patterns
 math: true
 ---
 
