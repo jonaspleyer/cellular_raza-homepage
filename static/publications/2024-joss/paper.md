@@ -81,12 +81,18 @@ Chaste [@Cooper2020] allows to reuse individual components of their simulation c
 and PDE solvers.
 Biocellion [@Kang2014] has support for different cell shapes such as spheres and cylinders but
 acknowledges that their current approach lacks flexibility in the subcellular description.
-
-- *TODO check which other frameworks to consider*
+BioDynaMo [@breitwieser_biodynamo_2022] offers some modularity in the choice for components of
+cellular agents but can not customize the cellular representation.
 
 # Underlying Assumptions and Internals
 
 ## List of Simulation Aspects
+
+`cellular_raza` assumes that all dynamics can be categorized into what we call "simulation
+aspects.
+These represent cellular processes, changes of the simulation domain and interactions from outside
+the simulation.
+The `chili` backend will insert only the required code to model these aspects.
 
 | Aspect | Description | Depends on |
 | --- | --- | --- |
