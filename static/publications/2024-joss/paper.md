@@ -25,12 +25,15 @@ bibliography: paper.bib
 
 # Summary
 
-`cellular_raza` is a library that allows users to define fully-customized cellular agents in order
-to run numerical simulations.
-It formulates simulation aspects in the form of rust traits.
-The cellular agents and simulation domain implement a subset of these simulation aspects and
-`cellular_raza` provides generic methods to numerically solve the system and store results.
-It also comes with predefined building blocks for agents and their physical domain to quickly
+`cellular_raza` is a cellular agent-based modeling framework which allows researchers to construct
+models from a clean slate.
+
+In contrast to other agent-based modelling toolkits, `cellular_raza` was designed to be free of
+assumptions about the underlying cellular representation.
+This enables researchers to build up complex models while retaining full control over every
+parameter introduced.
+
+It comes with predefined building blocks for agents and their physical domain to quickly
 construct new simulations bottom-up.
 Furthermore, `cellular_raza` has been used with the `pyo3` and `maturin` packages to create python
 bindings and can act as a numerical backend to a python package.
