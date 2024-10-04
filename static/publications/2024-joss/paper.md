@@ -40,8 +40,9 @@ bindings and can act as a numerical backend to a python package.
 
 # Statement of need
 
-Agent-based models are common in cellular biology and many tools have been developed so far
-to asses specific questions in specialized fields [@Pleyer2023].
+Agent-based models have become in cellular biology [@Mogilner2016; @Cess2022; @Delile2017] and many
+tools have been developed so far to asses specific questions in specialized fields
+[@Pleyer2023; @Delile_Herrmann_Peyrieras_Doursat_2017].
 While these tools have proven to be effective for targeted research questions,
 they often lack the ability to be applied for multiple distinct use-cases in a more generic context.
 However, core functionalities such as numerical solvers, storage solutions, domain decomposition
