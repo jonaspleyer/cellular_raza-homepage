@@ -52,8 +52,6 @@ a generic fashion.
 In order to combat this issue and build up models from first principles without any assumptions on
 the underlying complexity or abstraction level, we developed `cellular_raza`.
 
-- *TODO CITATIONS*
-
 # State of field
 ## Generic agent-based modelling toolkits
 There exists a wide variety of many general-purpose agent-based simulation toolkits which are being
