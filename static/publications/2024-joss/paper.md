@@ -92,7 +92,7 @@ cellular agents but can not customize the cellular representation.
 aspects.
 These represent cellular processes, changes of the simulation domain and interactions from outside
 the simulation.
-The `chili` backend will insert only the required code to model these aspects.
+The `chili` backend will insert only the required code to numerically integrate these aspects.
 
 | Aspect | Description | Depends on |
 | --- | --- | --- |
