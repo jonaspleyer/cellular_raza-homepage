@@ -295,17 +295,69 @@ $\mathscr{C}$ and the physical domain $D$ in which they live ie. $M=\mathscr{C}\
     $\phi_m=\phi_1\circ\dots\circ\phi_1$.
 \end{example}
 
-\begin{example}[\ac{abm} of Life]
-\end{example}
+When we compare the above rules with definitions~\ref{def:cellular-state}
+and~\ref{def:cellular-space}, we immediately see that the cellular identity is not preserved for the
+4th rule.
+This \ac{ca} assumes that a new cell is created from 3 neighboring cells which is contrary to the
+division process of cells.
+We set out to formualte the Game of Life within the framework of cellular \acp{abm}.
+To circumvent this problem, we could assume that simply one of the present cells divides and is
+chosen randomly with even probability.
+In order to formalize such a system we would require to introduce the notion of a
+Stochastic Dynamical System.
+But this raises the problem that the second cell of this division process would have to also be
+inserted somewhere in the \ac{ca}.
+Asked in more general terms: Given an arbitrary state $L^n_{ij}$:
+Is it possible to describe a single transition $L^n_{ij}\rightarrow L^{n+1}_{ij}$ by a combination
+of finitely many cellular division and death processes?
+In general: No.
+This is made clear by considering the example of Figure~\ref{fig:conway-non-abm-transition}.
+The transition shown can not be described by any combination of division and death under the
+consideration that cell-death can only act on currently alive cells.
+In principle, this conundrum could be lifted when performing the division and death process in
+different steps but this would change the outcome and behaviour of the system.
+Similarly, other \acp{ca} such as the Cellular Potts Model~\cite{Graner1992} or Rule
+184~\cite{Krug1988} can not
+directly be translated into an \ac{cabm}.
+This shows that even the fundamental choices in the design of \acp{cabm} already present interesting
+restrictions and \acp{ca} should in general not be treated as special cases of \acp{cabm}.
 
-
-\begin{definition}[Stochastic Dynamical System]
-    A Stochastic Dynamical System is ..
-\end{definition}
-
-\begin{example}[Cellular Potts Model]
-\end{example}
-
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \draw (0,0) -- (3,0);
+        \draw (0,0) -- (0,3);
+        \draw (3,0) -- (3,3);
+        \draw (0,3) -- (3,3);
+        \draw (1,0) -- (1,3);
+        \draw (2,0) -- (2,3);
+        \draw (0,1) -- (3,1);
+        \draw (0,2) -- (3,2);
+        \node at (2.5,0.5) {1};
+        \node at (0.5,2.5) {1};
+        \node at (1.5,2.5) {1};
+        \draw[->] (3.5,1.5) -- (4.5,1.5);
+        \draw (0+5,0) -- (3+5,0);
+        \draw (0+5,0) -- (0+5,3);
+        \draw (3+5,0) -- (3+5,3);
+        \draw (0+5,3) -- (3+5,3);
+        \draw (1+5,0) -- (1+5,3);
+        \draw (2+5,0) -- (2+5,3);
+        \draw (0+5,1) -- (3+5,1);
+        \draw (0+5,2) -- (3+5,2);
+        \node at (1.5+5,1.5) {1};
+    \end{tikzpicture}
+    \caption{
+        This transition in Conways Game of Life can not be described by any combination of
+        cell-division and death.
+        The cell in the middle which is being created by rule 4 is new and must thus be created by
+        the division mechanism in our \ac{abm}.
+        If any of the initial cells divide, we obtain 2 new cells which need to placed.
+        Since cell-death can only affect currently existing cells, this is contradictory to the
+        final state which only contains a single cell.
+    }
+    \label{fig:conway-non-abm-transition}
+\end{figure}
 
 \section{Dynamics}
 
@@ -315,17 +367,30 @@ $\bigcup_{i\in I}S_i=D$ which are pairwise disjoint.
 We will later require that any dynamics can be calculated by considering cellular agents inside a
 given subdomain $S_i$ and their interactions with neighboring subdomains.
 This also applies to spatial effects such as diffusion.
-Therefore, we must first develop the notion of being a \textbf{neighbor} which can be defined by
-two equivalent methods.
+Therefore, we must first develop the notion of being a \textbf{neighbor}.
 
 \begin{definition}[Neighbor]
-\hspace{0cm}
+    The notion of neighbor can be defined by two equivalent methods.
     \begin{enumerate}
         \item We call $\eta:I\rightarrow Pot(I)$ a \textbf{neighbor map} if
-            $i\in\eta(j) \Leftrightarrow j\in\eta(i)$ for each $i,j\in I$.
-        \item We call a relation $||$ on $I$ a \textbf{neighbor relation} if it is symmetric.
+        \item $i\in\eta(j) \Leftrightarrow j\in\eta(i)$ for each $i,j\in I$.
+            We call a relation $||$ on $I$ a \textbf{neighbor relation} if it is symmetric.
     \end{enumerate}
 \end{definition}
+
+\begin{example}[Moore Neighbors]
+    The neighborhood used in the Game of Life~\ref{example:game-of-life} is the 2-dimensional
+    special case.
+    In general, for any discrete space $\mathbb{Z}^n$, we consider the Moore neighborhood $U(x)$ for
+    any point $x\in\mathbb{Z}^n$ to be
+    \begin{equation}
+        U(x) := \{y\in\mathbb{Z}^n:\max\limits_{i=1}^n|x_i-y_i|=1\}.
+    \end{equation}
+    This definition ensures that at least one component of the value $y$ is not identical to the
+    point in question $x$.
+    This metric is also often called uniform norm, supremum norm (in a possibly infinite-dimensional
+    case) or Chebyshev norm~\cite{Rudin1976}.
+\end{example}
 
 Note that in the numerical implementation it is often more convenient to work with the first
 definition while the second can be more useful in a theoretical context.
