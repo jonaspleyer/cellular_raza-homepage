@@ -108,33 +108,35 @@ pdfkeywords={},
 \section{Introduction}
 \label{sec:introduction}
 Over the course of the last decades, many cellular \acp{abm} have been proposed and implemented
-[CITATIONS].
-Their puposes range from early embryogenesis to cancer research over to scar healing [CITATIONS].
-Some of these models provide exact mathematical formulations [CITATIONS] of the system which they
-solve.
+\cite{PoncedeLeon2022,Hoehme2010,Lupperger2020}.
+Their puposes range from early embryogenesis to cancer research over to wound
+healing~\cite{Ziraldo2013}.
+Some of these models provide exact mathematical formulations \cite{Ghaffarizadeh2018,Tanaka2015} of
+the system which they solve.
 Although it is well-known that \acp{abm} and \acp{ca} are a subclass of (continous or discrete)
-dynamical systems [CITATIONS], there has not yet been a directed effort towards a unifying
-mathamtical formalism for \acp{abm}.
+dynamical systems \cite{Wolfram1984} there has not yet been a directed effort towards a unifying
+mathamtical formalism for \acp{cabm}.
 We aim to provide insights into a variety of shared concepts along specific examples with real
 use-cases.
 We construct this formalism along the implementation of our numerical simulation framework
-\lstinline{cellular_raza} [CITATION].
+\lstinline{cellular_raza}~\cite{Pleyer_cellular_raza_2024}.
 
 \acp{abm} are centered around the thought that cells are the fundamental building-blocks of nature.
 Every cellular agent is distinct to any other and can in principle be tracked throughout space and
 time.
-Individual-based behaviour gives rise to global phenomena such as pattern-formation [CITTAIONS].
-The cells are part of the physical domain and may interact with it in various ways eg. via Exchange
-of Ligands, Diffusion or physical forces.
+The individual behaviour of cells results in the emergence of global phenomena such as spatial or
+temporal patterns \cite{Owen2020,Wolpert1969,Giudicelli2007}.
+The cells are part of the physical domain and may interact with it in various ways eg. via exchange
+of Ligands or physical forces.
 Furthermore, cells interact with each other directly.
 Most of these interactions are of short range compared to the total size of the system although
-counter-examples such as electrical signals exist [CITATIONS].
-We explicitly note that our assumptions are not fundamental and lossening of these restrictions can
+counter-examples such as electrical signals exist \cite{Ded2021}.
+We explicitly note that our assumptions are not fundamental and loosening of these restrictions can
 be discussed to possibly cover a wider variety of problems.
 It is important to consider these limitations when applying this theoretical framework.
 
 \section{The Cellular Space $\mathscr{C}$}
-We assume that each individual cell lives in a space $C$ which describes all possible configurations
+We assume that each individual cell lives in a set $C$ which describes all possible configurations
 of this single cell.
 Cellular systems are characterized by the fact that cells are in principle (although in
 practice sometimes more difficult) tracable through time and space.
@@ -189,6 +191,7 @@ Thus a cell is an element of the product $J\times C$.
 The explicit representation of $J$ can depend on the respective system in question.
 
 \begin{definition}[Cellular State]
+    \label{def:cellular-state}
     Let $J$ be a set of identifiers and $C$ be the set describing cellular agents.
     We call a set of cells $M\in Pot(J\times C)$ a cellular state if $M$ is finite and every cell
     has a unique identifer ie. $\#\pi_1(M)=\#M$.
