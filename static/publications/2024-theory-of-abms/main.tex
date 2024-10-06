@@ -199,32 +199,39 @@ The explicit representation of $J$ can depend on the respective system in questi
 
 To allow for processes such as cell-division and death we additionally must be able to treat a
 variable number of cells throughout the evolution of the dynamical system.
+The evolution function of our dynamical system will map cellular states onto each other, thus
+acting on the cellular space $\mathscr{C}$.
 
 \begin{definition}[Cellular Space]
+    \label{def:cellular-space}
     The cellular space $\mathscr{C}(J, C)$ of an index set $J$ and cellular configuration space $C$
     is given by $\mathscr{C}(J,C) = \{M\in Pot(J\times C) | M \text{ is cellular state }\}$.
     We may choose the simplified notation $\mathscr{C} = \mathscr{C}(J, C)$ where the context is
     clear.
 \end{definition}
 
-The evolution function of our dynamical system will map cellular states onto each other, thus
-acting on the cellular space $\mathscr{C}$.
-
 Furthermore, as can be seen from Figure~\ref{fig:cell-lineage-break}, division of cells introduces
 two new identifiers with two new cells and consumes the previously existing cell.
 Cell-death removes cells but newly created ones may not obtain their unique identifier making it
 also unique in time.
-It is clear that by these processes identifiers $j\in J$ live in a connected subset $U\subset T$
-where $T$ is the monoid of our dynamical system describing time.
 
-When we compare these statements with \acp{ca} such as the Game of Life~\ref{example:game-of-life},
-we immediately see that this cellular identity is not preserved.
+\begin{definition}[Division (Proliferation)]
+\end{definition}
+\begin{definition}[Death]
+\end{definition}
 
-\subsection{Division}
-\subsection{Death}
-% \subsection{Fusion}
+\begin{lemma}[Cellular Identity]
+    \label{thm:cellular-uniqueness}
+    Given an index $j\in J$, we define the set of time-points $T_j=\{t\in T: j\in\phi_t(x_0)\}$.
+    Let the underlying time monoid $T$ of our \ac{abm} be a connected topological space.
+    a path-connected subset
+    $U\subset T$ where $T$ is the monoid of our dynamical system describing time.
+\end{lemma}
+\begin{proof}
+    TODO
+\end{proof}
 
-\section{Dynamical Systems}
+\section{Dynamics}
 \begin{definition}[Dynamical System]
     A dynamical system is a tuple $(T,M,\phi)$ where $T$ is a monoid (written additively) and
     $\phi$ is a mapping
@@ -247,8 +254,8 @@ $\mathscr{C}$ and the physical domain $D$ in which they live ie. $M=\mathscr{C}\
 \begin{example}[Game of Life]
     \label{example:game-of-life}
     Conway's Game of Life is perhaps the most popular example for a cellular automaton.
-    It is deterministic and functions on a infinite grid $\mathbb{Z}^2$ by assigning one of two
-    states (alive or dead) to each grid-point
+    It is deterministic and acts on a infinite grid $\mathbb{Z}^2$ by assigning one of two states
+    (alive or dead) to each grid-point
     \begin{equation}
         L:\mathbb{Z}^2\rightarrow\{0,1\}
     \end{equation}
@@ -275,7 +282,7 @@ $\mathscr{C}$ and the physical domain $D$ in which they live ie. $M=\mathscr{C}\
     Together with the sum of all neighboring cells $S_{ij}=\sum\limits_{\iota\in\eta_{ij}}L^n_\iota$
     we can write these as
     \begin{equation}
-        \phi(L_{ij}^n) = L_{ij}^{n+1} =
+        \phi_1(L_{ij}^n) = L_{ij}^{n+1} =
         \begin{cases}
             0 &L^n_{ij}=1 \text{ and } S_{ij}<2\\
             1 &L^n_{ij}=1 \text{ and } S_{ij}=2,3\\
@@ -284,6 +291,8 @@ $\mathscr{C}$ and the physical domain $D$ in which they live ie. $M=\mathscr{C}\
             0 &\text{else}
         \end{cases}
     \end{equation}
+    which fully specifies the dynamical system when applying iteratively
+    $\phi_m=\phi_1\circ\dots\circ\phi_1$.
 \end{example}
 
 \begin{example}[\ac{abm} of Life]
