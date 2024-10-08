@@ -227,10 +227,12 @@ also unique in time.
 
 \begin{lemma}[Cellular Identity]
     \label{thm:cellular-uniqueness}
-    Given an index $j\in J$, we define the set of time-points $T_j=\{t\in T: j\in\phi_t(x_0)\}$.
-    Let the underlying time monoid $T$ of our \ac{abm} be a connected topological space.
-    a path-connected subset
-    $U\subset T$ where $T$ is the monoid of our dynamical system describing time.
+    Given an index $j\in J$, we define the \textbf{Life-Span} of $j$ which is the set of all
+    time-points for which this index exists $T_j=\{t\in T: j\in\phi_t(x_0)\}$.
+    Let $T$ be a connected topological space.
+    Then $T_j$ is also connected.
+    If $T$ is a metric space, we also define the \textbf{Lifetime} via
+    $t_j:=\sup\limits_{s,t\in T_j}d(t, s)$ or $t_j:=0$ if $T_j=\o$.
 \end{lemma}
 \begin{proof}
     TODO
