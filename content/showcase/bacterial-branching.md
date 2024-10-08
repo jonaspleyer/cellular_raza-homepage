@@ -3,10 +3,13 @@ title: Bacterial Branching Patterns
 math: true
 ---
 
-This simulation was inspired by the spatial growth patterns of _Bacillus Subtilis_ which were first
-mathematically described in [\[1,2\]](#references).
-These patterns can be modeled by considering two variables: the spatial-temporal distribution $n$
-of the available nutrient and the bacterial population density $b$.
+Spatio-temporal patterns of bacterial growth such as in _Bacillus Subtilis_ have been studied for
+numerous years [\[1,2\]](#references).
+They are typically described by a system of PDEs (Partial Differential Equations) which  describe
+intracellular reactions, growth and spatial contributions (typically via Diffusion processes) which
+describe diffusion of nutrients and movement of the cells.
+We consider two variables: the spatial-temporal distribution $n$ of the available nutrient and the
+bacterial population density $b$.
 Together with the ratio of diffusion of both components $d$ the set of coupled partial differential
 equations read:
 
