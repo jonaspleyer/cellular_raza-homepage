@@ -72,8 +72,7 @@ The inspected frameworks are all crafted for specific use-cases and may require 
 These parameters are often not known in practice and are cumbersome to determine experimentally.
 This creates problems for the extendability of the software and the ability to properly interpret
 results.
-
-There exist only few modeling frameworks which provide a significant level of flexibility and
+Only few modeling frameworks exist which provide a significant level of flexibility and
 customizability in their definition of cell-agents.
 Chaste [@Cooper2020] allows to reuse individual components of their simulation code such as ODE
 and PDE solvers but is only partially cell-based.
