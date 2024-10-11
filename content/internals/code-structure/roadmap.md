@@ -11,8 +11,6 @@ Even if these features are listed, they may be postponed due to complications or
 For feature requests, please use [github's issue tracker](https://www.github.com/jonaspleyer/cellular_raza/issues).
 
 ## The way to version 0.1
-### Simulation Flow
-
 ### CellAgent (concepts + backend)
 - [x] mechanics via force interactions
 - [x] proliferation
