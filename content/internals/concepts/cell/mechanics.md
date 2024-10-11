@@ -13,7 +13,25 @@ In many examples, these types are identical.
 The subdomain trait is responsible for keeping cell-agents inside the specified simulation
 domain.
 
-# Difference to [Interaction](/internals/concepts/cell/interaction) concept
+The solver of the chosen [backend](/internals/backends) must be told how to increment position and
+velocity of the cell.
+This is done by the `calculate_increment` function.
+
+```rust
+fn calculate_increment(&self, force: For) -> Result<(Pos, Vel), CalcError> {
+    // Do some calculations
+    ...
+    // Return increments
+    Ok((...,...))
+}
+```
+
+If the user decides to leave out the [Interaction](/internals/concepts/cell/interaction) concept,
+we will assume a force of zero as specified by the
+[`num::Zero`](https://docs.rs/num/latest/num/traits/trait.Zero.html) trait when numerically solving
+the equations.
+
+## Difference to [Interaction](/internals/concepts/cell/interaction) concept
 
 To describe physical interactions between cells when in proximity of each other, we also provide the
 [Interaction](/internals/concepts/cell/interaction) concept.
@@ -26,16 +44,25 @@ For example we can seamlessly change between the
 [`Langevin3D`](/docs/cellular_raza_building_blocks/struct.Langevin3D.html) struct without having to
 alter the currently used Interaction type (if present).
 
-# Examples
+The [`Mechanics`](/docs/cellular_raza_concepts/trait.Mechanics.html) trait requires the
+[`Position`](/docs/cellular_raza_concepts/trait.Position.html) and
+[`Velocity`](/docs/cellular_raza_concepts/trait.Velocity.html) traits which provide setters and
+getters for the spatial cellular representation.
+
+## Examples
 A wide variety of cellular repesentations can be realized by this trait.
 `cellular_raza` provides some of them in its
 [`cellular_raza_building_blocks`](/docs/cellular_raza_building_blocks) crate.
 
-## Point-like Particles
+### Newtonian Dynamics
 To illustrate how the [`Mechanics`](/docs/cellular_raza_concepts/Mechanics.html) concept works, we
-take alook at the most simple representation as point-like particles.
+take alook at the most simple representation as
+[point-like particles](/internals/concepts/cell/position) under the effect of
+standard newtonian dynamics.
+
 In this case, cells are described by a postion and velocity vector of $n$ (typically $n=2,3$)
 dimensions which we will call `VectorN` for simplicity.
+
 $$
     \vec{x} = \begin{bmatrix}
         x_1\\\\
@@ -51,8 +78,10 @@ $$
         v_n
     \end{bmatrix}
 $$
+
 A third type is also of importance which describes the force acting on the cell.
 In our case we can assume the same form as before
+
 $$
     \vec{F} = \begin{bmatrix}
         F_1\\\\
@@ -61,18 +90,7 @@ $$
         F_n
     \end{bmatrix}.
 $$
-The solver of the chosen [backend](/internals/backends) must be told how to increment position and
-velocity of the cell.
-This is done by the `calculate_increment` function.
-```rust
-fn calculate_increment(&self, force: For) -> Result<(Pos, Vel), CalcError> {
-    // Do some calculations
-    ...
-    // Return increments
-    Ok((...,...))
-}
-```
-Even for simple point-like particles, we have a variety of options.
+
 If we assume simple newtonian dynamics without any additional stochastic effects, we can write down
 the equations of motion
 $$\begin{align}
@@ -81,6 +99,7 @@ $$\begin{align}
 \end{align}$$
 Note that we assume that our cell has a certain mass, which may also be set to $m=1$ and thus
 neglected in some implementations.
+
 ```rust
 struct MyCell {
     pos: VectorN,
@@ -88,32 +107,10 @@ struct MyCell {
     mass: f64,
 }
 ```
-The [`Mechanics`](/docs/cellular_raza_concepts/trait.Mechanics.html) trait interoperates very
-closesly with the [`Position`](/docs/cellular_raza_concepts/trait.Position.html) and
-[`Velocity`](/docs/cellular_raza_concepts/trait.Velocity.html) traits which provide setters and
-getters
-If we implement the properties explained by the preceding equations, we obtain
+
+The implementation of the [`Mechanics`]() trait reads:
+
 ```rust
-impl Position<VectorN> for MyCell {
-    fn pos(&self) -> VectorN {
-        self.pos.clone()
-    }
-
-    fn set_pos(&mut self, pos: &VectorN) {
-        self.pos = pos.clone();
-    }
-}
-
-impl Velocity<VectorN> for MyCell {
-    fn velocity(&self) -> VectorN {
-        self.vel.clone()
-    }
-
-    fn set_velocity(&mut self, velocity: &VectorN) {
-        self.vel = velocity.clone();
-    }
-}
-
 // Here is the magic
 impl Mechanics<VectorN, VectorN, VectorN> for MyCell {
     fn calculate_increment(
@@ -126,6 +123,57 @@ impl Mechanics<VectorN, VectorN, VectorN> for MyCell {
     }
 }
 ```
-If the user decides to leave out the Interaction concept, we will assume a force of zero as
-specified by the [`num::Zero`](https://docs.rs/num/latest/num/traits/trait.Zero.html) trait when
-numerically solving the equations.
+
+These dynamics together with an additional damping constant are pre-defined as the
+[`NewtonDamped2D`](/docs/cellular_raza_building_blocks/NewtonDamped2D.html) struct.
+
+### Brownian Dynamics
+
+The standard brownian motion stochastic differential equation is given by
+$$\begin{equation}
+    \dot{\vec{x}} = -\frac{D}{k_B T}\nabla V(x) + \sqrt{2D}R(t).
+\end{equation}$$
+
+The variable $R(t)$ is the [wiener process](https://en.wikipedia.org/wiki/Wiener_process)
+[\[1\]](#references).
+To model this stochastic contribution, we use the `get_random_contribution` method of the
+[`Mechanics`](/docs/cellular_raza_concepts/trait.Mechanics.html) trait.
+
+```rust
+struct MyCell {
+    pos: VectorN,
+}
+
+impl Mechanics<VectorN> for MyCell {
+    fn get_random_contribution(
+        &self,
+        rng: &mut rand_chacha::ChaCha8Rng,
+        dt: f64,
+    ) -> Result<(VectorN, VectorN), RngError> {
+        let dpos = (2.0 as $float_type * self.diffusion_constant).sqrt()
+            * wiener_process(
+            rng,
+            dt
+        )?;
+        let dvel = VectorN::zeros();
+        Ok((dpos, dvel))
+    }
+
+    fn calculate_increment(
+        &self,
+        force: VectorN,
+    ) -> Result<(VectorN, VectorN), CalcError> {
+        let dx = self.diffusion_constant / self.kb_temperature * force;
+        Ok((dx, VectorN::zeros()))
+    }
+}
+
+```
+
+## References
+
+[1]
+N. Wiener,
+[Collected Works](https://mitpress.mit.edu/9780262230704/norbert-wiener-collected-works/):
+v. 1. London, England: MIT Press,
+1976.
