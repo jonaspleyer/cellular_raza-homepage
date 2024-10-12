@@ -460,9 +460,29 @@ restrictions and \acp{ca} should in general not be treated as special cases of \
     \label{fig:conway-non-abm-transition}
 \end{figure}
 
-\section{Dynamics}
+This statement can be generalized to the class of elementary \acp{ca}~\cite{Wolfram1983}.
 
+\begin{theorem}[Elementary \aclp{ca} are not cell-based]
+    \begin{itemize}
+        \item Show for all Wolfram Rules that most of them can not be cell-based models
+        \item Consider migration as an additional rule instead of just division and death
+        \item Formal question: given an initial state $x_0$ and final state $x_1$ does a combination
+            of cell-based rules exist which produces this state?
+        \item Additional question: Is this procedure deterministic? (It should not have to be
+            deterministic imho)
+    \end{itemize}
+\end{theorem}
+\begin{proof}
+\end{proof}
+
+\begin{theorem}[]
+\end{theorem}
+\begin{proof}
+\end{proof}
+
+%###################################################################################################
 \section{Spatial Decomposition}
+\label{section:spatial-decomposition}
 We assume that the physical domain $D$ can be split into smaller subdomains
 $\bigcup_{i\in I}S_i=D$ which are pairwise disjoint.
 We will later require that any dynamics can be calculated by considering cellular agents inside a
@@ -637,6 +657,11 @@ We take this as the basis for calculating forces between cells.
 \subsection{Cell Sorting}
 \label{subsection:cell-sorting}
 
+\begin{itemize}
+    \item Define ratio of spatial density of species 1 and 2 $\rho(x)$
+    \item Assume that $\rho(x) = \rho_0\sin(\lambda x)$
+    \item Optimize Lagrangian/Hamiltonian with respect to $\lambda$
+\end{itemize}
 
 %---------------------------------------------------------------------------------------------------
 \subsection{Bacterial Rods}
