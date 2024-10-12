@@ -197,35 +197,76 @@ We call the set of all identifiers $J$ and only consider cells as a combination 
 $c\in C$ with an identifier $\iota\in I$.
 Thus a cell is an element of the product $J\times C$.
 The explicit representation of $J$ can depend on the respective system in question.
-
-\begin{definition}[Cellular State]
-    \label{def:cellular-state}
-    Let $J$ be a set of identifiers and $C$ be the set describing cellular agents.
-    We call a set of cells $M\in Pot(J\times C)$ a cellular state if $M$ is finite and every cell
-    has a unique identifer ie. $\#\pi_1(M)=\#M$.
-\end{definition}
-
 To allow for processes such as cell-division and death we additionally must be able to treat a
 variable number of cells throughout the evolution of the dynamical system.
 The evolution function of our dynamical system will map cellular states onto each other, thus
 acting on the cellular space $\mathscr{C}$.
+As can be seen from Figure~\ref{fig:cell-lineage-break}, division of cells introduces two new
+identifiers for two new cells and consumes the previously existing cell.
+Cell-death removes cells.
+Newly inserted cells may not obtain previously used identifiers since this would again interfere
+with cell lineage.
+This means, we need to keep track of all identifiers $\iota\in I_p$ which have been used in the
+past.
+
+\begin{definition}[Cellular State]
+    \label{def:cellular-state}
+    Let $I$ be a set of identifiers and $C$ be the set describing cellular agents.
+    We call a set of cells $(I_p,M)\in Pot(I)\times Pot(I\times C)$ a cellular state if
+    \begin{enumerate}
+        \item Every cell has a unique identifer $\#\pi_1(M)=\#M$.
+        \item Identifiers have not been used previously $I_p\cap\pi_1(M)=\varphi$
+    \end{enumerate}
+    where $\pi$ is the projection on the first component.
+    The set $I_p$ contains identifiers which have been used previously.
+\end{definition}
 
 \begin{definition}[Cellular Space]
     \label{def:cellular-space}
-    The cellular space $\mathscr{C}(J, C)$ of an index set $J$ and cellular configuration space $C$
-    is given by $\mathscr{C}(J,C) = \{M\in Pot(J\times C) | M \text{ is cellular state }\}$.
-    We may choose the simplified notation $\mathscr{C} = \mathscr{C}(J, C)$ where the context is
+    The cellular space $\mathscr{C}(I, C)$ of an index set $I$ and cellular configuration space $C$
+    is given by
+    $\mathscr{C}(I,C) = \{M\in Pot(I)\times Pot(I\times C) | M \text{ is cellular state }\}$.
+    We may choose the simplified notation $\mathscr{C} = \mathscr{C}(I, C)$ where the context is
     clear.
+    We write $c_\iota:=(\iota,c)\in M$ where $(I_p,M)\in\mathscr{C}$ despite the non-exhaustiveness
+    of the index $\iota$ in a single cellular state.
 \end{definition}
 
-Furthermore, as can be seen from Figure~\ref{fig:cell-lineage-break}, division of cells introduces
-two new identifiers with two new cells and consumes the previously existing cell.
-Cell-death removes cells but newly created ones may not obtain their unique identifier making it
-also unique in time.
+Cell division~\cite{bhlitem268752} is a process during which a cell transforms either via binary
+(or multiple) fission~\cite{Biov2014} or mitosis~\cite{Ilowiecki1981,von1835resp} and
+meiosis~\cite{}[CITATION] into separate
+daughter cells.
+To describe cell division, the dynamics behind this transition needs to be taken into account.
+We will discuss this in the chapter~\ref{section:dynamics}.
+In our agent-based approach, the end of this transition removes the old cell and inserts the new
+daughter cells.
 
 \begin{definition}[Cell Division]
-    TODO proliferation
+    \label{definition:cell-division}
+    We call a map $\gamma:C\rightarrow \cup_{n\geq 2}C^n$ a division function and
+    $\Upsilon:\{\gamma:C\rightarrow \cup_{n\geq 2}C^n\}\times I\times\mathscr{C}\rightarrow\mathscr{C}$ a 
+    division operator if for any initial state $(I_p,M)\in\mathscr{C}$ with $d_i\in M$ and final
+    state $(J_p,N)=\Upsilon(\eta,i,(I_p,M))$
+    \begin{enumerate}
+        \item Exactly one cell is removed $M\backslash N=\{d_i\}$
+        \item At least two new cells are created: $N\backslash M=\{c_\iota,\tilde{c}_{\tilde{\iota},\dots}\}$
+        \item We carry forward all old identifiers and the removed one: $J_p=I_p\cup\{i\}$
+        \item New cells have new identifiers: $\iota,\tilde{\iota},\dots\notin J_p$.
+    \end{enumerate}
+    In the case when $i\notin\pi_1(M)$, we require $\Upsilon(\eta,i,(I_p,M))=(I_p,M)$.
 \end{definition}
+
+It is important to note that while this definition seems cumbersome in the first place, it is
+essential in upkeeping a valid cellular state.
+From an application standpoint, it is desirable to only specify the division map $\gamma$ and have
+$\Upsilon$ be defined by the underlying modeling framework.
+
+Another important process is that of cell death which is similarly as cell-division not instantanous
+but occurs over a period of time.
+Most commonly known death schemes are apoptosis~\cite{Kerr1965} (planned cell death) and
+necrosis~\cite{Gerschenson2001} (ie. through injury).
+How to describe such a transition will be discussed in chapter~\ref{section:dynamics}.
+
 \begin{definition}[Cell Death]
     TODO
     - apoptosis
@@ -233,18 +274,33 @@ also unique in time.
     - removal
 \end{definition}
 
-\begin{lemma}[Cellular Identity]
-    \label{thm:cellular-uniqueness}
-    Given an index $j\in J$, we define the \textbf{Life-Span} of $j$ which is the set of all
-    time-points for which this index exists $T_j=\{t\in T: j\in\phi_t(x_0)\}$.
-    Let $T$ be a connected topological space.
-    Then $T_j$ is also connected.
-    If $T$ is a metric space, we also define the \textbf{Lifetime} via
-    $t_j:=\sup\limits_{s,t\in T_j}d(t, s)$ or $t_j:=0$ if $T_j=\o$.
+\begin{lemma}[Cell Lineage]
+    \label{lemma:cell-lineage}
+    Given an initial state $(I_p,M)\in\mathscr{C}$, an arbitrary combination of applications of
+    division and death functions creates a forest.
 \end{lemma}
 \begin{proof}
-    TODO
+    We proof this statement via induction. For $n=0$ we are presented with a cellular state
+    $M\in\mathscr{C}$ which consists of cells $\{c_\iota\in M\}$.
+    We interpret each cell as root of a new tree.
+    In the induction step $n\rightarrow n+1$, we may assume that $G=(C,E)$ is a tree with
+    cells as vertices.
+    Any application of a division function $\Upsilon(\gamma, \dot)$ consumes a cell $c_{\iota_0}$
+    and produces new cells $\{c_{\iota_1},\dots,c_{\iota_n}\}$.
+    We thus insert the new cells as additional vertices with the edges
+    $\{c_{\iota_0},c_{\iota_1}\},\dots,\{c_{\iota_0},c_{\iota_n}\}$.
+    From property 4. of the cell-division definition~\ref{definition:cell-division}, we know that
+    the index of the removed cell $c_{\iota_0}$ will not occur for any further application of the
+    division operator which means that the vertex of cell $c_{\iota_0}$ has $n$ children.
+    In the case of a death function, nothing happens.
+    The associated cell $c_\iota$ will remain and endpoint for any further applications of death
+    or division.
 \end{proof}
+\begin{corollary}[$k$-ary and Binary Cell Division]
+    In the case where the division function $\eta:C\rightarrow C^k\subset\cup_{n\in\mathbb{N}}C^n$
+    is of k-ary nature, lemma~\ref{lemma:cell-lineage} retains a k-ary tree.
+    The most common biological reality is the binary case.
+\end{corollary}
 
 %###################################################################################################
 \section{Dynamics}
@@ -264,6 +320,29 @@ also unique in time.
 \end{definition}
 
 We often write $\phi(t,m) = \phi_t(m)$.
+
+\begin{lemma}[Cellular Identity]
+    \label{thm:cellular-uniqueness}
+    Given an index $\iota\in I$, we define the \textbf{Life-Span} of $\iota$ which is the set of all
+    time-points for which this index exists 
+    \begin{equation}
+        T_\iota=\{t\in T: \iota\in\phi_t(x_0)\}.
+    \end{equation}
+    Let $T$ be a locally connected topological space.
+    Then $T_j$ is connected.
+    If $T$ is a metric space, we also define the \textbf{Lifetime} via
+    \begin{equation}
+        t_\iota:=\sup\left(\{d(s,t)|s,t\in T_\iota\}\cup\{0\}\right).
+    \end{equation}
+\end{lemma}
+\begin{proof}
+    We prove this theorem by showing that all continuous functions from $T_\iota$ to $\{0,1\}$ are
+    constant.
+    Suppose $f:T_\iota\rightarrow\{0,1\}$ is continous.
+    Without loss of generality we can assume that there exists a value $t\in T_\iota$ such that
+    $f(t)=1$.
+    TODO
+\end{proof}
 
 %###################################################################################################
 \section{Comparison with \aclp{ca}}
