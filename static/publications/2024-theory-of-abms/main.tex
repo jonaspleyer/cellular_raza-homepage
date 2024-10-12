@@ -101,6 +101,7 @@ pdfkeywords={},
 \begin{document}
 \maketitle
 
+%###################################################################################################
 \begin{abstract}
 \end{abstract}
 
@@ -108,9 +109,9 @@ pdfkeywords={},
 % keywords can be removed
 \keywords{Agent-Based \and Cell \and Biology \and Dynamical System}
 
-
+%###################################################################################################
 \section{Introduction}
-\label{sec:introduction}
+\label{section:introduction}
 Over the course of the last decades, many cellular \acp{abm} have been proposed and implemented
 \cite{PoncedeLeon2022,Hoehme2010,Lupperger2020}.
 Their puposes range from early embryogenesis to cancer research over to wound
@@ -139,7 +140,9 @@ We explicitly note that our assumptions are not fundamental and loosening of the
 be discussed to possibly cover a wider variety of problems.
 It is important to consider these limitations when applying this theoretical framework.
 
+%###################################################################################################
 \section{The Cellular Space $\mathscr{C}$}
+\label{section:cellular-space}
 We assume that each individual cell lives in a set $C$ which describes all possible configurations
 of this single cell.
 Cellular systems are characterized by the fact that cells are in principle (although in
@@ -157,40 +160,41 @@ $gc_{212}$ and $gc_{221}$ would have different grandparent-cells.
 \begin{figure}
     \centering
     \begin{tikzpicture}[level distance=1.5cm,
-      level 1/.style={sibling distance=3cm},
-      level 2/.style={sibling distance=1.5cm}]
-      \node {$p_1$}
-        child {node {$c_{11}$}
-          child {node {$gc_{111}$}}
-          child {node {$gc_{112}$}}
-        }
-        child {node (c12) {$c_{12}$}
-        child {node {$gc_{121}$}}
-          child {node {$gc_{122}$}}
-        };
+        level 1/.style={sibling distance=3cm},
+        level 2/.style={sibling distance=1.5cm}
+    ]
+        \node (p1) {$p_1$}
+            child {node (c11) {$c_{11}$}
+                child {node (gc111) {$gc_{111}$}}
+                child {node (gc112) {$gc_{112}$}}
+            }
+            child {node (c12) {$c_{12}$}
+                child {node (gc121) {$gc_{121}$}}
+                child {node (gc122) {$gc_{122}$}}
+            };
         \node[] at (6, 0) {$p_2$}
-        child {node (c21) {$c_{21}$}
-          child {node {$gc_{211}$}}
-          child {node {$gc_{212}$}}
-        }
-        child {node {$c_{22}$}
-        child {node {$gc_{221}$}}
-          child {node {$gc_{222}$}}
-        };
+            child {node (c21) {$c_{21}$}
+                child {node (gc211) {$gc_{211}$}}
+                child {node (gc212) {$gc_{212}$}}
+            }
+            child {node {$c_{22}$}
+                child {node (gc221) {$gc_{221}$}}
+                child {node (gc222) {$gc_{222}$}}
+            };
         \draw[dashed,<->] (c12) -- (c21);
-    \end{tikzpicture}
-    \caption{
-        Arbitrary cells can not be interchanged freely since this might introduce incorrect
-        configurations into the cell-lineage.
-        For example, the two cousin-cells $gc_{212}$ and $gc_{221}$ would have different
-        grandparent-cells if $c_{12}$ and $c_{21}$ would be interchanged.
-    }
-    \label{fig:cell-lineage-break}
+        \end{tikzpicture}
+        \caption{
+            Arbitrary cells can not be interchanged freely since this might introduce incorrect
+            configurations into the cell-lineage.
+            For example, the two cousin-cells $gc_{212}$ and $gc_{221}$ would have different
+            grandparent-cells if $c_{12}$ and $c_{21}$ would be interchanged.
+        }
+        \label{fig:cell-lineage-break}
 \end{figure}
 
 This exemplifies the need to assign unique identifiers for cells to correctly trace their lineage.
 We call the set of all identifiers $J$ and only consider cells as a combination of an element
-$c\in C$ with an identifier $j\in J$.
+$c\in C$ with an identifier $\iota\in I$.
 Thus a cell is an element of the product $J\times C$.
 The explicit representation of $J$ can depend on the respective system in question.
 
@@ -242,7 +246,9 @@ also unique in time.
     TODO
 \end{proof}
 
+%###################################################################################################
 \section{Dynamics}
+\label{section:dynamics}
 \begin{definition}[Dynamical System]
     A dynamical system is a tuple $(T,M,\phi)$ where $T$ is a monoid (written additively) and
     $\phi$ is a mapping
@@ -256,7 +262,12 @@ also unique in time.
         \phi(t_2, \phi(t_1, m)) &= \phi(t_2+t_1,m).
     \end{align}
 \end{definition}
+
 We often write $\phi(t,m) = \phi_t(m)$.
+
+%###################################################################################################
+\section{Comparison with \aclp{ca}}
+\label{section:comparison-with-ca}
 Classical \acp{ca} such as Conway's Game of Life \cite{Graner1992} or the Cellular Potts Model
 \cite{games1970fantastic} are spatially and temporally discrete dynamical systems.
 In the case of \acp{abm} the space $M$ consists of the collection of all currently living cells
@@ -425,17 +436,18 @@ domain.
     $||$ such that $D=\cup_{i\in I}$ and $S_i$ are pairwise disjoint.
 \end{definition}
 
+%---------------------------------------------------------------------------------------------------
 \subsection{Properties of Multicellular Systems}
-\label{subsec:introduction-properties}
+\label{subsection:properties}
 
 \begin{enumerate}
     \item Stochastic -> Irreversible
     \item Dissipative (take up energy, non-equilibrium, decrease entropy)
 \end{enumerate}
 
-
+%---------------------------------------------------------------------------------------------------
 \subsection{Individual-Based Descriptions of Cellular Agent}
-\label{subsec:introduction-individual-descriptions}
+\label{subsection:individual-descriptions}
 
 \begin{table}
 	\caption{Aspects of cellular systems}
@@ -484,6 +496,7 @@ interactions with other cells and the external environment respectively.
 Lastly, we allow an external controller to make changes to the experimental setup in accordance with
 the experimental reality.
 
+%---------------------------------------------------------------------------------------------------
 \subsection{Intracellular Representations and Processes}
 \label{subsec:abstractions-cell}
 \subsubsection{Mechanics - Spatial Representation, Intracellular Forces \& Movement}
@@ -493,6 +506,7 @@ the experimental reality.
 \subsubsection{Cycle}
 \label{subsubsec:abstractions-cell-cycle}
 
+%---------------------------------------------------------------------------------------------------
 \subsection{Cell-Cell Interactions}
 \label{subsec:abstractions-cell-cell}
 \subsubsection{Forces}
@@ -545,6 +559,7 @@ We take this as the basis for calculating forces between cells.
     (F_i, F_j) = F(x_i, x_j, v_i, v_j, \sigma_i, \sigma_j)
 \end{equation}
 
+%---------------------------------------------------------------------------------------------------
 \subsection{Domain-Cell Interactions}
 \label{subsec:abstractions-domain-cell}
 
@@ -602,7 +617,13 @@ We take this as the basis for calculating forces between cells.
 
 \bibliographystyle{IEEEtran}
 \bibliography{references}  %%% Uncomment this line and comment out the ``thebibliography'' section below to use the external .bib file (using bibtex) .
+%###################################################################################################
+\section{Applications}
+\label{section:applications}
 
+%---------------------------------------------------------------------------------------------------
+\subsection{Cell Sorting}
+\label{subsection:cell-sorting}
 
 %%% Uncomment this section and comment out the \bibliography{references} line above to use inline references.
 % \begin{thebibliography}{1}
@@ -612,12 +633,18 @@ We take this as the basis for calculating forces between cells.
 % 	\newblock Real-time segmentation of on-line handwritten arabic script.
 % 	\newblock In {\em Frontiers in Handwriting Recognition (ICFHR), 2014 14th
 % 			International Conference on}, pages 417--422. IEEE, 2014.
+%---------------------------------------------------------------------------------------------------
+\subsection{Bacterial Rods}
+\label{subsection:bacterial-rods}
 
 % 	\bibitem{kour2014fast}
 % 	George Kour and Raid Saabne.
 % 	\newblock Fast classification of handwritten on-line arabic characters.
 % 	\newblock In {\em Soft Computing and Pattern Recognition (SoCPaR), 2014 6th
 % 			International Conference of}, pages 312--318. IEEE, 2014.
+%---------------------------------------------------------------------------------------------------
+\subsection{Branching Patterns of \textit{Bacillus Subtilis}}
+\label{subsection:branching-patterns-of-bacillus-subtilis}
 
 % 	\bibitem{hadash2018estimate}
 % 	Guy Hadash, Einat Kermany, Boaz Carmeli, Ofer Lavi, George Kour, and Alon
@@ -627,7 +654,9 @@ We take this as the basis for calculating forces between cells.
 % 	\newblock {\em arXiv preprint arXiv:1804.09028}, 2018.
 
 % \end{thebibliography}
+%---------------------------------------------------------------------------------------------------
+\subsection{Semi-Vertex Model}
+\label{subsection:semi-vertex-model}
 
 
 \end{document}
-
