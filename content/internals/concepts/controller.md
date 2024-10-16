@@ -11,3 +11,9 @@ A controller is however not all-knowing and restriced to modifications on the ce
 It can not change the internal behaviour of the extracellular domain.
 
 <!-- TODO finish desribing the controller in more detail -->
+
+{{<callout type="warning">}}
+The [Controller](/docs/cellular_raza_concepts/trait.Controller.html) trait is currently not
+available for the [chili](/internals/backends/chili) backend.
+We hope to be adding this feature in the future.
+{{< /callout >}}
