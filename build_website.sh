@@ -1,3 +1,6 @@
+CR_FOLDER=./cellular_raza
+CWD=$(pwd)
+
 generate_docs() {
     TARGETS=(
         cellular_raza
@@ -10,7 +13,7 @@ generate_docs() {
     git submodule init
     git submodule update --recursive
 
-    cd cellular_raza
+    cd $CR_FOLDER
     cargo clean --doc
 
     for target in ${TARGETS[@]}; do
@@ -18,16 +21,16 @@ generate_docs() {
             -p $target \
             --all-features --\
             --cfg docsrs\
-            --theme ../static/hextra.css \
+            --theme $CWD/static/hextra.css \
             --default-theme hextra \
-            --html-in-header ../custom_navbar.html \
-            --html-in-header ../.docs-header.html
+            --html-in-header $CWD/custom_navbar.html \
+            --html-in-header $CWD/.docs-header.html
     done
-    cd ..
+    cd $CWD
 
     # Swap old for new folder
-    rm -rf static/docs
-    cp -r cellular_raza/target/doc static/docs
+    rm -rf $CWD/static/docs
+    cp -r $CR_FOLDER/target/doc $CWD/static/docs
 }
 
 build_website() {
