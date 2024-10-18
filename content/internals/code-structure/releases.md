@@ -9,6 +9,22 @@ To this point, version numbers do not follow the [semver](https://semver.org/) s
 We are working towards this goal and will report our progress.
 {{< /callout >}}
 
+## cellular_raza 0.1.1
+_18th Oktober 2024_
+- adapt some tests and plotting of them
+- cleanup module structure for time and some tests
+- More detailed descriptions of [concepts](/internals/concepts)
+- New formulation of [MorsePotential](/docs/cellular_raza_building_blocks/struct.MorsePotential.html)
+- Corrected bugs in the [Langevin](/docs/cellular_raza_building_blocks/struct.Langevin.html)
+  mechanics model
+- Abstract [Bacterial Rods](/showcase/bacterial-rods) example into building blocks
+- Start new subproject [cr_mech_coli](https://github.com/jonaspleyer/cr_mech_coli) to build
+  mechanistic, mechanical _E.Coli_ model
+- changed how identifiers will be updated after division:
+  both cells will now receive new identifiers, in the future we want to extend this to arbitrary
+  numbers in order to support multiple fission
+- removed unused `cellular_raza-building_blocks::prelude`
+
 ## cellular_raza 0.1.0
 _28th August 2024 🎉 2 Year Anniversary 🎉_
 - changed calculation of random contribution in `Mechanics` trait
