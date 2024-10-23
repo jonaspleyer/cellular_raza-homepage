@@ -5,30 +5,35 @@ math: true
 
 Spatio-temporal patterns of bacterial growth such as in _Bacillus Subtilis_ have been studied for
 numerous years [\[1,2\]](#references).
-They are typically described by a system of PDEs (Partial Differential Equations) which  describe
-intracellular reactions, growth and spatial contributions (typically via Diffusion processes) which
-describe diffusion of nutrients and movement of the cells.
-We consider two variables: the spatial-temporal distribution $n$ of the available nutrient and the
-bacterial population density $b$.
-Together with the ratio of diffusion of both components $d$ the set of coupled partial differential
-equations read:
+They are typically modeled by a system of PDEs (Partial Differential Equations) which  describe
+intracellular reactions, growth and spatial processes (usually via Diffusion), such as diffusion of
+nutrients and movement of the cells.
+Here, we only consider two variables: the spatial-temporal distribution $n(x,t)$ of the available
+nutrients and the bacterial population density $b(x,t)$.
+The rescaled set of coupled partial differential equations read:
 
 $$\\begin{alignat}{5}
     \dot{n} &= &&\nabla^2n &- &f(n, b)\\\\
     \dot{b} &= d&&\nabla^2b &+ \theta &f(n, b)
 \\end{alignat}$$
 
-The function $f(n,b)$ describes the nutrient consumption by the bacterial metabolism.
+The function $f(n,b)$ describes the nutrient consumption by the bacterial metabolism and $d$ is the
+ratio of diffusion constants.
 The parameter $\theta$ is the "gain" in bacterial mass per nutrient volume resulting from growth
 and division.
 
+<!-- TODO reformulate this paragraph -->
 One critique of these models is that the pattern will diffuse over the course of time, thus not
 creating a persistent pattern.
 This comes from modeling cellular motility via a diffusion equation.
-However stable patterns could be achieved if an equilibrium state exists where cells remain at
+However, stable patterns could be achieved if an equilibrium state exists where cells remain at
 their locations.
 
 ## Mathematical Description
+
+To formulate the above equations in an agent-based approach, we need to define cellular behaviour on
+an individual-based level.
+
 ### Mechanics & Interaction
 
 We represent cells as soft spheres with the same interaction potential as in the
@@ -56,51 +61,45 @@ The volumeo f cell $c$ is given by $V_c$.
 The parameter $u$ is the uptake rate of the nutrient while $\alpha$ describes the consumption of the
 nutrient by the cellular metabolism resulting in an increase of the volume $V_c$.
 In contrast, $\sigma$ degrades the intracellular nutrients 
-<<<<<<< HEAD
-After reaching $90\\%$ of the maximum volume $V_\text{max}$ the cell divides into two equally sized
-cells with volume $V_\text{max}/2$.
-The gain θ is approximately given by $\theta\approx \log(2) \alpha u/ (u + \alpha)$.
-If the uptake rate is very large the gain is limited by
-the nutrient processing rate $\alpha$ (the nutrient metabolism), but in the case where the nutrient
-metabolism is very fast (efficient) the total gain is limited by the uptake rate $u$.
 
 ### Cycle
 
 Once cells have reached a minimum age $\tau$ and nutrient threshold $n_t$, they will divide.
-The newly created agents behave exactly the same as their parent and they will continue to take up
-nutrients, process them and divide.
-This also means, we do not alter their internal parameters during the division process.
-Usually, this cycle of producing new generations ceases due to low concentration of the nutrient
-resource after a few division events.
-Our simulation duration is chosen short enough such that the colony remains in its equilibrium
-state and we thus do not need to model cell death.
+The newly created agents inherit all parameter values and thus their individual behaviour of their
+mother cell.
+They will continue to take up nutrients, process them and divide.
+Usually, this cycle of producing new generations ceases due to depletion of nutrients after a few
+division events.
+For simplicity we ignore cell death in our simulation.
 
 ## Parameters
 
+The parameter values have been chosen such that our simulation yields realistic results.
+
 | Parameter | Symbol | Value |
 | --- | --- | --- |
-| Cell Radius | $R$ | $6.0\hspace{0.25em}\mu \text{m}$ |
-| Potential Strength | $V_0$ | $2\hspace{0.25em}\mu\text{m}^2\hspace{0.25em}\text{min}^{-2}$ |
-| Damping Constant | $\lambda$ | $2\hspace{0.25em}\text{min}^{-1}$ |
-| Interaction Range | $\xi$ | $1.5 \hspace{0.25em} R$ |
-| Turnover Rate | $\sigma$ | $0.025 \hspace{0.25em}\text{min}^{-1}$ |
-| Uptake Rate | $u$ | $0.05 \hspace{0.25em}\text{min}^{-1}$ |
-| Growth Rate | $\alpha$ | $0.1\hspace{0.25em}\mu m^2\hspace{0.25em}\mu g^{-1}\hspace{0.25em}l$ |
-| Nutrient Division Threshold | $n_t$ | $0.8\hspace{0.25em}\mu g\hspace{0.25em} l^{-1}$ |
-| Age threshold | $\tau$ | $65\hspace{0.25em}\text{min}$ |
-| Diffusion Constant | $D$ | $12\hspace{0.25em}\mu m^2 \hspace{0.25em}\text{min}^{-1}$ |
+| Cell Radius | $R$ | $6.0 \text{ µm}$ |
+| Potential Strength | $V_0$ | $2\text{ µm}^2\text{ }/\text{ min}^2$ |
+| Damping Constant | $\lambda$ | $2\text{ min}^{-1}$ |
+| Interaction Range | $\xi$ | $1.5  R$ |
+| Turnover Rate | $\sigma$ | $0.025 \text{ min}^{-1}$ |
+| Uptake Rate | $u$ | $0.05 \text{ min}^{-1}$ |
+| Growth Rate | $\alpha$ | $0.1 \text{ µm}^2\text{ l }/ \text{ µg}$ |
+| Nutrient Division Threshold | $n_t$ | $0.8 \text{ µg }/\text{ l}$ |
+| Age threshold | $\tau$ | $65\text{min}$ |
+| Diffusion Constant | $D$ | $12 \text{ µm}^2\text{ }/\text{ min}$ |
 
 ## Initial State
 
 | Property | Symbol | Value |
 | --- | --- | --- |
-| Time Stepsize | $\Delta t$ | $0.25\hspace{0.25em}\text{min}$ |
+| Time Stepsize | $\Delta t$ | $0.25\text{ min}$ |
 | Time Steps | $N_t$ | $20'000$ |
-| Domain Size | $L$ | $3000\hspace{0.25em}\mu\text{m}$ |
-| Centered Starting Domain Size | $L_0$ | $300\hspace{0.25em}\mu m$ |
+| Domain Size | $L$ | $3000\text{ µm}$ |
+| Centered Starting Domain Size | $L_0$ | $300 \text{ µm}$ |
 | Number of cells | $N_0$ | $400$ |
-| Initial Intracellular Nutrients | $n_i^c$ | $1.0 \hspace{0.25em}\mu g\hspace{0.25em} \hspace{0.25em}l^{-1}$ |
-| Initial Extracellular Nutrients | $n_e$ | $25\hspace{0.25em}\mu g\hspace{0.25em} l^{-1}$ |
+| Initial Intracellular Nutrients | $n_i^c$ | $1.0 \text{ µg }/\text{ l}$ |
+| Initial Extracellular Nutrients | $n_e$ | $25 \text{ µg }/\text{ l}$ |
 
 ## Results
 
@@ -112,7 +111,7 @@ state and we thus do not need to model cell death.
 
 {{< callout type="info" >}}
 The picture shown above was generated with modified parameters on a larger domain size of
-$L\approx 30000\hspace{0.25em}\mu m$ and with an increased number of simulation steps.
+$L\approx 30000\mu m$ and with an increased number of simulation steps.
 Unfortunately the exact numbers have been lost.
 {{< /callout >}}
 

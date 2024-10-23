@@ -4,7 +4,6 @@ date: 2024-04-11
 math: true
 ---
 
-<!-- TODO -->
 Vertex models are a very popular choice in describing multicellular systems.
 They are actively being used in great variety such as to describe mechanical properties of plant
 cells [\[1\]](#references) or organoid structures of epithelial
@@ -24,24 +23,24 @@ In the following text, we assume that vertices are always ordered (clockwise or 
 and this ordering is identical for every cell in our simulation.
 
 ### Mechanics
-Every vertex is connected to its next neighbours in order via springs with an associated length
-$d$ and spring constant $\\gamma$.
+Every vertex is connected to its next neighbours via springs with an associated length $d$ and
+spring constant $\\gamma$.
 The potential used to calculate the force $F_i$ acting along the edges of the cell between vertex
 $i$ and $i+1$ is given by
 
 $$\\begin{align}
-    \vec{F}\_{\text{edges},i} &= - \\gamma \\left(|\vec{v}\_i - \vec{v}\_{i+1}| - d\\right)
-    \frac{\vec{v}\_i - \vec{v}\_{i+1}}{|\vec{v}\_i - \vec{v}\_{i+1}|}\\\\
+    \vec{F}\_{\text{edges},i} &= - \\gamma \\left(||\vec{v}\_i - \vec{v}\_{i+1}|| - d\\right)
+    \frac{\vec{v}\_i - \vec{v}\_{i+1}}{||\vec{v}\_i - \vec{v}\_{i+1}||}\\\\
     %V\_\text{edges} &= \sum\limits\_{i=0}^n \\frac{\\gamma}{2}\left(d\_i - d\right)^2
 \\end{align}$$
 
-where $d_i = |\vec{v}\_i - \vec{v}\_{i+1}|$ is the distance between individual vertices.
+where $||\vec{v}\_i - \vec{v}\_{i+1}||$ is the distance between individual vertices.
 
-From the length of the individual edges, we can determine the total 2D volume $V$ of the cell when
-the equilibrium configuration of a perfect hexagon is reached.
+From the length of the individual edges, we can determine the total area $A$ of the cell when
+the equilibrium configuration of a perfect polygon is reached:
 
 $$\\begin{equation}
-    V = d^2\sum\limits_{i=0}^{n-1}\frac{1}{2\sin(\pi/n)}
+    A = d^2\sum\limits_{i=0}^{n-1}\frac{1}{2\sin(\pi/n)}.
 \\end{equation}$$
 
 However, since the individual vertices are mobile, we require an additional mechanism which
@@ -51,7 +50,7 @@ two adjacent vertices and the center point $\vec{c}=\sum\_i\vec{v}\_i/(n+1)$.
 They can be calculated by using the parallelogramm formula
 
 $$\\begin{align}
-    \tilde{V}\_i &=
+    \tilde{A}\_i &=
     \det\\begin{vmatrix}
         \vec{v}\_{i+1} - \vec{c} & \vec{v}\_i - \vec{c}
     \\end{vmatrix}\\\\
@@ -59,35 +58,38 @@ $$\\begin{align}
         (\vec{v}\_{i+1} - \vec{c})\_0 & (\vec{v}\_{i} - \vec{c})\_0\\\\
         (\vec{v}\_{i+1} - \vec{c})\_1 & (\vec{v}\_{i} - \vec{c})\_1
     \\end{pmatrix}\\\\
-    \tilde{V} &= \sum\limits_{i=0}^{n-1}\tilde{V}\_i
+    \tilde{A} &= \sum\limits_{i=0}^{n-1}\tilde{A}\_i
 \\end{align}$$
 
 The resulting force then points from the center of the cell $\vec{c}$ towards the
 individual vertices $\vec{v}\_i$.
 
 $$\\begin{align}
-    \vec{F}\_{\text{pressure},i} = P\\left(V-\\tilde{V}\\right)\frac{\vec{v}\_i - \vec{c}}{|\vec{v}\_i - \vec{c}|}
+    \vec{F}\_{\text{pressure},i} = P\\left(A-\\tilde{A}\\right)\frac{\vec{v}\_i - \vec{c}}{||\vec{v}\_i - \vec{c}||}
 \\end{align}$$
 
-These mechanical considerations alone are enough to yield perfect hexagonal configurations for
+These mechanical considerations alone are enough to yield perfect polygons configurations for
 individual cells without any interactions.
+We also take into account that cells are surrounded by viscuous liquid which introduces a damping
+effect given by a force proportional to the velocity at each vertex
+
+$$\begin{equation}
+    \vec{F}\_{\text{damping},i} = - \lambda \dot{\vec{v}}.
+\end{equation}$$
+
+
 If we also take into account an external force acting on the cell, the total force acting on the
 individual vertices $\vec{v}\_i$ can be calculated via
 
 $$\\begin{equation}
     \vec{F}\_{\text{total},i} = \vec{F}\_{\text{external},i} + \vec{F}\_{\text{edges},i}
-        + \vec{F}\_{\text{pressure},i}
+        + \vec{F}\_{\text{pressure},i} + \vec{F}\_{\text{damping},i}.
 \\end{equation}$$
 
 ### Interaction
-Cell-agents are interacting via forces $\vec{F}(\vec{p},\vec{q})$ which are dependent on two points
-$\vec{p}$ and $\vec{q}$ in either cell.
-The mechanical model we are currently using does not fully capture the essence of these cellular
-interactions.
-In principle, we would have to calculate the total force $\vec{F}'$ by integrating over all points
-either inside the cell or on its boundary but for the sake of simplicity we consider a different
-approach.
 
+For the sake of simplicity, we model cellular interactions by calculating forces between each vertex
+and its closest neighbor on the other cells polygon.
 Let us denote the vertices of the two cells in question with $\\{\vec{v}_i\\}$ and
 $\\{\vec{w}_j\\}$.
 
@@ -100,20 +102,31 @@ The same procedure when switching $v_i$ and $w_j$ results in a symmetric interac
 
 #### Case 1: Outside Interaction
 In this case, we assume that the vertex $\vec{v}_i$ in question is not inside the other cell.
-We make the simplified assumption that each vertex $\vec{v}_i$ is interacting with the closest
+We make the simplifying assumption that each vertex $\vec{v}_i$ is interacting with the closest
 point on the outer edge of the other cell.
 Given these sets of vertices, we calculate for each vertex $\vec{v}_i$ the closest
 point
-$$\\begin{equation}\vec{p} = (1-q)\vec{w}_j + q\vec{w}\_{j+1}\\end{equation}$$
-(assuming that we set $\vec{w}\_{j+1}=\vec{w}\_1$ when $j=N\_\text{vertices}$)
-on the edge and then the force acting on this vertex can be calculated
-$$\\begin{equation}\vec{F}\_{\text{outside},i} = \vec{V}(\vec{v}_i, \vec{p})\\end{equation}$$
-by applying $\vec{F}$ on them.
+
+$$\\begin{equation}
+    \vec{p} = (1-q)\vec{w}_j + q\vec{w}\_{j+1}
+\\end{equation}$$
+
+where the value $q\in[0,1]$ and the index $j$ need to be chosen such that the distance
+$||\vec{v}\_i-\vec{p}||$ is minimal (assuming that we set $\vec{w}\_{j+1}=\vec{w}\_1$ when
+$j=N\_\text{vertices}$).
+The force acting on this vertex can now be calculated
+
+$$\\begin{equation}
+    \vec{F}\_{\text{outside},i} = \vec{\nabla}V(\vec{v}_i, \vec{p})
+\\end{equation}$$
+
+by using the points $\vec{v}_i$ and $\vec{p}$.
 The force acting on the other cell acts on the vertices $j$ and $j+1$ with relative strength $1-q$
-and $q$ respectively.
+and $q$ respectively
+
 $$\\begin{alignat}{5}
-&\vec{F}\_{\text{outside},j} &=& - &(1-q)&\vec{V}(\vec{v}_i,\vec{p})\\\\
-&\vec{F}\_{\text{outside},j+1} &=& &-q&\vec{V}(\vec{v}_i,\vec{p})
+    &\vec{F}\_{\text{other,outside},j} &=& - &(1-q)&\vec{\nabla} V(\vec{v}_i,\vec{p})\\\\
+    &\vec{F}\_{\text{other,outside},j+1} &=& &-q&\vec{\nabla}V(\vec{v}_i,\vec{p}).
 \\end{alignat}$$
 
 {{<callout type="info" >}}
@@ -123,23 +136,28 @@ to quickly identify if a given vertex is outside the other cell.
 
 #### Case 2: Inside Interaction
 In the second case, a vertex of the other cell $\vec{w}_j$ has managed to move inside.
-Here, a different force $\vec{W}$ acts which is responsible for pushing the vertex outwards.
+Here, a repulsive force $W$ acts which is responsible for pushing the vertex outwards.
 The force is calculated between the center of our cell
-$$\\begin{equation}\vec{v}_c = \frac{1}{N\_\text{vertices}}\sum\limits_i \vec{v}_i\\end{equation}$$
+
+$$\\begin{equation}
+    \vec{v}_c = \frac{1}{N\_\text{vertices}}\sum\limits_i \vec{v}_i
+\\end{equation}$$
+
 and the external vertex in question.
 The force which is calculated this way acts in equal parts on all vertices.
+
 $$\\begin{alignat}{5}
-&\vec{F}\_{\text{inside},j} &=& &&\frac{1}{N\_\text{vertices}}\vec{W}(\vec{v}\_c,\vec{w}_j)\\\\
-&\vec{F}\_{\text{inside},i} &=&-&&\frac{1}{N\_\text{vertices}}\vec{W}(\vec{v}\_c,\vec{w}_j)
+    &\vec{F}\_{\text{inside},j} &=& &&\frac{1}{N\_\text{vertices}}\vec{\nabla}W(\vec{v}\_c,\vec{w}_j)\\\\
+    &\vec{F}\_{\text{inside},i} &=&-&&\frac{1}{N\_\text{vertices}}\vec{\nabla}W(\vec{v}\_c,\vec{w}_j)
 \\end{alignat}$$
 
 ### Cycle
 
-We introduce an additional mechanism by which every cells area grows linearly over time.
-The growth parameter is chosen from a uniform distribution initially.
+We introduce an additional mechanism by which the area of each cell grows linearly over time.
+The growth parameter $\alpha_n$ is chosen for each cell individually from a uniform distribution.
 
 $$\\begin{equation}
-    \dot{V} = \alpha
+    \dot{A} = \alpha_n
 \\end{equation}$$
 
 By this process, cells will start to push on each other and thus expand the whole tissue structure.
@@ -149,16 +167,16 @@ By this process, cells will start to push on each other and thus expand the whol
 ## Parameters
 | Parameter | Symbol | Value |
 | --------- | ------ | ----- |
-| Area      | $V$    | $500$ |
-| Spring Tension | $\gamma$ | $2.0$ |
-| Central Pressure | $P$ | $0.5$ |
-| Interaction Range | $\beta$ | $0.5$ |
-| Potential Strength | $V_0$ | $10.0$ |
-| Damping | $\lambda$ | $0.2$ |
-| Growth Rate | $\alpha$ | $5.0$ |
-| Domain Size | $L$ | $800$ |
+| Area      | $V$    | $500 \text{ µm}$ |
+| Spring Tension | $\gamma$ | $2.0 \text{ µm}^{-1}\text{min}^{-1}$ |
+| Central Pressure | $P$ | $0.5 \text{ µm}^{-1}\text{min}^{-2}$ |
+| Interaction Range | $\beta$ | $0.5 \text{ µm}$ |
+| Potential Strength | $V_0$ | $10.0 \text{ µm}^2/\text{min}^2$ |
+| Damping | $\lambda$ | $0.2 \text{ min}^{-1}$ |
+| Growth Rate | $\alpha$ | $5.0 \text{ µm}^2/\text{min}$ |
+| Domain Size | $L$ | $800 \text{ µm}$ |
 | Simulation Steps | $N_\text{step}$ | $20000$ |
-| Time Increment | $\Delta t$ | $0.005$ |
+| Time Increment | $\Delta t$ | $0.005 \text{ min}$ |
 
 ## Results
 ### Initial State

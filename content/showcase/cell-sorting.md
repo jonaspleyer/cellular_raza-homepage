@@ -13,10 +13,11 @@ The underlying principle is that interactions between cells are specific.
 ## Mathematical Description
 
 We assume that cells are spherical objects which interact via force potentials.
+The two positions of cells are $x_i,x_j$ and their distance is $r=|x_i-x_j|$.
 
 $$\begin{align}
-    \sigma_{i,j} &= \frac{r}{R_i + R_j}\\\\
-    U_{i,j}(r) &= V_0 \left(\frac{1}{3\sigma_{i,j}^3} - \frac{1}{\sigma_{i,j}}\right)
+    \sigma &= \frac{r}{R_i + R_j}\\\\
+    U(\sigma) &= V_0 \left(\frac{1}{3\sigma^3} - \frac{1}{\sigma}\right)
 \end{align}$$
 
 The values $R_i,R_j$ are the radii of the cells ($i\neq j$) interacting with each other.
@@ -24,34 +25,34 @@ For simplification, we can assume that they are identical $R_i=R_j=R$.
 
 Furthermore, we assume that the equation of motion is given by
 
-$$
+$$\begin{equation}
     \partial^2_t x = F - \lambda \partial_t x
-$$
+\end{equation}$$
 
 where the first term is the usual force term $F = - \nabla V$ obtained by differentiating the
 given potential and the second term is a damping term which arises due to the cells being immersed
 inside a viscuous fluid.
 
 {{< callout type="info" >}}
-Note that we opted to omit the mass factor on the left-hand side of the previous equation.
+Note that we set the mass to $m=1$ thus rescaling the involved parameters.
 This means, that units of $V_0$ and $\lambda$ are changing and they incorporate this property.
 {{< /callout >}}
 
 We can assume that interactions between cells are restricted to close ranges and thus enforce a
-cutoff $\xi$ for the interaction where the resulting force is identical to zero.
+cutoff $\xi\geq R_i+R_j$ for the interaction where the resulting force is identical to zero.
 We further assume that cells of different species do not attract each other but do repel.
-To describe this behaviour, we set the potential to zero when $r>R_i+R_j$ (ie. $\sigma>1$)
+To describe this behaviour, we set the potential to zero when $r>R_i+R_j$ (i.e., $\sigma>1$)
 and both cells have distinct species type $s_i$.
 In total we are left with
 
-$$
-    V_{i,j}(r) =
+$$\begin{equation}
+    V(\sigma) =
     \begin{cases}
-        0 &\text{ if } r\geq\xi\\\\
+        0 &\text{ if } \sigma\geq\xi/(R_i+R_j)\\\\
         0 &\text{ if } s_i\neq s_j \text{ and } \sigma\geq 1\\\\
-        U_{i,j}(r) &\text{ else }
+        U(\sigma) &\text{ else }
     \end{cases}.
-$$
+\end{equation}$$
 
 ## Parameters
 
@@ -59,10 +60,10 @@ In total, we are left with only 4 parameters to describe our system.
 
 | Parameter | Symbol | Value |
 | --- | --- | --- |
-| Cell Radius | $R_i$ | $6.0\mu \text{m}$ |
-| Potential Strength | $V_0$ | $2\mu\text{m}^2\text{min}^{-2}$ |
+| Cell Radius | $R_i$ | $6.0 \text{ µm}$ |
+| Potential Strength | $V_0$ | $2\text{ µm}^2\text{ }/\text{ min}^2$ |
 | Damping Constant | $\lambda$ | $2\text{min}^{-1}$ |
-| Interaction Range | $\xi$ | $1.5 R_i$ |
+| Interaction Range | $\xi$ | $1.5 (R_i+R_j)=3R_i$ |
 
 The following table shows additional values which are used to initialize the system.
 In total, 1600 cells with random initial positions and zero velocity were placed inside the domain.
@@ -71,11 +72,11 @@ In total, 1600 cells with random initial positions and zero velocity were placed
 | --- | --- | --- |
 | Time Stepsize | $\Delta t$ | $0.2\text{min}$ |
 | Time Steps | $N_t$ | $10'000$ |
-| Domain Size | $L$ | $110\mu\text{m}$ |
+| Domain Size | $L$ | $110\text{ µm}$ |
 | Cells Species 1 | $N_{C,1}$ | $800$ |
 | Cells Species 2 | $N_{C,2}$ | $800$ |
 
-This results in a total time of $2000\text{min}=33.33\text{h}$.
+The chosen total simulated time is thus $2000\text{ min}=33.33\text{ h}$.
 
 ## Results
 
@@ -93,7 +94,7 @@ Cells are initially placed randomly inside the cuboid simulation domain.
 
 ### Final State
 
-After the simulation has finished, the cells have self-organized into connected regions of the same
+After the simulation has finished, the cells have assembled into connected regions of the same
 species.
 
 ![](/showcase/cell_sorting/0000010000.png)
