@@ -8,4 +8,7 @@
 
 # cellular_raza
 
+[![License: MIT](https://img.shields.io/github/license/jonaspleyer/cellular_raza-homepage?style=flat-square)](https://opensource.org/license/mit/)
+![Build](https://img.shields.io/github/actions/workflow/status/jonaspleyer/cellular_raza-homepage/docs-header.yml?style=flat-square)
+
 This is code for the homepage of `cellular_raza` at [cellular-raza.com](https://cellular-raza.com).
