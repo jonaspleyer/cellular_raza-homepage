@@ -1,0 +1,79 @@
+ Cargo.toml                                         |  13 +-
+ README.md                                          |  12 +-
+ cellular_raza_book/.gitignore                      |   1 +
+ cellular_raza_book/book.toml                       |   6 +
+ cellular_raza_book/src/AbstractionLayers.md        |   1 +
+ .../src/AbstractionLayersConcepts.md               |   1 +
+ .../src/AbstractionLayersPipeline.md               |   1 +
+ .../src/AbstractionLayersUser-Space.md             |   1 +
+ cellular_raza_book/src/BenchmarkAlgorithms.md      |   1 +
+ cellular_raza_book/src/BenchmarkHardware.md        |   1 +
+ cellular_raza_book/src/BenchmarkPipelines.md       |   1 +
+ cellular_raza_book/src/Benchmarking.md             |   1 +
+ cellular_raza_book/src/Developers.md               |   1 +
+ .../src/DevelopersCodingGuidelines.md              |   1 +
+ .../src/DevelopersDesigningNewConcepts.md          |   1 +
+ .../src/DevelopersHowToWritePipeline.md            |   1 +
+ cellular_raza_book/src/GettingStarted.md           |  26 +
+ cellular_raza_book/src/Pipelines.md                |   7 +
+ .../src/PipelinesFeatureComparison.md              |  11 +
+ cellular_raza_book/src/SUMMARY.md                  |  23 +
+ cellular_raza_book/src/UserGuides.md               |   1 +
+ cellular_raza_book/src/UserGuidesFirstSim.md       |   1 +
+ .../src/UserGuidesImplementOwnConcepts.md          |   1 +
+ .../src/UserGuidesPredefinedCellularModules.md     |   1 +
+ .../src/UserGuidesStartFromPreviousSimualtion.md   |   1 +
+ cellular_raza_book/src/about_cellular_raza.md      |  20 +
+ examples/kidney_organoid_model/Cargo.toml          |   2 +-
+ .../kidney_organoid_model/src/cell_properties.rs   | 280 ++++++
+ examples/kidney_organoid_model/src/main.rs         | 441 ++++------
+ examples/kidney_organoid_model/src/plotting.rs     |  86 ++
+ examples/multi_cells.rs                            |   2 +-
+ examples/template.rs                               |   4 +-
+ examples/ureter_signalling/.gitignore              |   5 +
+ examples/ureter_signalling/Cargo.toml              |  21 +
+ examples/ureter_signalling/src/cell_properties.rs  | 257 ++++++
+ examples/ureter_signalling/src/main.rs             | 310 +++++++
+ .../ureter_signalling/src/plot_from_saved_run.rs   |  72 ++
+ examples/ureter_signalling/src/plotting.rs         |  81 ++
+ plot.py                                            |  28 -
+ src/concepts/cell.rs                               |  30 +-
+ src/concepts/cycle.rs                              |  16 +-
+ src/concepts/domain.rs                             | 805 +----------------
+ src/concepts/errors.rs                             |  29 +-
+ src/concepts/interaction.rs                        |  12 +
+ src/concepts/mechanics.rs                          |   7 +
+ src/concepts/mod.rs                                | 141 +++
+ .../cell_models}/custom_cell_nd.rs                 |   0
+ .../cell_models}/mod.rs                            |   0
+ src/implementations/cell_models/modular_cell.rs    | 171 ++++
+ .../cell_models}/standard_cell_2d.rs               |   7 +-
+ .../cell_properties}/cycle.rs                      |   0
+ .../cell_properties}/death.rs                      |   0
+ .../cell_properties}/interaction.rs                |   0
+ .../cell_properties}/mechanics.rs                  |   0
+ .../cell_properties}/mod.rs                        |   1 -
+ .../domains}/cartesian_cuboid_n.rs                 | 227 +++--
+ .../domains}/mod.rs                                |   0
+ src/implementations/mod.rs                         |   3 +
+ src/impls_cell_models/modular_cell.rs              | 101 ---
+ src/impls_cell_properties/flags.rs                 |   5 -
+ src/init/mod.rs                                    |   1 -
+ src/init/supervisor.rs                             | 955 ---------------------
+ src/lib.rs                                         |  55 +-
+ src/pipelines/cpu_os_threads/config.rs             | 350 ++++++++
+ .../cpu_os_threads/domain_decomposition.rs         | 875 +++++++++++++++++++
+ src/pipelines/cpu_os_threads/mod.rs                |   7 +
+ .../cpu_os_threads/multiple_cell_types.rs          | 122 +++
+ src/pipelines/cpu_os_threads/prelude.rs            |  42 +
+ .../cpu_os_threads/restart.rs}                     |   0
+ src/pipelines/cpu_os_threads/storage_interface.rs  | 658 ++++++++++++++
+ src/pipelines/cpu_os_threads/supervisor.rs         | 551 ++++++++++++
+ src/pipelines/mod.rs                               |   8 +
+ src/plotting/cells_2d.rs                           |   4 +-
+ src/plotting/mod.rs                                |   1 +
+ src/plotting/viridis_colormap.rs                   | 230 +++++
+ src/prelude.rs                                     |  34 -
+ src/storage/sled_database/io.rs                    | 460 ++--------
+ src/storage/sled_database/mod.rs                   |   1 -
+ 78 files changed, 4901 insertions(+), 2733 deletions(-)

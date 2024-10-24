@@ -1,0 +1,216 @@
+ .cargo/config.toml                                 |    0
+ .github/workflows/publish_book.yml                 |   62 +
+ .gitignore                                         |    2 +
+ Cargo.toml                                         |   88 +-
+ LICENSE.md                                         |    0
+ README.md                                          |    9 +
+ .../.gitignore                                     |    0
+ cellular_raza-benchmarks/Cargo.toml                |   37 +
+ .../io.rs => cellular_raza-benchmarks/README.md    |    0
+ cellular_raza-benchmarks/benches/cell_sorting.rs   |  190 +++
+ cellular_raza-benchmarks/src/lib.rs                |    5 +
+ .../.gitignore                                     |    0
+ cellular_raza-book/book.toml                       |   15 +
+ cellular_raza-book/mdbook-admonish.css             |  352 ++++++
+ .../src/AbstractionLayers/Concepts.md              |    0
+ .../src/AbstractionLayers/User-Space.md            |    0
+ .../src/Benchmarking/Algorithms.md                 |    0
+ .../src/Benchmarking/BenchmarkBackends.md          |    1 +
+ .../src/Benchmarking}/Benchmarking.md              |    0
+ .../src/Benchmarking/Hardware.md                   |    0
+ .../src/DesignPrinciples/Backends.md               |    8 +
+ .../DesignPrinciples/BackendsFeatureComparison.md  |    1 +
+ .../src/DesignPrinciples/Concepts.md               |   32 +
+ .../src/DesignPrinciples/DesignPrinciples.md       |   65 +
+ .../src/DesignPrinciples/User-Space.md             |    1 +
+ .../src/Developers/CodingGuidelines.md             |    0
+ .../src/Developers/DesigningNewConcepts.md         |    0
+ .../src/Developers}/Developers.md                  |    0
+ .../src/Developers/HowToWriteBackend.md            |    1 +
+ cellular_raza-book/src/Roadmap.md                  |   49 +
+ cellular_raza-book/src/SUMMARY.md                  |   21 +
+ .../src/UserGuides/FirstSim.md                     |    0
+ .../src/UserGuides/GettingStarted.md               |   33 +
+ .../src/UserGuides/ImplementOwnConcepts.md         |   52 +
+ .../src/UserGuides/PredefinedCellularModules.md    |    0
+ .../src/UserGuides/StartFromPreviousSimualtion.md  |    0
+ cellular_raza-book/src/UserGuides/UserGuides.md    |   15 +
+ cellular_raza-book/src/about_cellular_raza.md      |  107 ++
+ cellular_raza-book/src/media/cellular_raza.svg     |   42 +
+ .../src/media/cellular_raza_dark_mode.svg          |   42 +
+ .../src/media/cellular_raza_square.svg             |   59 +
+ cellular_raza-book/src/media/rust-svgrepo-com.svg  |    2 +
+ cellular_raza-building-blocks/Cargo.toml           |   43 +
+ cellular_raza-building-blocks/README.md            |    2 +
+ .../src/cell_building_blocks/cycle.rs              |   25 +
+ .../src/cell_building_blocks/interaction.rs        |  544 +++++++++
+ .../src/cell_building_blocks/mechanics.rs          |  687 +++++++++++
+ .../src/cell_building_blocks/mod.rs                |    8 +
+ .../src/cell_models/mod.rs                         |    7 +
+ .../src/cell_models/modular_cell.rs                |  221 ++++
+ .../src/domains/cartesian_cuboid_2_vertex.rs       |  577 +++++++++
+ .../src/domains/cartesian_cuboid_n.rs              |  899 ++++++++++++++
+ .../src}/domains/mod.rs                            |    3 +
+ cellular_raza-building-blocks/src/lib.rs           |   69 ++
+ cellular_raza-building-blocks/src/prelude.rs       |    8 +
+ cellular_raza-concepts-derive/Cargo.toml           |   20 +
+ cellular_raza-concepts-derive/README.md            |    2 +
+ cellular_raza-concepts-derive/src/lib.rs           |  301 +++++
+ cellular_raza-concepts/Cargo.toml                  |   27 +
+ .../restart.rs => cellular_raza-concepts/README.md |    0
+ cellular_raza-concepts/src/cell.rs                 |  166 +++
+ cellular_raza-concepts/src/cycle.rs                |   52 +
+ cellular_raza-concepts/src/domain.rs               |  204 ++++
+ cellular_raza-concepts/src/domain_new.rs           |   94 ++
+ cellular_raza-concepts/src/errors.rs               |  111 ++
+ cellular_raza-concepts/src/interaction.rs          |   73 ++
+ .../mod.rs => cellular_raza-concepts/src/lib.rs    |   46 +-
+ cellular_raza-concepts/src/mechanics.rs            |  157 +++
+ cellular_raza-concepts/src/plotting.rs             |   82 ++
+ cellular_raza-concepts/src/prelude.rs              |    7 +
+ cellular_raza-core-derive/Cargo.toml               |   25 +
+ cellular_raza-core-derive/README.md                |    2 +
+ cellular_raza-core-derive/src/lib.rs               |  258 ++++
+ cellular_raza-core-derive/tests/identical.rs       |   17 +
+ cellular_raza-core-derive/tests/mod.rs             |    2 +
+ cellular_raza-core/.gitignore                      |    8 +
+ cellular_raza-core/Cargo.toml                      |   58 +
+ cellular_raza-core/README.md                       |    2 +
+ cellular_raza-core/doc/docs-header.html            |    4 +
+ .../src/backend/chili/aux_storage.rs               |  349 ++++++
+ .../src/backend/chili/datastructures.rs            |  617 ++++++++++
+ .../src/backend/chili}/errors.rs                   |  110 +-
+ cellular_raza-core/src/backend/chili/mod.rs        |   25 +
+ cellular_raza-core/src/backend/chili/setup.rs      |  333 +++++
+ .../src/backend/chili/simulation_flow.rs           |  594 +++++++++
+ .../src/backend/cpu_os_threads/config.rs           |  746 ++++++++++++
+ .../backend/cpu_os_threads/domain_decomposition.rs | 1272 ++++++++++++++++++++
+ .../src/backend/cpu_os_threads/errors.rs           |  136 +++
+ .../src/backend/cpu_os_threads/logger.rs           |  165 +++
+ .../src/backend/cpu_os_threads/mod.rs              |   22 +
+ .../src/backend/cpu_os_threads/prelude.rs          |   42 +
+ .../src/backend/cpu_os_threads/supervisor.rs       |  845 +++++++++++++
+ .../src/backend/cpu_rayon/concepts.rs              |  155 +++
+ cellular_raza-core/src/backend/cpu_rayon/engine.rs |  830 +++++++++++++
+ cellular_raza-core/src/backend/cpu_rayon/mod.rs    |    3 +
+ cellular_raza-core/src/backend/mod.rs              |   23 +
+ cellular_raza-core/src/lib.rs                      |   19 +
+ cellular_raza-core/src/storage/concepts.rs         |  518 ++++++++
+ cellular_raza-core/src/storage/mod.rs              |   11 +
+ cellular_raza-core/src/storage/quick_xml.rs        |  220 ++++
+ cellular_raza-core/src/storage/serde_json.rs       |  248 ++++
+ cellular_raza-core/src/storage/sled_database.rs    |  293 +++++
+ cellular_raza-examples/autophagy_pyo3/.gitignore   |    4 +
+ cellular_raza-examples/autophagy_pyo3/Cargo.toml   |   25 +
+ cellular_raza-examples/autophagy_pyo3/MANIFEST.in  |    2 +
+ cellular_raza-examples/autophagy_pyo3/README.md    |   21 +
+ .../autophagy_pyo3/analysis.ipynb                  |  268 +++++
+ .../autophagy_pyo3/cr_autophagy.py                 |  224 ++++
+ .../autophagy_pyo3/explore_parameter_space.py      |  143 +++
+ cellular_raza-examples/autophagy_pyo3/noxfile.py   |   17 +
+ .../autophagy_pyo3/potential.ipynb                 |  156 +++
+ .../autophagy_pyo3/pyproject.toml                  |   13 +
+ .../autophagy_pyo3/requirements.txt                |   48 +
+ cellular_raza-examples/autophagy_pyo3/run_sim.py   |   25 +
+ cellular_raza-examples/autophagy_pyo3/src/lib.rs   |   18 +
+ .../autophagy_pyo3/src/particle_properties.rs      |  227 ++++
+ .../autophagy_pyo3/src/simulation.rs               |  405 +++++++
+ .../bacteria_population}/.gitignore                |    0
+ .../bacteria_population/Cargo.toml                 |   14 +
+ .../bacteria_population/src/bacteria_properties.rs |  238 ++++
+ .../bacteria_population/src/main.rs                |  240 ++++
+ .../bacteria_population/src/plotting.rs            |   76 ++
+ cellular_raza-examples/cell_sorting/Cargo.toml     |   13 +
+ cellular_raza-examples/cell_sorting/src/main.rs    |  161 +++
+ .../kidney_organoid_model}/.gitignore              |    0
+ .../kidney_organoid_model/Cargo.toml               |   14 +
+ .../kidney_organoid_model/src/cell_properties.rs   |  267 ++++
+ .../kidney_organoid_model/src/main.rs              |  210 ++++
+ .../kidney_organoid_model/src/plotting.rs          |  119 ++
+ .../organoid_turing_growth/.gitignore              |    5 +
+ .../organoid_turing_growth/Cargo.toml              |   14 +
+ .../organoid_turing_growth/src/cell_properties.rs  |  280 +++++
+ .../organoid_turing_growth/src/main.rs             |  321 +++++
+ .../organoid_turing_growth/src/plotting.rs         |  118 ++
+ cellular_raza-examples/pool_model_pyo3/.gitignore  |   10 +
+ cellular_raza-examples/pool_model_pyo3/Cargo.toml  |   20 +
+ cellular_raza-examples/pool_model_pyo3/MANIFEST.in |    2 +
+ cellular_raza-examples/pool_model_pyo3/README.md   |   21 +
+ .../pool_model_pyo3/analysis.ipynb                 |  250 ++++
+ .../pool_model_pyo3/cr_pool_model.py               |  242 ++++
+ .../pool_model_pyo3/materials/summary.typ          |   67 ++
+ .../pool_model_pyo3/pyproject.toml                 |   13 +
+ .../pool_model_pyo3/requirements.txt               |   48 +
+ cellular_raza-examples/pool_model_pyo3/run_sim.py  |   35 +
+ .../pool_model_pyo3/src/bacteria_properties.rs     |  315 +++++
+ cellular_raza-examples/pool_model_pyo3/src/lib.rs  |   21 +
+ .../pool_model_pyo3/src/simulation.rs              |  273 +++++
+ .../ureter_signalling/.gitignore                   |    5 +
+ .../ureter_signalling/Cargo.toml                   |   14 +
+ .../ureter_signalling/src/cell_properties.rs       |  276 +++++
+ .../ureter_signalling/src/main.rs                  |  258 ++--
+ .../ureter_signalling/src/plotting.rs              |  118 ++
+ cellular_raza/.cargo/config.toml                   |   14 +
+ cellular_raza/Cargo.toml                           |   44 +
+ cellular_raza/README.md                            |   29 +
+ cellular_raza/src/lib.rs                           |   17 +
+ cellular_raza/src/prelude.rs                       |    6 +
+ cellular_raza_book/book.toml                       |    6 -
+ cellular_raza_book/src/AbstractionLayers.md        |    1 -
+ .../src/AbstractionLayersPipeline.md               |    1 -
+ cellular_raza_book/src/BenchmarkPipelines.md       |    1 -
+ .../src/DevelopersHowToWritePipeline.md            |    1 -
+ cellular_raza_book/src/GettingStarted.md           |   26 -
+ cellular_raza_book/src/Pipelines.md                |    7 -
+ .../src/PipelinesFeatureComparison.md              |   11 -
+ cellular_raza_book/src/SUMMARY.md                  |   23 -
+ cellular_raza_book/src/UserGuides.md               |    1 -
+ .../src/UserGuidesImplementOwnConcepts.md          |    1 -
+ cellular_raza_book/src/about_cellular_raza.md      |   20 -
+ doc/docs-header.html                               |   36 +-
+ examples/cartesian.rs                              |  137 ---
+ examples/kidney_organoid_model/Cargo.toml          |   13 -
+ .../kidney_organoid_model/src/cell_properties.rs   |  280 -----
+ examples/kidney_organoid_model/src/main.rs         |  237 ----
+ examples/kidney_organoid_model/src/plotting.rs     |   86 --
+ examples/multi_cells.rs                            |  117 --
+ examples/template.rs                               |  132 --
+ examples/ureter_signalling/Cargo.toml              |   21 -
+ examples/ureter_signalling/src/cell_properties.rs  |  257 ----
+ .../ureter_signalling/src/plot_from_saved_run.rs   |   72 --
+ examples/ureter_signalling/src/plotting.rs         |   81 --
+ src/concepts/cell.rs                               |  117 --
+ src/concepts/cycle.rs                              |   20 -
+ src/concepts/domain.rs                             |   79 --
+ src/concepts/interaction.rs                        |   28 -
+ src/concepts/mechanics.rs                          |   28 -
+ src/implementations/cell_models/custom_cell_nd.rs  |   95 --
+ src/implementations/cell_models/mod.rs             |    3 -
+ src/implementations/cell_models/modular_cell.rs    |  171 ---
+ .../cell_models/standard_cell_2d.rs                |   85 --
+ src/implementations/cell_properties/cycle.rs       |   15 -
+ src/implementations/cell_properties/death.rs       |    2 -
+ src/implementations/cell_properties/interaction.rs |   44 -
+ src/implementations/cell_properties/mechanics.rs   |   47 -
+ src/implementations/cell_properties/mod.rs         |    4 -
+ src/implementations/domains/cartesian_cuboid_n.rs  |  593 ---------
+ src/implementations/mod.rs                         |    3 -
+ src/lib.rs                                         |  115 --
+ src/pipelines/cpu_os_threads/config.rs             |  350 ------
+ .../cpu_os_threads/domain_decomposition.rs         |  875 --------------
+ src/pipelines/cpu_os_threads/mod.rs                |    7 -
+ .../cpu_os_threads/multiple_cell_types.rs          |  122 --
+ src/pipelines/cpu_os_threads/prelude.rs            |   42 -
+ src/pipelines/cpu_os_threads/storage_interface.rs  |  658 ----------
+ src/pipelines/cpu_os_threads/supervisor.rs         |  551 ---------
+ src/pipelines/mod.rs                               |    8 -
+ src/plotting/cells_2d.rs                           |  144 ---
+ src/plotting/mod.rs                                |    3 -
+ src/plotting/spatial.rs                            |   42 -
+ src/plotting/viridis_colormap.rs                   |  230 ----
+ src/storage/concepts.rs                            |   16 -
+ src/storage/json_dump/mod.rs                       |    2 -
+ src/storage/mod.rs                                 |    6 -
+ src/storage/sled_database/io.rs                    |  163 ---
+ src/storage/sled_database/mod.rs                   |    1 -
+ 215 files changed, 19205 insertions(+), 6494 deletions(-)

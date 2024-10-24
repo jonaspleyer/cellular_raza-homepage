@@ -1,0 +1,37 @@
+ Cargo.toml                                         |   4 +-
+ cellular_raza-benchmarks/Cargo.toml                |   2 +-
+ cellular_raza-building-blocks/Cargo.toml           |   2 +-
+ .../src/cell_building_blocks/interaction.rs        |  59 ++-
+ .../src/cell_building_blocks/mechanics.rs          |  95 ++++-
+ .../src/domains/cartesian_cuboid_2_vertex.rs       |  28 +-
+ cellular_raza-concepts-derive/src/domain.rs        |  25 +-
+ cellular_raza-concepts/Cargo.toml                  |   2 +-
+ cellular_raza-concepts/tests/derive_domain.rs      |   1 +
+ cellular_raza-core-proc-macro/src/run_sim.rs       |   2 +-
+ cellular_raza-core/Cargo.toml                      |   4 +-
+ cellular_raza-core/src/backend/chili/result.rs     |  14 +-
+ .../src/backend/chili/update_cycle.rs              |   4 +-
+ .../src/backend/chili/update_mechanics.rs          |  20 +-
+ .../{springs => bacterial_rods}/Cargo.toml         |   2 +-
+ cellular_raza-examples/bacterial_rods/plotter.py   | 178 +++++++++
+ .../src/custom_domain.rs                           |   0
+ .../{springs => bacterial_rods}/src/main.rs        |  95 +++--
+ cellular_raza-examples/semi_vertex/Cargo.toml      |   3 +
+ .../semi_vertex/generate_movie.sh                  |   2 +
+ .../src/alternative_vertex_mechanics.rs            | 399 +++++++++++++++++++++
+ .../semi_vertex/src/cell_properties.rs             | 254 ++++---------
+ cellular_raza-examples/semi_vertex/src/main.rs     | 140 ++++----
+ cellular_raza-examples/semi_vertex/src/plotting.rs |  53 +--
+ cellular_raza-examples/springs/plot.py             | 113 ------
+ cellular_raza-examples/springs/plotter.py          | 123 -------
+ .../content/internals/backends/cpu-os-threads.md   |   6 +
+ .../content/internals/releases.md                  |  18 +
+ cellular_raza-homepage/content/showcase/_index.md  |   8 +-
+ .../content/showcase/bacterial-rods.md             | 130 +++++++
+ .../content/showcase/free-motile-vertex-model.md   |  55 ++-
+ .../static/showcase/bacterial-rods/final.png       |   3 +
+ .../static/showcase/bacterial-rods/initial.png     |   3 +
+ .../showcase/bacterial-rods/intermediate.png       |   3 +
+ .../static/showcase/bacterial-rods/movie.mp4       |   3 +
+ cellular_raza/Cargo.toml                           |   6 +-
+ 36 files changed, 1211 insertions(+), 648 deletions(-)

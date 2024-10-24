@@ -1,0 +1,148 @@
+ .github/workflows/test_beta.yml                    |  95 +++
+ .github/workflows/test_nightly.yml                 |   8 +-
+ Cargo.toml                                         |   3 +-
+ README.md                                          |   7 +-
+ build_website.sh                                   |  46 +-
+ cellular_raza-benchmarks/Cargo.toml                |   6 +-
+ cellular_raza-benchmarks/src/lib.rs                |   2 +-
+ cellular_raza-building-blocks/Cargo.toml           |  11 +-
+ .../src/cell_building_blocks/mechanics.rs          |   2 +-
+ .../src/cell_models/mod.rs                         |   2 +-
+ .../src/cell_models/modular_cell.rs                |   2 +-
+ .../src/cell_models/pool_bacteria.rs               |   7 +-
+ cellular_raza-building-blocks/src/lib.rs           |   6 +-
+ cellular_raza-concepts-derive/Cargo.toml           |   4 +-
+ cellular_raza-concepts-derive/src/lib.rs           |   4 +-
+ cellular_raza-concepts/Cargo.toml                  |  11 +-
+ cellular_raza-concepts/src/cell.rs                 |   6 +-
+ cellular_raza-concepts/src/cycle.rs                |  24 +-
+ cellular_raza-concepts/src/domain_new.rs           |   7 +-
+ cellular_raza-concepts/src/interaction.rs          |   2 +-
+ cellular_raza-concepts/src/lib.rs                  |   1 +
+ cellular_raza-core-proc-macro/Cargo.toml           |   4 +-
+ cellular_raza-core-proc-macro/src/aux_storage.rs   |   4 +-
+ cellular_raza-core-proc-macro/src/communicator.rs  |   5 +-
+ cellular_raza-core/Cargo.toml                      |  13 +-
+ .../src/backend/chili/aux_storage.rs               |  64 +-
+ .../src/backend/chili/datastructures.rs            |  22 +-
+ cellular_raza-core/src/backend/chili/errors.rs     |   9 +-
+ cellular_raza-core/src/backend/chili/mod.rs        |   4 +
+ .../src/{ => backend/chili}/proc_macro.rs          |  13 +-
+ cellular_raza-core/src/backend/chili/run_sim.rs    |  22 +
+ cellular_raza-core/src/backend/chili/setup.rs      |  12 +-
+ .../src/backend/chili/simulation_flow.rs           |  12 +-
+ cellular_raza-core/src/backend/chili/solvers.rs    |   7 +-
+ .../src/backend/cpu_os_threads/config.rs           |   8 +-
+ .../backend/cpu_os_threads/domain_decomposition.rs | 145 ++--
+ .../src/backend/cpu_os_threads/errors.rs           |  53 +-
+ .../src/backend/cpu_os_threads/mod.rs              |  18 +-
+ .../src/backend/cpu_os_threads/prelude.rs          |  34 -
+ .../src/backend/cpu_os_threads/supervisor.rs       |  61 +-
+ cellular_raza-core/src/backend/mod.rs              |  16 +-
+ cellular_raza-core/src/lib.rs                      |   2 -
+ cellular_raza-core/src/storage/concepts.rs         |  10 +-
+ cellular_raza-examples/README.md                   |  10 +
+ cellular_raza-examples/autophagy_pyo3/.gitignore   |   4 -
+ cellular_raza-examples/autophagy_pyo3/Cargo.toml   |  25 -
+ cellular_raza-examples/autophagy_pyo3/MANIFEST.in  |   2 -
+ cellular_raza-examples/autophagy_pyo3/README.md    |  21 -
+ .../autophagy_pyo3/analysis.ipynb                  | 268 -------
+ .../autophagy_pyo3/cr_autophagy.py                 | 224 ------
+ .../autophagy_pyo3/explore_parameter_space.py      | 143 ----
+ cellular_raza-examples/autophagy_pyo3/noxfile.py   |  17 -
+ .../autophagy_pyo3/potential.ipynb                 | 156 ----
+ .../autophagy_pyo3/pyproject.toml                  |  13 -
+ .../autophagy_pyo3/requirements.txt                |  48 --
+ cellular_raza-examples/autophagy_pyo3/run_sim.py   |  25 -
+ cellular_raza-examples/autophagy_pyo3/src/lib.rs   |  18 -
+ .../autophagy_pyo3/src/particle_properties.rs      | 227 ------
+ .../autophagy_pyo3/src/simulation.rs               | 404 ----------
+ cellular_raza-examples/diffusion/Cargo.toml        |  18 +
+ cellular_raza-examples/diffusion/src/main.rs       | 384 +++++++++
+ cellular_raza-examples/template/Cargo.toml         |   3 +-
+ cellular_raza-examples/template/src/main.rs        |  15 +-
+ cellular_raza-homepage/content/internals/_index.md |   6 +
+ .../cellular_raza-development-gource.webm          | Bin 0 -> 6029312 bytes
+ .../2023-10-15-bwHPC-symposium-2023/index.md       |   9 +
+ .../2023-10-15-bwHPC-symposium-2023/main.pdf       | Bin 0 -> 4985140 bytes
+ .../JonasPleyer-edited.jpeg                        | Bin 0 -> 192840 bytes
+ .../cellular_raza-theme.css                        | 360 +++++++++
+ .../2024-02-05-think-like-a-cell/columns.css       |  21 +
+ .../2024-02-05-think-like-a-cell/dist/reset.css    |  30 +
+ .../2024-02-05-think-like-a-cell/dist/reveal.css   |   8 +
+ .../dist/reveal.esm.js                             |   9 +
+ .../dist/reveal.esm.js.map                         |   1 +
+ .../2024-02-05-think-like-a-cell/dist/reveal.js    |   9 +
+ .../dist/reveal.js.map                             |   1 +
+ .../dist/theme/beige.css                           | 366 +++++++++
+ .../dist/theme/black-contrast.css                  | 362 +++++++++
+ .../dist/theme/black.css                           | 359 +++++++++
+ .../dist/theme/blood.css                           | 392 +++++++++
+ .../dist/theme/dracula.css                         | 385 +++++++++
+ .../dist/theme/fonts/league-gothic/LICENSE         |   2 +
+ .../theme/fonts/league-gothic/league-gothic.css    |  10 +
+ .../theme/fonts/league-gothic/league-gothic.eot    | Bin 0 -> 25696 bytes
+ .../theme/fonts/league-gothic/league-gothic.ttf    | Bin 0 -> 64256 bytes
+ .../theme/fonts/league-gothic/league-gothic.woff   | Bin 0 -> 30764 bytes
+ .../dist/theme/fonts/source-sans-pro/LICENSE       |  45 ++
+ .../source-sans-pro/source-sans-pro-italic.eot     | Bin 0 -> 75720 bytes
+ .../source-sans-pro/source-sans-pro-italic.ttf     | Bin 0 -> 238084 bytes
+ .../source-sans-pro/source-sans-pro-italic.woff    | Bin 0 -> 98556 bytes
+ .../source-sans-pro/source-sans-pro-regular.eot    | Bin 0 -> 88070 bytes
+ .../source-sans-pro/source-sans-pro-regular.ttf    | Bin 0 -> 288008 bytes
+ .../source-sans-pro/source-sans-pro-regular.woff   | Bin 0 -> 114324 bytes
+ .../source-sans-pro/source-sans-pro-semibold.eot   | Bin 0 -> 89897 bytes
+ .../source-sans-pro/source-sans-pro-semibold.ttf   | Bin 0 -> 284640 bytes
+ .../source-sans-pro/source-sans-pro-semibold.woff  | Bin 0 -> 115648 bytes
+ .../source-sans-pro-semibolditalic.eot             | Bin 0 -> 75706 bytes
+ .../source-sans-pro-semibolditalic.ttf             | Bin 0 -> 240944 bytes
+ .../source-sans-pro-semibolditalic.woff            | Bin 0 -> 98816 bytes
+ .../fonts/source-sans-pro/source-sans-pro.css      |  39 +
+ .../dist/theme/league.css                          | 368 +++++++++
+ .../dist/theme/moon.css                            | 362 +++++++++
+ .../dist/theme/night.css                           | 360 +++++++++
+ .../dist/theme/serif.css                           | 363 +++++++++
+ .../dist/theme/simple.css                          | 362 +++++++++
+ .../dist/theme/sky.css                             | 370 +++++++++
+ .../dist/theme/solarized.css                       | 363 +++++++++
+ .../dist/theme/white-contrast.css                  | 362 +++++++++
+ .../dist/theme/white.css                           | 359 +++++++++
+ .../white_contrast_compact_verbatim_headers.css    | 360 +++++++++
+ .../2024-02-05-think-like-a-cell/index.html        | 582 ++++++++++++++
+ ...2004_petri_dish_with_cultured_bacteria_blue.svg |   1 +
+ .../media/E._coli_Bacteria_(16578744517).jpg       | Bin 0 -> 3225406 bytes
+ .../media/cellular_raza.svg                        |  42 +
+ .../media/cellular_raza_dark_mode.svg              |  42 +
+ .../2024-02-05-think-like-a-cell/monokai.css       |  71 ++
+ .../plugin/highlight/highlight.esm.js              |   5 +
+ .../plugin/highlight/highlight.js                  |   5 +
+ .../plugin/highlight/monokai.css                   |  71 ++
+ .../plugin/highlight/plugin.js                     | 439 ++++++++++
+ .../plugin/highlight/zenburn.css                   |  80 ++
+ .../plugin/markdown/markdown.esm.js                |   7 +
+ .../plugin/markdown/markdown.js                    |   7 +
+ .../plugin/markdown/plugin.js                      | 475 +++++++++++
+ .../plugin/math/katex.js                           |  96 +++
+ .../plugin/math/math.esm.js                        |   6 +
+ .../plugin/math/math.js                            |   1 +
+ .../plugin/math/mathjax2.js                        |  89 ++
+ .../plugin/math/mathjax3.js                        |  77 ++
+ .../plugin/math/plugin.js                          |  15 +
+ .../plugin/notes/notes.esm.js                      |   1 +
+ .../plugin/notes/notes.js                          |   1 +
+ .../plugin/notes/plugin.js                         | 261 ++++++
+ .../plugin/notes/speaker-view.html                 | 891 +++++++++++++++++++++
+ .../plugin/search/plugin.js                        | 243 ++++++
+ .../plugin/search/search.esm.js                    |   7 +
+ .../plugin/search/search.js                        |   7 +
+ .../plugin/zoom/plugin.js                          | 264 ++++++
+ .../plugin/zoom/zoom.esm.js                        |  11 +
+ .../plugin/zoom/zoom.js                            |  11 +
+ .../content/publications/_index.md                 |   8 +-
+ .../static/JonasPleyer-circle.png                  | Bin 0 -> 1405004 bytes
+ .../static/JonasPleyer-square.jpeg                 | Bin 0 -> 192840 bytes
+ cellular_raza/Cargo.toml                           |  16 +-
+ cellular_raza/README.md                            |   6 +-
+ cellular_raza/src/lib.rs                           |   2 -
+ cellular_raza/src/prelude.rs                       |   4 +-
+ 147 files changed, 10784 insertions(+), 1922 deletions(-)
