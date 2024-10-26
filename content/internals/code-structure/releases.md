@@ -9,6 +9,13 @@ To this point, version numbers do not follow the [semver](https://semver.org/) s
 We are working towards this goal and will report our progress.
 {{< /callout >}}
 
+## cellular_raza 0.1.2
+[_26th October 2024_](git_diff-0.1.2-incremental.diff)
+
+- Bugfix for assigning correct
+  [`CellIdentifier`](/docs/cellular_raza_core/backend/chili/struct.CellIdentifier.html) for parent
+  cell
+
 ## cellular_raza 0.1.1
 [_18th Oktober 2024_](git_diff-0.1.1-incremental.diff)
 
