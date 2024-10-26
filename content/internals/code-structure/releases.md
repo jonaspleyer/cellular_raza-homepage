@@ -9,15 +9,15 @@ To this date, version numbers do not follow the [semver](https://semver.org/) sp
 We are working towards this goal and will report our progress.
 {{< /callout >}}
 
-## cellular_raza 0.1.2
+### cellular_raza 0.1.2
 [_26th October 2024_](git_diff-0.1.2-incremental.diff)
 
 - Bugfix for assigning correct
   [`CellIdentifier`](/docs/cellular_raza_core/backend/chili/struct.CellIdentifier.html) for parent
   cell
 
-## cellular_raza 0.1.1
-[_18th Oktober 2024_](git_diff-0.1.1-incremental.diff)
+### cellular_raza 0.1.1
+[_18th October 2024_](git_diff-0.1.1-incremental.diff)
 
 - Adapt some tests and plotting of them
 - cleanup module structure for time and some tests
@@ -33,7 +33,7 @@ We are working towards this goal and will report our progress.
   numbers in order to support multiple fission
 - Removed unused `cellular_raza-building_blocks::prelude`
 
-## cellular_raza 0.1.0
+### cellular_raza 0.1.0
 [_28th August 2024 🎉 2 Year Anniversary 🎉_](git_diff-0.1.0-incremental.diff)
 - Changed calculation of random contribution in `Mechanics` trait
     - Improved stochastic motion testing for Brownian and Langevin dynamics
@@ -46,7 +46,8 @@ We are working towards this goal and will report our progress.
     - First experimentation with error handlers
 - Rename some trait functions and variables from `neighbour` to `neighbor`
 
-## cellular_raza 0.0.13
+## Pre-0.1 Releases
+### cellular_raza 0.0.13
 [_30th July 2024_](git_diff-0.0.13-incremental.diff)
 - Advanced testing for contact reactions and solvers
 - Added Ron storage option
@@ -58,13 +59,13 @@ We are working towards this goal and will report our progress.
 - New function to create timestepper `from_partial_save_freq`
 - Update nalgebra to version "0.33"
 
-## cellular_raza 0.0.12
+### cellular_raza 0.0.12
 [_13th July 2024_](git_diff-0.0.12-incremental.diff)
 - Implement concepts for contact reactions
 - Add option to enable/disable determinism
 - Correct some bugs and implement functionality for storage solutions
 
-## cellular_raza 0.0.11
+### cellular_raza 0.0.11
 [_18th June 2024_](git_diff-0.0.11-incremental.diff)
 - corretly treat interaction functions related to neighbours
   [`is_neighbour`](/docs/cellular_raza_concepts/trait.Interaction.html#method.is_neighbour) and
@@ -72,7 +73,7 @@ We are working towards this goal and will report our progress.
   in the [chili](/internals/backends/chili) backend.
 - Modifications to examples
 
-## cellular_raza 0.0.10
+### cellular_raza 0.0.10
 [_11th June 2024_](git_diff-0.0.10-incremental.diff)
 - Change [Interaction](/internals/concepts/cell/interaction) concept to return two force values for
   own and other cell.
@@ -82,7 +83,7 @@ We are working towards this goal and will report our progress.
 - Change [VertexDerivedInteraction](/docs/cellular_raza_building_blocks/struct.VertexDerivedInteraction.html)
   to use closest point on external polygon
 
-## cellular_raza 0.0.9
+### cellular_raza 0.0.9
 [_1st June 2024_](git_diff-0.0.9-incremental.diff)
 - Major improvements to the [chili](/internals/backends/chili) backend
     - Stabilize main routines and macros
@@ -94,19 +95,19 @@ From now on releases will become more frequent and for smaller feature additions
 0.1.0 can be reached sooner.
 {{< /callout >}}
 
-## cellular_raza 0.0.8
+### cellular_raza 0.0.8
 [_16th February 2024_](git_diff-0.0.8-incremental.diff)
 - Added documentation where needed
 - Fix public interface for cpu_os_threads backend
 - Compared to 0.0.7 this new version will almost only fix Documentation and dependencies for the nightly compiler
 
-## cellular_raza 0.0.7
+### cellular_raza 0.0.7
 [_16th February 2024_](git_diff-0.0.7-incremental.diff)
 - More experimenting with trait for fluid dynamics
 - Improved documentation and website
 - Only minor advancements in backend development
 
-## cellular_raza 0.0.6
+### cellular_raza 0.0.6
 [_2nd February 2024_](git_diff-0.0.6-incremental.diff)
 Further development of `chili` backend:
 - Extend documentation and development of the chili backend
@@ -116,23 +117,23 @@ Further development of `chili` backend:
 - Proc-macro crate has been expanded with many useful helper macros
 - Next version might contain a first working iteration of the chili backend
 
-## cellular_raza 0.0.5
+### cellular_raza 0.0.5
 [_12th December 2023_](git_diff-0.0.5-incremental.diff)
 - Include some pyo3 fixes (prevented from compiling in 0.0.4)
 
-## cellular_raza 0.0.4
+### cellular_raza 0.0.4
 [_6th December 2023_](git_diff-0.0.4-incremental.diff)
 - Add readme files
 - Minor bugfix for pyo3 binding generation in building blocks
 
-## cellular_raza 0.0.3
+### cellular_raza 0.0.3
 [_6th March 2023_](git_diff-0.0.3-incremental.diff)
 
-## cellular_raza 0.0.2
+### cellular_raza 0.0.2
 [_22nd February 2023_](git_diff-0.0.2-incremental.diff)
 
-## cellular_raza 0.0.1
+### cellular_raza 0.0.1
 [_13th December 2023_](git_diff-0.0.1-incremental.diff)
 
-## initial commit
+### initial commit
 _27th August 2022_
