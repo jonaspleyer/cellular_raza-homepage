@@ -10,7 +10,7 @@ We are working towards this goal and will report our progress.
 {{< /callout >}}
 
 ### cellular_raza 0.1.3
-[_26th October 2024_](git_diff-0.1.2-incremental.diff)
+[_26th October 2024_](git_diff-0.1.3-incremental.diff)
 
 - Bugfix for assigning correct
   [`CellIdentifier`](/docs/cellular_raza_core/backend/chili/struct.CellIdentifier.html) for parent

@@ -4,10 +4,10 @@
  cellular_raza-concepts/Cargo.toml                        |  2 +-
  cellular_raza-core/Cargo.toml                            |  6 +++---
  cellular_raza-core/src/backend/chili/mod.rs              | 10 ++++++++++
- cellular_raza-core/src/backend/chili/update_cycle.rs     |  7 ++++---
+ cellular_raza-core/src/backend/chili/update_cycle.rs     | 10 +++++-----
  cellular_raza-examples/bacteria_population/src/main.rs   |  2 +-
  cellular_raza-examples/cellular_raza-template-pyo3       |  2 +-
  cellular_raza-examples/pool_model_pyo3/Cargo.toml        |  2 +-
  cellular_raza/Cargo.toml                                 |  6 +++---
  cellular_raza/tests/determinism_mechanics_interaction.rs |  8 ++------
- 12 files changed, 31 insertions(+), 23 deletions(-)
+ 12 files changed, 32 insertions(+), 25 deletions(-)
