@@ -43,6 +43,24 @@ flowchart LR
     High --> Intermediate --> Application
 ```
 
+## Offspring Crates & Other Contributions
+
+During the development of `cellular_raza` multiple subfunctionalities which were only developed for
+internal use have been refactored and published as individually standing crates.
+
+| Crate | Description | Usage |
+| --- | --- | --- |
+| [`approx-derive`](https://crates.io/crates/approx-derive) | Derive macros for `AbsDiffEq` and `RelativeEq` of the [`approx`](https://crates.io/crates/approx) crate. | Testing |
+| [`circ_buffer`](https://crates.io/crates/circ_buffer) | A `no_std` statically allocated ring-buffer with optional [`serde`](https://serde.rs) support. | Save increments for a [multistep solver](https://en.wikipedia.org/wiki/Linear_multistep_method). |
+| [`uniquevec`](https://crates.io/crates/uniquevec) | A `Vec`-like datastructure which only contains unique entries. It is `no_std` and makes no use of unsafe code. | Specify multiple [`StorageOption`](/docs/cellular_raza_core/storage/enum.StorageOption.html) in correct priority without duplicates. |
+
+Furthermore, contributions to the following projects have been made:
+[`pyo3`](https://github.com/PyO3/pyo3)
+[`rust-numpy`](https://github.com/PyO3/rust-numpy)
+[`plotters`](https://github.com/plotters-rs/plotters)
+[`servo`](https://github.com/servo/servo)
+[`typst`](https://github.com/typst/packages)
+
 ## Development
 
 <video src="/internals/cellular_raza-development-gource.mp4" controls style="width: minmax(100%, 1280px);">
