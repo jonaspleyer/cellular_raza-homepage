@@ -6,7 +6,7 @@ sidebar:
     open: true
 ---
 
-# Structure
+## Structure
 
 `cellular_raza` consists of multiple crates working in tandem.
 It was designed to have clear separations between conceptual choices and implementation details.
@@ -43,7 +43,7 @@ flowchart LR
     High --> Intermediate --> Application
 ```
 
-# Development
+## Development
 
 <video src="/internals/cellular_raza-development-gource.mp4" controls style="width: minmax(100%, 1280px);">
 </video>
