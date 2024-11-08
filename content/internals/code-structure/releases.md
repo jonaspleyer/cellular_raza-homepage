@@ -9,6 +9,25 @@ To this date, version numbers do not follow the [semver](https://semver.org/) sp
 We are working towards this goal and will report our progress.
 {{< /callout >}}
 
+### cellular_raza 0.1.4
+[_9th  November 2024_](git_diff-0.1.4-incremental.diff)
+
+- Add testing for `windows-latest`, `macos-12` and `macos-13`
+- Publish [`uniquevec`](https://crates.io/crates/uniquevec) crate from code developed in `storage`
+  module of `cellular_raza_core` and use as dependency.
+- Extend [`UpdateMechanics`](/docs/cellular_raza_core/backend/chili/trait.UpdateMechanics.html) and
+  [`UpdateReactions`](/docs/cellular_raza_core/backend/chili/trait.UpdateReactions.html) traits
+  to not rely on [`num::Zero`](https://docs.rs/num/latest/num/trait.Zero.html) trait
+- Extend [`run_simulation`](/docs/cellular_raza_core/backend/chili/macro.run_simulation.html)
+  macros and derivatives with new keywords
+    - Specify names of [`AuxStorage`](/docs/cellular_raza_core/backend/chili/) and
+      [`Communicator`](/docs/cellular_raza_core/backend/chili)
+    - Specify orders of solvers (for [Mechanics](/internals/concepts/cell/mechanics) and
+      [Reactions](/internals/concepts/cell/reactions)
+    - Set zero-values for [Force](/internals/concepts/cell/mechanics) and
+      [Intracellular](/internals/concepts/cell/reactions) (useful for dynamically-sized structs
+      which do not support the [num::Zero](https://docs.rs/num/latest/num/trait.Zero.html) trait.
+
 ### cellular_raza 0.1.3
 [_26th October 2024_](git_diff-0.1.3-incremental.diff)
 
