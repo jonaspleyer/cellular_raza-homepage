@@ -20,8 +20,11 @@ use the name [concepts](#concepts) for the combination of both of them.
 
 ## Aspects
 
-Simulation [aspectss](#aspects) can be thought of as mathematical abstractions.
-In the future, we aim to provide a concise mathematical notation in order to describe them.
+Simulation [aspects](#aspects) can be thought of as mathematical abstractions over physical
+processes.
+They represent cellular behaviour, the cell's interactions with the physical domain or other
+interactions (eg. with experimental setups).
+In the future, we aim to provide a concise mathematical notation in a more formal approach.
 
 | Aspect | Description | Depends on |
 | --- | --- | --- |
@@ -45,6 +48,13 @@ In the future, we aim to provide a concise mathematical notation in order to des
 
 ## Concepts
 
+We consider concepts to be an extension and thus a superset of [aspects](#aspects).
+They incorporate abstractions which are useful for handling the numerical simulation such as
+time-stepping and different storage solutions.
+But they do not represent any physical properties.
+
 | Name | Description | Depends on |
-|:---:| --- |
-| | |
+|:--- | --- | --- |
+| [`Storage`](/internals/concepts/storage) | We offer various solutions for storing results. | |
+| [`TimeStepper`](/internals/concepts/time) | Handles time-increments and advances simulation in steps. | |
+| [`Xapy`](/internals/concepts/solvers) | Abstracts over mathematical operations and allows implementations of more complex representations. | Provides a default implementation for types that satisfy [`num::Zero`](https://docs.rs/crate/num) and [`num::Float`](https://docs.rs/crate/num). |
