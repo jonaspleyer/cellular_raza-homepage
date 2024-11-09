@@ -60,14 +60,14 @@ The estimate of the MSD for
 [`Langevin3D`](/docs/cellular_raza_building_blocks/struct.Langevin3D.html) dynamics
 
 $$\\begin{equation}
-    M \ddot{X} = - \nabla V(X) - \lambda M \dot{X} + \sqrt{2M\lambda k_B T}R(t)
+    m \ddot{X} = - \nabla V(X) - \lambda m \dot{X} + \sqrt{2m\lambda k_B T}R(t)
 \\end{equation}$$
 
 is given by [\[5\]](#references)
 
 $$\\begin{equation}
-    \left<r^2(t)\right> =
-        v^2(0) \frac{1-\text{e}^{-\lambda t}}{\lambda^2}
+    \left<(x(t)-x_0)^2\right> =
+        v^2(0) \frac{\text{e}^{-\lambda t}}{\lambda^2}
         - \frac{d k_B T}{m\lambda^2}
             \left(1-\text{e}^{-\lambda t}\right)
             \left(3 - \text{e}^{-\lambda t}\right)
