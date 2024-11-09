@@ -44,7 +44,7 @@ jobs:
       - name: Install cargo
         uses: dtolnay/rust-toolchain@nightly
         with:
-          toolchain: nightly-2024-06-01
+          toolchain: nightly-2024-11-01
       - name: Add correct permissions
         run: chmod +x ./build_website.sh
         shell: bash
