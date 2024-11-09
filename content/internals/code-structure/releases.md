@@ -73,7 +73,7 @@ We are working towards this goal and will report our progress.
 - Added Ron storage option
 - Restructured and simplified storage solutions
 - Improve (but also change parameters) CLI for benchmarks
-- Use new `circ_buffer` crate in chili backend
+- Use new [`circ_buffer`](https://crates.io/crates/circ_buffer) crate in chili backend
 - Bugfixes for contact reactions
 - Move homepage to separate repository
 - New function to create timestepper `from_partial_save_freq`
@@ -110,6 +110,9 @@ We are working towards this goal and will report our progress.
     - Tested workflow with actual examples
 - Stabilize [new domain](/docs/cellular_raza_concepts/domain_new) traits
 - Added more examples
+- Developed [`approx-derive`](https://crates.io/crates/approx-derive) crate to more easily test
+  approximate results for complex datatypes.
+
 {{< callout type="info" >}}
 From now on releases will become more frequent and for smaller feature additions such that version
 0.1.0 can be reached sooner.
