@@ -26,6 +26,9 @@ The internal force acting on vertex $\\vec{v}\_i$ can be divided into 2 contribu
 the 2 springs pulling on it.
 In the case when $i=0,N\_\\text{vertices}$, this is reduced to only one internal component.
 We denote with $\vec{c}\_{i}$ the connection between two vertices
+
+<!-- TODO insert image here -->
+
 $$\begin{align}
     \vec{c}\_i = \vec{v}\_{i}-\vec{v}\_{i-1}
 \end{align}$$
@@ -43,12 +46,17 @@ vertex between two other is subject to a stiffening force.
 Assuming that $\alpha_i$ is the angle between the connections and
 $\vec{d}\_i=\vec{c}\_i/|\vec{c}\_i|$ is the normalized connection,
 we can write down the forces acting on vertices $\vec{v}\_i,\vec{v}\_{i-1},\vec{v}\_{i+1}$
+
+<!-- TODO insert sinus here -->
+<!-- TODO see page 13 of script what to do here -->
+
 $$\begin{align}
     \vec{F}\_{i,\text{stiffness}} &= \eta\_i\left(\pi-\alpha\_i\right)
         \frac{\vec{d}\_i - \vec{d}\_{i+1}}{|\vec{d}\_i-\vec{d}\_{i+1}|}\\\\
     \vec{F}\_{i-1,\text{stiffness}} &= -\frac{1}{2}\vec{F}\_{i,\text{stiffness}}\\\\
     \vec{F}\_{i+1,\text{stiffness}} &= -\frac{1}{2}\vec{F}\_{i,\text{stiffness}}
 \end{align}$$
+
 where $\eta\_i$ is the angle stiffness at vertex $\vec{v}\_i$.
 We can see that the stiffening force does not move the overall center of the cell in space.
 The total force is the sum of external and interal forces.
