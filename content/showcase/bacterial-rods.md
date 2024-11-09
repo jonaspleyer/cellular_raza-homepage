@@ -57,7 +57,7 @@ $$\begin{equation}
 \end{equation}$$
 and are integrated via
 $$\begin{align}
-    \partial\_t^2 \vec{x} &= \partial\vec{x} + D\vec{\xi}\\\\
+    \partial\_t^2 \vec{x} &= \partial_t\vec{x} + \sqrt{2D}\vec{\xi}\\\\
     \partial\_t\vec{x} &= \vec{F}\_\text{total}
 \end{align}$$
 where $D$ is the diffusion constant and  $\vec{\xi}$ is the wiener process (compare with
