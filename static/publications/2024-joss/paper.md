@@ -33,8 +33,8 @@ This enables researchers to build up complex models while retaining full control
 parameter introduced.
 It comes with predefined building blocks for agents and their physical domain to quickly
 construct new simulations bottom-up.
-Furthermore, `cellular_raza` has been used with the `pyo3` and `maturin` packages to create python
-bindings and can thus act as a numerical backend to a python package.
+Furthermore, `cellular_raza` can be used with the `pyo3` and `maturin` packages and thus act as a
+numerical backend to a python package.
 
 # Statement of Need
 
@@ -43,7 +43,9 @@ Agent-based models have become popular in cellular biology
 <!-- and many tools have been developed so far to asses specific questions in specialized fields -->
 While these tools have proven to be effective for targeted research questions,
 they often lack the ability to be applied for multiple distinct use-cases in a more generic context.
-Nevertheless, core functionalities such as numerical solvers, storage solutions, domain decomposition methods and functions to construct these simulations could be shared between models if written in a generic fashion.
+Nevertheless, core functionalities such as numerical solvers, storage solutions, domain
+decomposition methods and functions to construct these simulations could be shared between models
+if written generically.
 In order to address this issue and construct models from first principles without any assumptions
 regarding the underlying complexity or abstraction level, we developed `cellular_raza`.
 
@@ -51,26 +53,24 @@ regarding the underlying complexity or abstraction level, we developed `cellular
 ## General-Purpose Agent-Based Modeling Toolkits
 
 <!-- There exist a wide variety of many general-purpose agent-based simulation toolkits which are being
-actively applied in a different fields of study [@Abar2017; @Datseries2022; @Wilensky:1999]. -->
-General-purpose agent-based toolkits are often designed with specific applications in mind
-[@Abar2017; @Datseries2022; @Wilensky:1999].
+actively applied in a different fields of study [@Abar2017; @Datseris2022; @Wilensky:1999]. -->
+General-purpose agent-based toolkits are often designed without specific applications in mind
+[@Abar2017; @Datseris2022; @Wilensky:1999].
 They are often able to define agents bottom-up and can be a good choice if they allow for the
 desired cellular representation.
-However, they lack the explicit forethough to be applied in cellular systems and may implement
-global rules rather than individual-based ones.
-Furthermore, since they are required to solve a wider range of problems they are not able to make
-assumptions on the type of agent or the nature of their interactions and thus miss out on possible
+However, they lack the explicit forethough to be applied in cellular systems.
+Since they are required to solve a wider range of problems they are not able to make assumptions on
+the type of agent or the nature of their interactions and thus miss out on possible
 performance optimizations and advanced numerical solvers.
 
 ## Cellular Agent-Based Frameworks
 
 In our previous efforts [@Pleyer2023], we assessed the overall state of modelling toolkits for
 individual-based cellular simulations.
-The frameworks reviewed are all designed for specific use cases and may require a large number of
-parameters.
-These parameters are often unknown in practice and difficult to determine experimentally.
-This creates problems for the extensibility of the software and the ability to properly interpret
-the results.
+The frameworks reviewed are all designed for specific use cases and often require a large number of
+parameters which are often unknown in practice and difficult to determine experimentally.
+This is an inherent problem for the applicability of the software and the ability to properly
+interpret results.
 Few modelling frameworks exist that provide a significant degree of flexibility and customisation in
 the definition of cell agents.
 Chaste [@Cooper2020] allows reuse of individual components of its simulation code, such as ODE and
@@ -182,8 +182,8 @@ In the future, we hope to add a dedicated backend named `cara` to leverage GPU-a
 
 # Examples
 
-Examples and simulaton code are explained in full detail at
-[cellular-raza.com/showcase](https://cellular-raza.com/showcase).
+In the following, we present four different examples how to use `cellular_raza` (see
+[cellular-raza.com/showcase](https://cellular-raza.com/showcase)).
 
 ## Cell Sorting
 
@@ -392,6 +392,11 @@ Figure sizes can be customized by adding an optional second parameter:
 ![Caption for example figure.](figure.png){ width=20% }-->
 
 # Acknowledgements
+
+The author(s) declare that financial support was received for the research, authorship, and/or
+publication of this article.
+JP and CF received funding from FET-Open research and innovation actions grant under the European
+Union’s Horizon 2020 (CyGenTiG; grant agreement 801041).
 
 # References
 
