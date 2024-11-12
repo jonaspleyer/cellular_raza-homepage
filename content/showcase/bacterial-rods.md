@@ -27,12 +27,12 @@ the 2 springs pulling on it.
 In the case when $i=0,N\_\\text{vertices}$, this is reduced to only one internal component.
 We denote with $\vec{c}\_{i}$ the connection between two vertices
 
-<!-- TODO insert image here -->
-
 $$\begin{align}
     \vec{c}\_i = \vec{v}\_{i}-\vec{v}\_{i-1}
 \end{align}$$
+
 and can write down the resulting force
+
 $$\\begin{align}
     \vec{F}\_{i,\text{springs}} =
         &-\gamma\_i\left(1 - \\frac{l\_i}{\left|\vec{c}\_i\right|}\right)
@@ -61,16 +61,23 @@ where $\eta\_i$ is the angle stiffness at vertex $\vec{v}\_i$ (see
 [Figure 1](#fig:cell-mechanics-interaction)).
 We can see that the stiffening force does not move the overall center of the cell in space.
 The total force is the sum of external and interal forces.
+
 $$\begin{equation}
-    \vec{F}\_{i,\text{total}} = \vec{F}\_{i,\text{springs}}+ \vec{F}\_{i,\text{stiffness}} + \vec{F}\_{i,\text{external}}
+    \vec{F}\_{i,\text{total}} = \vec{F}\_{i,\text{springs}}+ \vec{F}\_{i,\text{stiffness}}
+        + \vec{F}\_{i,\text{external}}
 \end{equation}$$
+
 and are integrated via
+
 $$\begin{align}
     \partial\_t^2 \vec{x} &= \partial_t\vec{x} + \sqrt{2D}\vec{\xi}\\\\
     \partial\_t\vec{x} &= \vec{F}\_\text{total}
 \end{align}$$
+
 where $D$ is the diffusion constant and  $\vec{\xi}$ is the wiener process (compare with
 [brownian motion](/docs/cellular_raza_building_blocks/struct.Brownian3D.html)).
+These mechanics are available under the
+[`RodMechanics`](/docs/cellular_raza_building_blocks/struct.RodMechanics.html) building block.
 
 <div style="text-align: center;" id="fig:cell-mechanics-interaction">
     <img src="/showcase/bacterial-rods/mechanics.png" width=500>
@@ -88,23 +95,29 @@ numerically expensive integration over the complete length of the rod.
 Given a vertex $\vec{v}\_i$ on one cell, we calculate the closest point $\vec{p}$ on the polygonal
 line given by the vertices $\\{\vec{w}\_j\\}$ of the interacting cell.
 Furthermore we determine the value $q\in[0,1]$ such that
+
 $$\begin{equation}
     \vec{p} = (1-q)\vec{w}\_j + q\vec{w}\_{j+1}
 \end{equation}$$
+
 for some specific $j$.
 The force is then calculated between the points $\vec{v}\_i$ and $\vec{p}\_i$ and acts on the
 vertex $\vec{w}\_i,\vec{w}\_{i+1}$ with relative strength $(1-q)$ and $q$.
+
 $$\begin{align}
     \vec{F}\_{i,\text{External}} = \vec{F}(\vec{v}\_i,\vec{p})
 \end{align}$$
+
 For this example, we reused the interaction shape of the [cell-sorting](/showcase/cell-sorting)
 example ignoring the species aspect.
 
 ### Cycle
 To simulate proliferation, we introduce a growth term for the spring lengths $l\_i$
+
 $$\begin{equation}
     \partial\_t l\_i = \mu
 \end{equation}$$
+
 which will increase the length of the cell indefenitely unless we impose a condition for the
 [division event](/internals/concepts/cell/cycle).
 We define a threshold (in our case double of the original length) for the total length of the
