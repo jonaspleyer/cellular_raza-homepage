@@ -57,7 +57,8 @@ $$\begin{align}
     \vec{F}\_{i+1,\text{stiffness}} &= -\frac{1}{2}\vec{F}\_{i,\text{stiffness}}
 \end{align}$$
 
-where $\eta\_i$ is the angle stiffness at vertex $\vec{v}\_i$.
+where $\eta\_i$ is the angle stiffness at vertex $\vec{v}\_i$ (see
+[Figure 1](#fig:cell-mechanics-interaction)).
 We can see that the stiffening force does not move the overall center of the cell in space.
 The total force is the sum of external and interal forces.
 $$\begin{equation}
@@ -70,6 +71,16 @@ $$\begin{align}
 \end{align}$$
 where $D$ is the diffusion constant and  $\vec{\xi}$ is the wiener process (compare with
 [brownian motion](/docs/cellular_raza_building_blocks/struct.Brownian3D.html)).
+
+<div style="text-align: center;" id="fig:cell-mechanics-interaction">
+    <img src="/showcase/bacterial-rods/mechanics.png" width=500>
+    Figure 1: One cell-agent consists of multiple vertices which are connected by springs.
+    Any angle which deviates from $\pi$ between the adjacent connections introduces a stiffening
+    force.
+    The area indicated around the polygon is the collections of points with distance less than $R$
+    to some point $\vec{p}$ on the segments.
+    It visualizes the interaction range.
+</div>
 
 ### Interaction
 When calculating forces acting between the cells, we can use a simplified model to circumvent the
