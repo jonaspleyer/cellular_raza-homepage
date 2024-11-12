@@ -139,12 +139,6 @@ The following actions need to be taken for the old and new agent.
         \vec{w}\_{i,\text{new},\pm} &= (1-q\_i)\vec{m} + q\_i(\vec{v}_{\pm\text{start}} - \vec{m})
     \end{align}$$
 
-{{< callout type="warning" >}}
-This is a rather rudimentary implementation of how to calculate the new positions of the cells.
-To enhance this approach, we could "go along" the existing polygonal line instead of simply
-interpolating between middle and either of the end points.
-{{< /callout >}}
-
 ### Domain
 In this simulation example, the domain plays an important role.
 The domain consists of an elongated box with reflective boundary conditions.
