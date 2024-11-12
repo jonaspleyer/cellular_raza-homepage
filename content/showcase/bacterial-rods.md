@@ -14,7 +14,7 @@ the motion of rod-shaped bacteria.
 To model the spatial mechanics of elongated bacteria [\[3\]](#references), we represent them as a
 collection of auxiliary vertices $\\{\\vec{v}\_i\\}$ which are connected by springs in ascending
 order.
-Furthermore, we assume that the cells are flexible described by their stiffness property.
+Furthermore, we assume that the cells are flexible described by their curvature property.
 A force $\vec{F}$ interacting between cellular agents determines the radius (thickness) of the
 rods and an attractive component can model adhesion between cells.
 
@@ -25,7 +25,7 @@ spring.
 The internal force acting on vertex $\\vec{v}\_i$ can be divided into 2 contributions coming from
 the 2 springs pulling on it.
 In the case when $i=0,N\_\\text{vertices}$, this is reduced to only one internal component.
-We denote with $\vec{c}\_{i}$ the connection between two vertices
+We denote with $\vec{c}\_{i}$ the edge between two vertices
 
 $$\begin{align}
     \vec{c}\_i = \vec{v}\_{i}-\vec{v}\_{i-1}
@@ -42,28 +42,27 @@ $$\\begin{align}
 \\end{align}$$
 
 In addition to springs between individual vertices $\vec{v}\_i$, we assume that each angle at a
-vertex between two other is subject to a stiffening force.
-Assuming that $\alpha_i$ is the angle between the connections and
-$\vec{d}\_i=\vec{c}\_i/|\vec{c}\_i|$ is the normalized connection,
+vertex between two other is subject to a force indiced by curvature.
+Assuming that $\alpha_i$ is the angle between the edges and
+$\vec{d}\_i=\vec{c}\_i/|\vec{c}\_i|$ is the normalized edge vector,
 we can write down the forces acting on vertices $\vec{v}\_i,\vec{v}\_{i-1},\vec{v}\_{i+1}$
 
-<!-- TODO insert sinus here -->
 <!-- TODO see page 13 of script what to do here -->
 
 $$\begin{align}
-    \vec{F}\_{i,\text{stiffness}} &= \eta\_i\left(\pi-\alpha\_i\right)
+    \vec{F}\_{i,\text{curvature}} &= \eta\_i\sin\left(\pi-\alpha\_i\right)
         \frac{\vec{d}\_i - \vec{d}\_{i+1}}{|\vec{d}\_i-\vec{d}\_{i+1}|}\\\\
-    \vec{F}\_{i-1,\text{stiffness}} &= -\frac{1}{2}\vec{F}\_{i,\text{stiffness}}\\\\
-    \vec{F}\_{i+1,\text{stiffness}} &= -\frac{1}{2}\vec{F}\_{i,\text{stiffness}}
+    \vec{F}\_{i-1,\text{curvature}} &= -\frac{1}{2}\vec{F}\_{i,\text{curvature}}\\\\
+    \vec{F}\_{i+1,\text{curvature}} &= -\frac{1}{2}\vec{F}\_{i,\text{curvature}}
 \end{align}$$
 
-where $\eta\_i$ is the angle stiffness at vertex $\vec{v}\_i$ (see
+where $\eta\_i$ is the angle curvature at vertex $\vec{v}\_i$ (see
 [Figure 1](#fig:cell-mechanics-interaction)).
-We can see that the stiffening force does not move the overall center of the cell in space.
+We can see that the curvature force does not move the overall center of the cell in space.
 The total force is the sum of external and interal forces.
 
 $$\begin{equation}
-    \vec{F}\_{i,\text{total}} = \vec{F}\_{i,\text{springs}}+ \vec{F}\_{i,\text{stiffness}}
+    \vec{F}\_{i,\text{total}} = \vec{F}\_{i,\text{springs}}+ \vec{F}\_{i,\text{curvature}}
         + \vec{F}\_{i,\text{external}}
 \end{equation}$$
 
@@ -82,8 +81,7 @@ These mechanics are available under the
 <div style="text-align: center;" id="fig:cell-mechanics-interaction">
     <img src="/showcase/bacterial-rods/mechanics.png" width=500>
     Figure 1: One cell-agent consists of multiple vertices which are connected by springs.
-    Any angle which deviates from $\pi$ between the adjacent connections introduces a stiffening
-    force.
+    Any angle which deviates from $\pi$ between the adjacent edges introduces a curvature force.
     The area indicated around the polygon is the collections of points with distance less than $R$
     to some point $\vec{p}$ on the segments.
     It visualizes the interaction range.
