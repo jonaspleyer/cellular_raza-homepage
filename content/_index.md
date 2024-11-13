@@ -2,14 +2,22 @@
 toc: false
 ---
 
+{{< hextra/hero-headline >}}
+<img class="hx-block dark:hx-hidden" src="/logos/cellular_raza.svg" alt="cellular_raza">
+<img class="hx-hidden dark:hx-block" src="/logos/cellular_raza_dark_mode.svg" alt="cellular_raza">
+{{< /hextra/hero-headline >}}
+
+{{< hextra/hero-subtitle >}}
+Cellular Agent-based Modeling from a Clean Slate
+{{< /hextra/hero-subtitle >}}
+
 `cellular_raza` is a cellular
 [agent-based modeling](https://en.wikipedia.org/wiki/Agent-based_model) framework
 which allows researchers to construct models from a clean slate.
-
-In contrast to other agent-based modelling toolkits, `cellular_raza` was designed to be free of
-assumptions about the underlying cellular representation.
+In contrast to other agent-based modelling toolkits, it is free of assumptions about the underlying
+cellular representation.
 This enables researchers to build up complex models while retaining full control over every
-parameter introduced.
+parameter and behaviour introduced.
 
 ## Selected [Showcases](/showcase)
 
