@@ -14,7 +14,7 @@ the motion of rod-shaped bacteria.
 To model the spatial mechanics of elongated bacteria [\[3\]](#references), we represent them as a
 collection of auxiliary vertices $\\{\\vec{v}\_i\\}$ which are connected by springs in ascending
 order.
-Furthermore, we assume that the cells are flexible described by their curvature property.
+Furthermore, we assume that the cells are flexible which is described by their curvature property.
 A force $\vec{F}$ interacting between cellular agents determines the radius (thickness) of the
 rods and an attractive component can model adhesion between cells.
 
@@ -42,15 +42,24 @@ $$\\begin{align}
 \\end{align}$$
 
 In addition to springs between individual vertices $\vec{v}\_i$, we assume that each angle at a
-vertex between two other is subject to a force indiced by curvature.
-Assuming that $\alpha_i$ is the angle between the edges and
-$\vec{d}\_i=\vec{c}\_i/|\vec{c}\_i|$ is the normalized edge vector,
-we can write down the forces acting on vertices $\vec{v}\_i,\vec{v}\_{i-1},\vec{v}\_{i+1}$
+vertex between edges is subject to a force indiced by curvature.
+We assume that we can model the mechanical properties of the bacterium as an elastic rod.
+We define $\alpha_i = \sphericalangle(\vec{c}\_{i-1},\vec{c}\_i)$ as the angle between adjacent
+edges and $\vec{d}\_i=\vec{c}\_i/|\vec{c}\_i|$ as the normalized edge vector.
+The bending force can be assumed to be proportional to the curvature $\kappa_i$ at each vertex
+$\vec{v}\_i$
 
-<!-- TODO see page 13 of script what to do here -->
+$$\begin{equation}
+    \kappa_i = 2\tan\left(\frac{\alpha_i}{2}\right)
+\end{equation}$$
+
+where $\eta$ is the rigidity.
+The resulting force acts along the angle bisector which can be calculated from the normalized edge
+vectors $\vec{d}\_i$.
+The forces acting on vertices $\vec{v}\_i,\vec{v}\_{i-1},\vec{v}\_{i+1}$ are given by
 
 $$\begin{align}
-    \vec{F}\_{i,\text{curvature}} &= \eta\_i\sin\left(\pi-\alpha\_i\right)
+    \vec{F}\_{i,\text{curvature}} &= \eta\kappa_i
         \frac{\vec{d}\_i - \vec{d}\_{i+1}}{|\vec{d}\_i-\vec{d}\_{i+1}|}\\\\
     \vec{F}\_{i-1,\text{curvature}} &= -\frac{1}{2}\vec{F}\_{i,\text{curvature}}\\\\
     \vec{F}\_{i+1,\text{curvature}} &= -\frac{1}{2}\vec{F}\_{i,\text{curvature}}
@@ -58,7 +67,7 @@ $$\begin{align}
 
 where $\eta\_i$ is the angle curvature at vertex $\vec{v}\_i$ (see
 [Figure 1](#fig:cell-mechanics-interaction)).
-We can see that the curvature force does not move the overall center of the cell in space.
+We can see that the curvature force does not move the overall center of the rod in space.
 The total force is the sum of external and interal forces.
 
 $$\begin{equation}
@@ -106,8 +115,10 @@ $$\begin{align}
     \vec{F}\_{i,\text{External}} = \vec{F}(\vec{v}\_i,\vec{p})
 \end{align}$$
 
-For this example, we reused the interaction shape of the [cell-sorting](/showcase/cell-sorting)
-example ignoring the species aspect.
+We provide the [`RodInteraction`](/docs/cellular_raza_building_blocks/struct.RodInteraction.html)
+struct to convert a point-wise interaction to a rod-rod interaction potential.
+In our case, we use the
+[`MorsePotential`](/docs/cellular_raza_building_blocks/struct.MorsePotential.html) building block.
 
 ### Cycle
 To simulate proliferation, we introduce a growth term for the spring lengths $l\_i$
