@@ -146,7 +146,7 @@ remaining space.
 
 ## Results
 ### Initial Snapshot
-![](/showcase/bacterial-rods/0000000040.png)
+![](/showcase/bacterial-rods/0000000025.png)
 
 ### Movie
 <br>
@@ -155,7 +155,7 @@ remaining space.
 </video>
 
 ### Final Snapshot
-![](/showcase/bacterial-rods/0000036000.png)
+![](/showcase/bacterial-rods/0000023000.png)
 
 ## Code
 The code is part of the examples and can be found in the official github repository under
