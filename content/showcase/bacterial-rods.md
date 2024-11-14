@@ -20,10 +20,9 @@ rods and an attractive component can model adhesion between cells.
 
 ### Mechanics
 
-In principle we can assign individual lengths $\\{l_i\\}$ and strengths $\\{\gamma\\}\_i$ to each
-spring.
 The internal force acting on vertex $\\vec{v}\_i$ can be divided into 2 contributions coming from
 the 2 springs pulling on it.
+We assume that the segment lengths $l$ and tension $\gamma$ are spatially independent.
 In the case when $i=0,N\_\\text{vertices}$, this is reduced to only one internal component.
 We denote with $\vec{c}\_{i}$ the edge between two vertices
 
@@ -35,9 +34,9 @@ and can write down the resulting force
 
 $$\\begin{align}
     \vec{F}\_{i,\text{springs}} =
-        &-\gamma\_i\left(1 - \\frac{l\_i}{\left|\vec{c}\_i\right|}\right)
+        &-\gamma\left(1 - \\frac{l}{\left|\vec{c}\_i\right|}\right)
         \vec{c}\_i\\\\
-        &+ \gamma\_{i+1}\left(1 - \\frac{l\_{i+1}}{\left|\vec{c}\_{i+1}\right|}\right)
+        &+ \gamma\left(1 - \\frac{l}{\left|\vec{c}\_{i+1}\right|}\right)
         \vec{c}\_{i+1}
 \\end{align}$$
 
@@ -121,10 +120,10 @@ In our case, we use the
 [`MorsePotential`](/docs/cellular_raza_building_blocks/struct.MorsePotential.html) building block.
 
 ### Cycle
-To simulate proliferation, we introduce a growth term for the spring lengths $l\_i$
+To simulate proliferation, we introduce a growth term for the spring lengths $l$
 
 $$\begin{equation}
-    \partial\_t l\_i = \mu
+    \partial\_t l = \mu
 \end{equation}$$
 
 which will increase the length of the cell indefenitely unless we impose a condition for the
@@ -139,7 +138,7 @@ The following actions need to be taken for the old and new agent.
    where $\mu\_0$ is some fixed value)
 2. Assign new positions
     1. Calculate new spring lengths
-    $$\tilde{l}\_i = l\_i\left(\frac{1}{2} - \frac{r}{\sum\limits\_i l\_i}\right)$$
+    $$\tilde{l}\_i = l\left(\frac{1}{2} - \frac{r}{\sum\limits\_i l}\right)$$
     2. Calculate middle of old cell
     $$\vec{m} = \frac{1}{N\_\text{vertices}}\sum\limits\_i\vec{v}\_i$$
     3. Calculate positions of new vertices $\vec{w}\_i$
