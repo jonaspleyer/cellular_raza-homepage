@@ -156,6 +156,33 @@ Cells are initially placed in the left part.
 Due to their repulsive potential at short distances, they begin to push each other into the
 remaining space.
 
+## Parameters
+
+| Parameter | Symbol | Value |
+| --- | --- | --- |
+| [`RodMechanics`](/docs/cellular_raza_building_blocks/struct.RodMechanics.html) |
+| Spring Tension | $\gamma$ | $10\text{ min}^{-2}$ |
+| Diffusion Constant | $D$ | $0$ $\text{µm}^2\text{min}^{-2}$ |
+| Damping | $\lambda$ | $1.5\text{min}^{-1}$ |
+| Spring Length | $l$ | $3\text{ µm}$ |
+| Rigidity | $\eta$ | $2$ $\text{µm min}^{-1}$ |
+| [`MorsePotential`](/docs/cellular_raza_building_blocks/struct.MorsePotential.html) |
+| Interaction Radius | $R$ | $3\text{ µm}$ |
+| Potential Stiffness | $\lambda$ | $0.5\text{ µm}$ |
+| Cutoff | | $5\text{ µm}$ |
+| Strength | $V_0$ | $0.1\text{ µm}^2\text{min}^{-2}$ |
+| **Cycle** |
+| Division Threshold | | $6$ µm |
+| Growth Rate | $\mu$ | $0.1\text{ µm min}^{-1}$ |
+| |
+| [`CartesianCuboidRods`](/docs/cellular_raza_building_blocks/struct.CartesianCuboidRods.html)
+| Domain Length | $L$ | $50\text{ µm}$ |
+| |
+| **Time** |
+| Stepsize | $\Delta t$ | $0.1\text{ min}$ |
+| Save Interval | $\Delta t_\text{save}$ | $2.5\text{ min}$ |
+| Total Time | $T$ | $25\text{ h}$ |
+
 ## Results
 ### Initial Snapshot
 ![](/showcase/bacterial-rods/0000000025.png)
