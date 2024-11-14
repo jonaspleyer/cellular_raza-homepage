@@ -1,5 +1,5 @@
 ---
-title: 'cellular_raza: Agent-based Modeling of Cellular Systems from a Clean Slate'
+title: 'cellular_raza: Cellular Agent-based Modeling from a Clean Slate'
 tags:
   - rust
   - biology
