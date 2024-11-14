@@ -44,27 +44,25 @@ In addition to springs between individual vertices $\vec{v}\_i$, we assume that 
 vertex between edges is subject to a force indiced by curvature.
 We assume that we can model the mechanical properties of the bacterium as an elastic rod.
 We define $\alpha_i = \sphericalangle(\vec{c}\_{i-1},\vec{c}\_i)$ as the angle between adjacent
-edges and $\vec{d}\_i=\vec{c}\_i/|\vec{c}\_i|$ as the normalized edge vector.
+edges.
 The bending force can be assumed to be proportional to the curvature $\kappa_i$ at each vertex
 $\vec{v}\_i$
 
 $$\begin{equation}
-    \kappa_i = 2\tan\left(\frac{\alpha_i}{2}\right)
+    \kappa\_i = 2\tan\left(\frac{\alpha\_i}{2}\right).
 \end{equation}$$
 
-where $\eta$ is the rigidity.
-The resulting force acts along the angle bisector which can be calculated from the normalized edge
-vectors $\vec{d}\_i$.
+The resulting force acts along the angle bisector which can be calculated from the edge vectors.
 The forces acting on vertices $\vec{v}\_i,\vec{v}\_{i-1},\vec{v}\_{i+1}$ are given by
 
 $$\begin{align}
     \vec{F}\_{i,\text{curvature}} &= \eta\kappa_i
-        \frac{\vec{d}\_i - \vec{d}\_{i+1}}{|\vec{d}\_i-\vec{d}\_{i+1}|}\\\\
+        \frac{\vec{c}\_i - \vec{c}\_{i+1}}{|\vec{c}\_i-\vec{c}\_{i+1}|}\\\\
     \vec{F}\_{i-1,\text{curvature}} &= -\frac{1}{2}\vec{F}\_{i,\text{curvature}}\\\\
     \vec{F}\_{i+1,\text{curvature}} &= -\frac{1}{2}\vec{F}\_{i,\text{curvature}}
 \end{align}$$
 
-where $\eta\_i$ is the angle curvature at vertex $\vec{v}\_i$ (see
+where $\eta\_i$ is the rigidity at vertex $\vec{v}\_i$ (see
 [Figure 1](#fig:cell-mechanics-interaction)).
 We can see that the curvature force does not move the overall center of the rod in space.
 The total force is the sum of external and interal forces.
