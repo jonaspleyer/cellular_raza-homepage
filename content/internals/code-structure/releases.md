@@ -9,6 +9,24 @@ To this date, version numbers do not follow the [semver](https://semver.org/) sp
 We are working towards this goal and will report our progress.
 {{< /callout >}}
 
+## Pre-1.0 Releases
+
+### cellular_raza 0.1.5
+[_14th November 2024_](git_diff-0.1.5-incremental.diff)
+
+- Correct calculation of curvature contribution in
+  [`RodMechanics`](/docs/cellular_raza_building_blocks/struct.RodMechanics.html).
+- Extend documentation of [chili](/internals/backends/chili) backend
+- Use new building block
+  [`RodMechanics`](/docs/cellular_raza_building_blocks/struct.RodMechanics.html) for bacterial rods
+  example
+- Fixed bug from `0.1.4` where AuxStorage was initialized with `Default` trait instead of
+  `num::Zero` or custom constructor.
+- Add macro to yield constructor for the generated `AuxStorage` struct.
+- Removed deprecated `xml` storage option.
+- Update [`RodMechanics`](/docs/cellular_raza_building_blocks/struct.RodMechanics.html) bending
+  force calculation
+
 ### cellular_raza 0.1.4
 [_9th  November 2024_](git_diff-0.1.4-incremental.diff)
 

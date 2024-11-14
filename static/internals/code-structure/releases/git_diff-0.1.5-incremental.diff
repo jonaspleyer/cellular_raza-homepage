@@ -1,0 +1,25 @@
+ CITATION.cff                                       |   4 +-
+ Cargo.toml                                         |   2 +-
+ cellular_raza-benchmarks/Cargo.toml                |   2 +-
+ cellular_raza-building-blocks/Cargo.toml           |   2 +-
+ .../src/cell_building_blocks/bacterial_rods.rs     | 108 +++++--
+ cellular_raza-concepts/Cargo.toml                  |   2 +-
+ cellular_raza-core-proc-macro/src/aux_storage.rs   |   4 +-
+ cellular_raza-core-proc-macro/src/lib.rs           |   9 +
+ cellular_raza-core-proc-macro/src/run_sim.rs       |   3 +-
+ cellular_raza-core/Cargo.toml                      |   4 +-
+ .../src/backend/chili/aux_storage.rs               |  29 +-
+ cellular_raza-core/src/backend/chili/mod.rs        |  52 +++-
+ cellular_raza-core/src/backend/chili/proc_macro.rs |  22 ++
+ .../src/backend/chili/update_cycle.rs              |  19 +-
+ .../src/backend/chili/update_mechanics.rs          |   4 -
+ cellular_raza-core/src/backend/mod.rs              |   8 +-
+ cellular_raza-core/src/storage/concepts.rs         |  48 +--
+ cellular_raza-core/src/storage/mod.rs              |   7 -
+ cellular_raza-core/src/storage/quick_xml.rs        |  69 -----
+ cellular_raza-core/src/storage/test.rs             |   1 -
+ cellular_raza-examples/bacterial_rods/plotter.py   |  18 +-
+ .../bacterial_rods/src/custom_domain.rs            | 151 ---------
+ cellular_raza-examples/bacterial_rods/src/main.rs  | 336 +++++----------------
+ cellular_raza/Cargo.toml                           |   6 +-
+ 24 files changed, 308 insertions(+), 602 deletions(-)
