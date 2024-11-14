@@ -192,7 +192,7 @@ remaining space.
 </video>
 
 ### Final Snapshot
-![](/showcase/bacterial-rods/0000023000.png)
+![](/showcase/bacterial-rods/0000015000.png)
 
 ## Code
 The code is part of the examples and can be found in the official github repository under
