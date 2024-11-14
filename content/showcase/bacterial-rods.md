@@ -118,12 +118,14 @@ We provide the [`RodInteraction`](/docs/cellular_raza_building_blocks/struct.Rod
 struct to convert a point-wise interaction to a rod-rod interaction potential.
 In our case, we use the
 [`MorsePotential`](/docs/cellular_raza_building_blocks/struct.MorsePotential.html) building block.
+We detect neighbors who are in range of $2R$ where $R$ is the radius of interaction.
 
 ### Cycle
-To simulate proliferation, we introduce a growth term for the spring lengths $l$
+To simulate proliferation, we introduce a growth term for the spring lengths $l$.
+We reduce the growth rate with increasing number of neighbors $n$.
 
 $$\begin{equation}
-    \partial\_t l = \mu
+    \partial\_t l = \mu \left(1 - \frac{\min(n,N)}{N}\right)
 \end{equation}$$
 
 which will increase the length of the cell indefenitely unless we impose a condition for the
