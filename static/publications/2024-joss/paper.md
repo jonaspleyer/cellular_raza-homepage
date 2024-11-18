@@ -243,8 +243,8 @@ phase of the bacterial colony.
 Cells are placed inside the left-hand side of an elongated box with reflective boundary conditions.
 Their colors range from green for fast growth to blue for dormant cells.
 
-![Bacterial Rods](figures/bacterial-rods-0000000040.png){ width=50% }
-![Bacterial Rods](figures/bacterial-rods-0000023000.png){ width=50% }
+![Bacterial Rods](figures/bacterial-rods-0000000025.png){ width=50% }
+![Bacterial Rods](figures/bacterial-rods-0000007200.png){ width=50% }
 \begin{figure}[!h]
     \centering
     \caption{
