@@ -90,8 +90,9 @@ a fully customised bottom-up approach, if desired.
 'cellular_raza' utilises macros to generate code contingent on the simulation aspects being solved
 numerically.
 It makes extensive use of generics and provides abstract numerical solvers.
-'cellular_raza' hides the inherent complexity of the code generation process, but lets the user
-modify details of the simulation with additional keyword arguments inside the macros.
+'cellular_raza' hides the inherent complexity of the code generation process, yet enables users to
+modify the specifics of the simulation through the use of additional keyword arguments within the
+macros.
 Consequently, users are able to fully and deeply customise the representation and behaviour of the
 agents.
 Each simulation aspect is formulated as a trait in Rust's type system, which provides the necessary
