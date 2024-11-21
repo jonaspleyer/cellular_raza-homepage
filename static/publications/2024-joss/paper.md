@@ -82,22 +82,22 @@ cellular agents, but cannot freely customise the cellular representation.
 
 # cellular_raza
 
-We distinguish between different simulation aspects (i.e. mechanics, cell-cycle or cell-cycle) which
-are directly related to properties of the cells, domain or other external interactions.
-The user choses a cellular representation which can be built from pre-existing building blocks or
-fully-customized bottom-up if desired.
-[`cellular_raza`](https://cellular-raza.com) uses macros to generate code depending on which
-simulation aspects are being numerically solved.
-It is then compiled and builds up a complete numerical simulation.
-In contrast to other simulation tools, [`cellular_raza`](https://cellular-raza.com) makes extensive
-use of generics and provides abstract numerical solvers.
-Users are thus able to fully and deeply customize the representation and behaviour of their agents.
-This inherent complexity is hidden from the user but can be modified with additional keyword
-arguments in the macros.
-Each [simulation aspect](https://cellular-raza.com/internals/concepts/) formulated as a trait in
-Rust's type system which provide the necessary abstractions.
-The [cellular-raza.com/guides/getting-started](https://cellular-raza.com/guides/getting-started)
-guide provides a good entry point and explains every step from building, running to visualizing.
+We distinguish between different simulation aspects, e.g.,  mechanics, cell cycle, or cell cycle.
+These aspects are directly related to the properties of the cells, domain, or other external
+interactions.
+The user selects a cellular representation, which can be built from pre-existing building blocks or
+a fully customised bottom-up approach, if desired.
+'cellular_raza' utilises macros to generate code contingent on the simulation aspects being solved
+numerically.
+It makes extensive use of generics and provides abstract numerical solvers.
+'cellular_raza' hides the inherent complexity of the code generation process, but lets the user
+modify details of the simulation with additional keyword arguments inside the macros.
+Consequently, users are able to fully and deeply customise the representation and behaviour of the
+agents.
+Each simulation aspect is formulated as a trait in Rust's type system, which provides the necessary
+abstractions.
+The getting-started guide provides a good entry point and explains every step from building, running
+to visualising.
 
 <!--
 # Underlying Assumptions and Internals
