@@ -49,7 +49,7 @@ Only a fraction of the nutrients is converted to actual growth of cell volume.
 $$\\begin{align}
     \dot{n}\_i^c &= u(n\_e(x\_c) - n\_i^c) - (\alpha + \sigma)n\_i^c\\\\
     \dot{V}\_c &= \alpha n\_i^c V\_c \left(1 - \frac{V\_c}{V\_\text{max}}\right)\\\\
-    \dot{n}\_e &= D\Delta n\_e - u \sum\limits\_{c=1}^N \delta(x-x\_c)(n\_e-n\_i)
+    \dot{n}\_e &= D\Delta n\_e - u \sum\limits\_{c=1}^N \delta(x-x\_c)(n\_e-n\_i^c)
 \\end{align}$$
 
 The components of these PDEs describe the extracellular and intracellular nutrients as well as the
@@ -57,7 +57,7 @@ volume of the individual cell.
 $n_e$ is the spatially distributed extra-cellular nutrient concentration which undergoes diffusion
 with the diffusion constant $D$ while $n^c_i$ is the intra-cellular nutrient concentration of cell 
 $c\in\\{1,\dots,N\\}$ positioned at $x_c$.
-The volumeo f cell $c$ is given by $V_c$.
+The volumeo of cell $c$ is given by $V_c$.
 The parameter $u$ is the uptake rate of the nutrient while $\alpha$ describes the consumption of the
 nutrient by the cellular metabolism resulting in an increase of the volume $V_c$.
 In contrast, $\sigma$ degrades the intracellular nutrients 
