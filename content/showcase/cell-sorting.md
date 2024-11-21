@@ -16,8 +16,8 @@ We assume that cells are spherical objects which interact via force potentials.
 The two positions of cells are $x_i,x_j$ and their distance is $r=|x_i-x_j|$.
 
 $$\begin{align}
-    \sigma &= \frac{r}{R_i + R_j}\\\\
-    U(\sigma) &= V_0 \left(\frac{1}{3\sigma^3} - \frac{1}{\sigma}\right)
+    \sigma_{i,j} &= \frac{r}{R_i + R_j}\\\\
+    U(\sigma_{i,j}) &= V_0 \left(\frac{1}{3\sigma\_{i,j}^3} - \frac{1}{\sigma_{i,j}}\right)
 \end{align}$$
 
 The values $R_i,R_j$ are the radii of the cells ($i\neq j$) interacting with each other.
@@ -41,16 +41,16 @@ This means, that units of $V_0$ and $\lambda$ are changing and they incorporate 
 We can assume that interactions between cells are restricted to close ranges and thus enforce a
 cutoff $\xi\geq R_i+R_j$ for the interaction where the resulting force is identical to zero.
 We further assume that cells of different species do not attract each other but do repel.
-To describe this behaviour, we set the potential to zero when $r>R_i+R_j$ (i.e., $\sigma>1$)
+To describe this behaviour, we set the potential to zero when $r>R_i+R_j$ (i.e., $\sigma_{i,j}>1$)
 and both cells have distinct species type $s_i$.
 In total we are left with
 
 $$\begin{equation}
-    V(\sigma) =
+    V(\sigma_{i,j}) =
     \begin{cases}
-        0 &\text{ if } \sigma\geq\xi/(R_i+R_j)\\\\
-        0 &\text{ if } s_i\neq s_j \text{ and } \sigma\geq 1\\\\
-        U(\sigma) &\text{ else }
+        0 &\text{ if } \sigma_{i,j}\geq\xi/(R_i+R_j)\\\\
+        0 &\text{ if } s_i\neq s_j \text{ and } \sigma_{i,j}\geq 1\\\\
+        U(\sigma_{i,j}) &\text{ else }
     \end{cases}.
 \end{equation}$$
 
