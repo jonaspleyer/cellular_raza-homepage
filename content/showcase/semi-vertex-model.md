@@ -93,12 +93,12 @@ and its closest neighbor on the other cells polygon.
 Let us denote the vertices of the two cells in question with $\\{\vec{v}_i\\}$ and
 $\\{\vec{w}_j\\}$.
 
-Given a vertex $v_i$ of the first cell and the other cells vertices $\\{w_j\\}$ we asses if the
-vertex $v_i$ is contained in the polygon $\\{w_j\\}$ and calculate either the inside or a outside
-interaction force.
-In this way, by iterating over all vertices $v_i$, we can calculate the total external force
-$\vec{F}_\text{external}$ as the sum of all individual contributions.
-The same procedure when switching $v_i$ and $w_j$ results in a symmetric interaction.
+Given a vertex $\vec{v}\_i$ of the first cell and the other cells vertices $\\{\vec{w}_j\\}$ we
+asses if the vertex $v_i$ is contained in the polygon $\\{\vec{w}\_j\\}$ and calculate either the
+inside or a outside interaction force.
+In this way, by iterating over all vertices $\vec{v}\_i$, we can calculate the total external force
+$\vec{F}\_\text{external}$ as the sum of all individual contributions.
+The same procedure when switching $\vec{v}\_i$ and $\vec{w}\_j$ results in a symmetric interaction.
 
 #### Case 1: Outside Interaction
 In this case, we assume that the vertex $\vec{v}_i$ in question is not inside the other cell.
