@@ -57,7 +57,7 @@ volume of the individual cell.
 $n_e$ is the spatially distributed extra-cellular nutrient concentration which undergoes diffusion
 with the diffusion constant $D$ while $n^c_i$ is the intra-cellular nutrient concentration of cell 
 $c\in\\{1,\dots,N\\}$ positioned at $x_c$.
-The volumeo of cell $c$ is given by $V_c$.
+The volume of cell $c$ is given by $V_c$.
 The parameter $u$ is the uptake rate of the nutrient while $\alpha$ describes the consumption of the
 nutrient by the cellular metabolism resulting in an increase of the volume $V_c$.
 In contrast, $\sigma$ degrades the intracellular nutrients 

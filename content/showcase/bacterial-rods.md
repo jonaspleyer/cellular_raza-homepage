@@ -134,11 +134,11 @@ To construct a new cell, we cannot simply copy the existing one twice, but we al
 internal parameters in the process.
 The following actions need to be taken for the old and new agent.
 
-1. Assign a new growth rate (pick randomly from uniform distribution in $[0.8\mu\_0,1.2\mu\_0]$
-   where $\mu\_0$ is some fixed value)
+1. Assign a new growth rate (pick randomly from uniform distribution in
+   $[0.8\text{ }\mu\_0,1.2\text{ }\mu\_0]$ where $\mu\_0$ is some fixed value)
 2. Assign new positions
     1. Calculate new spring lengths
-    $$\tilde{l}\_i = l\left(\frac{1}{2} - \frac{r}{\sum\limits\_i l}\right)$$
+    $$\tilde{l} = l\left(\frac{1}{2} - \frac{r}{\sum\limits\_i l}\right)$$
     2. Calculate middle of old cell
     $$\vec{m} = \frac{1}{N\_\text{vertices}}\sum\limits\_i\vec{v}\_i$$
     3. Calculate positions of new vertices $\vec{w}\_i$

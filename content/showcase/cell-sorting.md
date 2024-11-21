@@ -62,7 +62,7 @@ In total, we are left with only 4 parameters to describe our system.
 | --- | --- | --- |
 | Cell Radius | $R_i$ | $6.0 \text{ µm}$ |
 | Potential Strength | $V_0$ | $2\text{ µm}^2\text{ }/\text{ min}^2$ |
-| Damping Constant | $\lambda$ | $2\text{min}^{-1}$ |
+| Damping Constant | $\lambda$ | $2\text{ min}^{-1}$ |
 | Interaction Range | $\xi$ | $1.5 (R_i+R_j)=3R_i$ |
 
 The following table shows additional values which are used to initialize the system.
@@ -70,7 +70,7 @@ In total, 1600 cells with random initial positions and zero velocity were placed
 
 | Property | Symbol | Value |
 | --- | --- | --- |
-| Time Stepsize | $\Delta t$ | $0.2\text{min}$ |
+| Time Stepsize | $\Delta t$ | $0.2\text{ min}$ |
 | Time Steps | $N_t$ | $10'000$ |
 | Domain Size | $L$ | $110\text{ µm}$ |
 | Cells Species 1 | $N_{C,1}$ | $800$ |

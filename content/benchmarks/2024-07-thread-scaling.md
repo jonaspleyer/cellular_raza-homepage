@@ -63,7 +63,7 @@ Options:
 
 ```
 Results generated in this way are stored inside the `benchmark_results` folder.
-In addition, we provide a python script `potting/cell_sorting.py` to quickly visualize obtained
+In addition, we provide a python script `plotting/cell_sorting.py` to quickly visualize obtained
 results.
 
 ## Hardware
