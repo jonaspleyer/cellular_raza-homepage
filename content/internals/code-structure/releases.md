@@ -11,6 +11,18 @@ We are working towards this goal and will report our progress.
 
 ## Pre-1.0 Releases
 
+### cellular_raza 0.1.6
+[_21st November 2024_](git_diff-0.1.6-incremental.diff)
+
+- Streamline documentation of [chili](/internals/backends/chili) backend, especially macros
+- Add more tests for deriving [`ReactionsContact`](/docs/cellular_raza_concepts/trait.ReactionsContact.html)
+- Bugfigx for [`CellAgent`](/docs/cellular_raza_concepts/derive.CellAgent.html) derive macro
+- Restructure keyword arguments of main macros such that correct compatibility with each other is
+  guaranteed
+- Enable shorthand initialization for keywords of the
+  [`run_simulation`](/docs/cellular_raza_core/backend/chili/macro.run_simulation.html) macro.
+- Prepare for submission to JOSS journal
+
 ### cellular_raza 0.1.5
 [_14th November 2024_](git_diff-0.1.5-incremental.diff)
 
