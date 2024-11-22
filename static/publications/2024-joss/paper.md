@@ -216,10 +216,10 @@ close proximity if their species is identical.
 Cells are placed randomly inside a cube with reflective boundary conditions.
 In the final snapshot, we can clearly see the phase-separation between the different species.
 
-![Cell Sorting - Start](figures/cell_sorting_start.png){ width=50% }
-![Cell Sorting - End](figures/cell_sorting_end.png){ width=50% }
 \begin{figure}[!h]
     \centering
+    \includegraphics[width=0.5\textwidth]{figures/cell_sorting_start.png}%
+    \includegraphics[width=0.5\textwidth]{figures/cell_sorting_end.png}
     \caption{
         The initial random placement of cells reorders into a phase-separated spatial pattern.
     }
@@ -244,10 +244,10 @@ phase of the bacterial colony.
 Cells are placed inside the left-hand side of an elongated box with reflective boundary conditions.
 Their colors range from green for fast growth to blue for dormant cells.
 
-![Bacterial Rods](figures/bacterial-rods-0000000025.png){ width=50% }
-![Bacterial Rods](figures/bacterial-rods-0000007200.png){ width=50% }
 \begin{figure}[!h]
     \centering
+    \includegraphics[width=0.5\textwidth]{figures/bacterial-rods-0000000025.png}%
+    \includegraphics[width=0.5\textwidth]{figures/bacterial-rods-0000007200.png}
     \caption{
         The bacteria extend from the initial placement in the left side towards the right side.
         Their elongated shape and the confined space favour the orientation facing along the growth
@@ -270,10 +270,10 @@ The outer domain is colored by the intensity of present nutrients.
 A lighter color indicates that more nutrients are available while a dark color signifies a lack
 thereof.
 
-![Bacterial Branching](figures/cells_at_iter_0000028000.png){ width=50% }
-![Bacterial Branching](figures/cells_at_iter_0000099000.png){ width=50% }
 \begin{figure}[!h]
     \centering
+    \includegraphics[width=0.5\textwidth]{figures/cells_at_iter_0000028000.png}%
+    \includegraphics[width=0.5\textwidth]{figures/cells_at_iter_0000099000.png}
     \caption{
         The bacterial colony grows outwards towards the nutrient-rich parts of the domain thus
         forming branches in the process.
@@ -294,9 +294,9 @@ between them.
 Cells are placed in a perfect hexagonal grid such that edges and vertices align.
 Their growth rates are chosen from a uniform distribution.
 
-![](figures/snapshot-00000000000000000050.png){ width=50% }
-![](figures/snapshot-00000000000000020000.png){ width=50% }
 \begin{figure}[!h]
+    \includegraphics[width=0.5\textwidth]{figures/snapshot-00000000000000000050.png}
+    \includegraphics[width=0.5\textwidth]{figures/snapshot-00000000000000020000.png}
     \caption{
         During growth the cells push on each other thus creating small spaces in between them as the
         collection expands.
