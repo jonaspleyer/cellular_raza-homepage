@@ -231,8 +231,8 @@ Bacteria come in various forms [@Zapun2008; @Young2006] such as elongated shapes
 which grows asymmetrically in the direction of elongation.
 Our model describes the physical mechancis of one cell as a collection of multiple vertices
 $\vec{v}_i$ which are connected by springs.
-Their relative angle at each connecting vertex introduces a stiffening force which is proportional
-to the angle difference $\alpha-180°$.
+Their relative angle $\alpha$ at each connecting vertex introduces a stiffening force which is
+proportional to $2\tan(\alpha/2)$.
 Cells interact via a soft-sphere force potential with short-ranged attraction.
 Multiple contributions are calculated between every vertex and the closest point on the
 other cells edges.
