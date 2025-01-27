@@ -89,17 +89,17 @@ Deriving these functionalities is thus greatly convenient.
 These derive macros are both used is used in the [bacterial-rods](/showcase/bacterial-rods) example.
 
 {{< codeFromFile
-    file="cellular_raza/cellular_raza-examples/bacterial_rods/src/custom_domain.rs"
-    filename="cellular_raza-examples/bacterial_rods/src/custom_domain.rs"
-    start="8"
-    end="14"
+    file="cellular_raza/cellular_raza-building-blocks/src/cell_building_blocks/bacterial_rods.rs"
+    filename="cellular_raza-building-blocks/src/cell_building_blocks/bacterial_rods.rs"
+    start="286"
+    end="292"
 >}}
 
 {{< codeFromFile
-    file="cellular_raza/cellular_raza-examples/bacterial_rods/src/custom_domain.rs"
-    filename="cellular_raza-examples/bacterial_rods/src/custom_domain.rs"
-    start="57"
-    end="63"
+    file="cellular_raza/cellular_raza-building-blocks/src/cell_building_blocks/bacterial_rods.rs"
+    filename="cellular_raza-building-blocks/src/cell_building_blocks/bacterial_rods.rs"
+    start="349"
+    end="355"
 >}}
 
 ## Generics
