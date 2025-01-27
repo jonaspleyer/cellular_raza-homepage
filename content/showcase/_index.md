@@ -5,10 +5,16 @@ title: Showcase
 
 {{< cards >}}
     <!-- {{<
+        card link="cr_mech_coli"
+        title="cr_mech_coli"
+        image="https://jonaspleyer.github.io/cr_mech_coli/_images/extract_positions-001200.png"
+        subtitle="A mechanical model of Rod-Shaped Bacteria such as _E.Coli_."
+    >}}
+    {{<
         card link="cr_trichome"
-        title="cr_trichome - Modeling Patterns on Arabidopsis Thaliana Leaves"
+        title="cr_trichome"
         image="/showcase/cr_trichome/cr_trichome_end.png"
-        subtitle="Turing Patterns on the leaf of Arabidopsis Thaliana"
+        subtitle="Modeling a Trichome Turing Pattern on the leaf of _Arabidopsis Thaliana_."
     >}} -->
     {{<
         card link="bacterial-branching"
