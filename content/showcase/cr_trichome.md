@@ -5,7 +5,7 @@ math: true
 draft: true
 ---
 
-## `cr_trichome` - Turing Patterns on the leaf of _Arabidopsis Thaliana_
+## Modeling a Trichome Turing Pattern on the leaf of _Arabidopsis Thaliana_
 
 Trichomes are hairs consisting of a single cell which can be seen developing on the surface of
 leaves of _Arabidopsis Thaliana_.
