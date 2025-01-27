@@ -87,7 +87,7 @@ relative performance scaling.
 
 <br>
 <div style="text-align: center;">
-    <p>Table 1: Fit parameters for quadratic approximation of scaling behaviour.</p>
+    <p>Table 1: List of tested hardware configurations.</p>
 </div>
 
 ## Results
