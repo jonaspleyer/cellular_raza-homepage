@@ -118,27 +118,21 @@ handle_options() {
         case $1 in
             -d | --doc)
                 generate_docs
-                exit 0
                 ;;
             -w | --website)
                 build_website
-                exit 0
                 ;;
             -u | --upload)
                 upload
-                exit 0
                 ;;
             -m | --movie)
                 movie
-                exit 0
                 ;;
             --scc)
                 scc_table
-                exit 0
                 ;;
             --todo)
                 todo_table
-                exit 0
                 ;;
             -a | --all)
                 generate_docs
@@ -146,17 +140,15 @@ handle_options() {
                 scc_table
                 todo_table
                 upload
-                exit 0
                 ;;
             -h | --help)
                 usage
-                exit 0
                 ;;
             \?)
                 usage
-                exit 1
                 ;;
         esac
+        exit 0
     done
 }
 
