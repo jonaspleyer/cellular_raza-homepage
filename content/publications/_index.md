@@ -3,6 +3,7 @@ title: Publications
 prev: /
 ---
 
+[![JOSS Status](https://joss.theoj.org/papers/7a0a13c37e57776edc21132f518ef36a/status.svg)](https://joss.theoj.org/papers/7a0a13c37e57776edc21132f518ef36a)
 We are eagerly moving forwards to get `cellular_raza` published.
 If you want to cite us now, please use our git repository:
 
