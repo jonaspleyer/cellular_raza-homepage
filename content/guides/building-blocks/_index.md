@@ -1,6 +1,8 @@
 ---
 title: Building Blocks
 weight: 30
+cascade:
+    type: docs
 ---
 
 `cellular_raza` is designed such that researchers are flexible when it comes to designing new
