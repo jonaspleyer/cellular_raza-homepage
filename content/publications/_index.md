@@ -23,6 +23,12 @@ doi: [10.1038/s41556-024-01572-y](https://doi.org/10.1038/s41556-024-01572-y).
 
 ## 2024
 
+Toquinha Bergmann et al.,
+(2024).
+[Trichome Pattern Formation: Computational Exploration of the Robustness and mechanistic influences
+of the Turing Mechanism](2024-09-16-self-organization-symposium).
+At the "Self-Organization in Biology" Symposium, Freiburg.
+
 Pleyer, J.
 (2024).
 [cellular_raza - Think like a cell](2024-02-05-think-like-a-cell).
