@@ -155,6 +155,12 @@ The dependencies which are derived from the workspace either via `workspace = tr
 >}}
 {{< /details >}}
 
+{{< callout type="info" >}}
+We are currently working on a rewrite of this example using the [`chili`](/internals/backends/chili)
+backend under
+[`cellular_raza-examples/bacterial_branching`](https://github.com/jonaspleyer/cellular_raza/tree/master/cellular_raza-examples/bacterial_branching).
+{{< /callout >}}
+
 ## References
 
 [1]
