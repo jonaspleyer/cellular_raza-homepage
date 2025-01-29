@@ -125,6 +125,17 @@ We are currently working at porting the existing code to the [`chili`](/internal
 backend.
 {{< /callout >}}
 
+{{< details title="Cargo" closed="true" >}}
+{{< codeFromFile
+    file="cellular_raza/cellular_raza-examples/bacteria_population/Cargo.toml"
+    filename="cellular_raza-examples/bacteria_population/Cargo.toml"
+>}}
+{{< callout type="info" >}}
+The dependencies which are derived from the workspace either via `workspace = true` or
+`path="../../"` should be replaced with the versions used in the workspace
+[`Cargo.toml`](https://github.com/jonaspleyer/cellular_raza/tree/master/Cargo.toml).
+{{< /callout >}}
+{{< /details >}}
 {{< details title="Bacterial Properties" closed="true" >}}
 {{< codeFromFile
     file="cellular_raza/cellular_raza-examples/bacteria_population/src/bacteria_properties.rs"

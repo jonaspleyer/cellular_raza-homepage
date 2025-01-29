@@ -198,6 +198,17 @@ remaining space.
 The code is part of the examples and can be found in the official github repository under
 [bacterial-rods](https://github.com/jonaspleyer/cellular_raza/tree/master/cellular_raza-examples/bacterial_rods).
 
+{{< details title="Cargo" closed="true" >}}
+{{< codeFromFile
+    file="cellular_raza/cellular_raza-examples/bacterial_rods/Cargo.toml"
+    filename="cellular_raza-examples/bacterial_rods/Cargo.toml"
+>}}
+{{< callout type="info" >}}
+The dependencies which are derived from the workspace either via `workspace = true` or
+`path="../../"` should be replaced with the versions used in the workspace
+[`Cargo.toml`](https://github.com/jonaspleyer/cellular_raza/tree/master/Cargo.toml).
+{{< /callout >}}
+{{< /details >}}
 {{< details title="Main Simulation" closed="true">}}
 {{< codeFromFile
     file="cellular_raza/cellular_raza-examples/bacterial_rods/src/main.rs"

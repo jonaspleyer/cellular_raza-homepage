@@ -105,6 +105,17 @@ The code for this simulation and the visualization can be found in the
 [examples](https://github.com/jonaspleyer/cellular_raza/tree/master/cellular_raza-examples/cell_sorting)
 folder of `cellular_raza`.
 
+{{< details title="Cargo" closed="true" >}}
+{{< codeFromFile
+    file="cellular_raza/cellular_raza-examples/cell_sorting/Cargo.toml"
+    filename="cellular_raza-examples/cell_sorting/Cargo.toml"
+>}}
+{{< callout type="info" >}}
+The dependencies which are derived from the workspace either via `workspace = true` or
+`path="../../"` should be replaced with the versions used in the workspace
+[`Cargo.toml`](https://github.com/jonaspleyer/cellular_raza/tree/master/Cargo.toml).
+{{< /callout >}}
+{{< /details >}}
 {{< details title="Full Code" closed="true" >}}
 {{< codeFromFile
     file="cellular_raza/cellular_raza-examples/cell_sorting/src/main.rs"
