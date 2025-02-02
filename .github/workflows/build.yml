@@ -57,6 +57,8 @@ jobs:
       - name: Build documentation
         run: ./build_website.sh -d
         shell: bash
+      - name: Build All
+        run: ./build_website.sh -a
       - name: Build with Hugo
         env:
           HUGO_CACHEDIR: ${{ runner.temp }}/hugo_cache
