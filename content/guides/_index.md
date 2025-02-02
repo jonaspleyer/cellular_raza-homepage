@@ -24,6 +24,7 @@ development of new simulations.
 | [Introduction](introduction) | General assumptions and setting of `cellular_raza` |
 | [Getting Started](getting-started) | Good first starting point. Learn the fundamentals of `cellular_raza` |
 | [Building Blocks](building-blocks) | Use predefined building blocks to combine them into a fully working simulation. |
+| [Python Bindings](python-bindings) | Learn how to develop python packages with `cellular_raza` as a numerical backend. |
 
 ## Templates
 
@@ -34,7 +35,7 @@ We provide two slightly different variants to build up a reliable simulation inf
 The [cellular_raza-template](https://github.com/jonaspleyer/cellular_raza-template) is purely
 written in Rust while
 [cellular_raza-template-pyo3](https://github.com/jonaspleyer/cellular_raza-template-pyo3) provides
-Python bindings in addition.
+Python bindings in addition (see also [python-bindings](python-bindings)).
 Both templates automatically generate a working documentation which is hosted with the
 github-integrated services.
 
