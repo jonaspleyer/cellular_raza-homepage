@@ -126,6 +126,52 @@ writing docstrings for our Rust-based code.
     end="39"
 >}}
 
+### Simulation Flow
+
+The overall structure of this template project is similar to that of the
+[getting-started](/guides/getting-started) guide.
+We define an `Agent` struct and derive its properties from already existing building blocks.
+
+{{< codeFromFile
+    file="cellular_raza/cellular_raza-examples/cellular_raza-template-pyo3/src/lib.rs"
+    filename="src/lib.rs"
+    start="50"
+    end="60"
+>}}
+
+All settings required to run a new simulation are stored in the `SimulationSettings` struct.
+
+{{< codeFromFile
+    file="cellular_raza/cellular_raza-examples/cellular_raza-template-pyo3/src/lib.rs"
+    filename="src/lib.rs"
+    start="20"
+    end="33"
+>}}
+
+This information is then used to initialize all agents and the simulation domain within the
+`run_simulation` function.
+
+{{< details title="`run_simulation`" closed="true" >}}
+{{< codeFromFile
+    file="cellular_raza/cellular_raza-examples/cellular_raza-template-pyo3/src/lib.rs"
+    filename="src/lib.rs"
+    start="62"
+    end="133"
+>}}
+{{< /details >}}
+
+This functionality is then exported as python functions.
+
+{{< codeFromFile
+    file="cellular_raza/cellular_raza-examples/cellular_raza-template-pyo3/src/lib.rs"
+    filename="src/lib.rs"
+    start="135"
+    end="140"
+>}}
+
+For now, the adjoining python code in `./cellular_raza_template_pyo3` is empty and only re-exports
+these objects and functions.
+
 ### Troubleshooting & Caveats
 #### `pyo3` Versions
 The `pyo3` version which we are using in our project and that of `cellular_raza` needs to match.
