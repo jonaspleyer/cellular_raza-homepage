@@ -26,4 +26,5 @@ with increasing number of cells (see [benchmarks/sim-size](/benchmarks/2024-07-s
 | --- | --- | --- |
 | [`Domain`](/internals/concepts/domain/decomposition) | Representation of the physical simulation domain. | |
 | [`Mechanics`](/internals/concepts/domain/mechanics) | Handles forces which the domain may exert on a cell.| `Domain` |
+| [`DomainForce`](/internals/concepts/domain/force) | The domain can exert forces onto the cell. | `Domain`,`Mechanics` |
 | [`Reactions`](/internals/concepts/domain/reactions) | Models interactions of cells with extracellular resources (eg. by uptake or secretion).| `Domain` |
