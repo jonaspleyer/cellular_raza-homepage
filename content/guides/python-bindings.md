@@ -181,3 +181,11 @@ Otherwise compilation of the project will fail.
 
 Since `pyo3` does not support generics, we can not expose any classes that use generics directly.
 If we wish to use any class with generics, we need to write wrappers around them.
+
+#### Docstrings and LSP
+
+Sphinx inspects the generated python object itself while most language servers rely on the inline
+docstrings from the python source code or `*.pyi` stub files.
+This means that the documentation of our python code which comes from Rust will show the contents
+of docstrings given in `src/...` while the syntax highlighting and completion will show the
+content of the stub file `cellular_raza_template_pyo3/cellular_raza_template_pyo3.pyi`.
