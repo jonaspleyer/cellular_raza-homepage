@@ -91,6 +91,25 @@ It exports functions and classes inside a module from the `lib.rs` file.
 >}}
 
 The name of this module should also be changed when building a new project.
+Functions and object need to be annotated with the `#[pyfunction]` and `#[pyclass]` derive macros
+respectively.
+See the documentation of [`pyo3`](https://pyo3.rs/).
+
+{{< codeFromFile
+    file="cellular_raza/cellular_raza-examples/cellular_raza-template-pyo3/src/lib.rs"
+    filename="src/lib.rs"
+    start="51"
+    end="53"
+>}}
+
+options="{\"hl_lines\" \"51-53\"}"
+
+{{< codeFromFile
+    file="cellular_raza/cellular_raza-examples/cellular_raza-template-pyo3/src/lib.rs"
+    filename="src/lib.rs"
+    start="66"
+    end="67"
+>}}
 
 #### Docs
 
