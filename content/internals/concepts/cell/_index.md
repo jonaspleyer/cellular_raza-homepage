@@ -5,6 +5,10 @@ sidebar:
     open: true
 ---
 
+The `Cell` (often also called "Agent") is the fundamental unit `cellular_raza`.
+We describe a wide variety of processes which occur inside a cell and how they interact with the
+external environment.
+
 | Aspect | Description | Depends on |
 | --- | --- | --- |
 | [`Position`](/internals/concepts/cell/mechanics) | Spatial representation of the cell | |
