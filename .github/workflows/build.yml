@@ -63,5 +63,5 @@ jobs:
         env:
           HUGO_CACHEDIR: ${{ runner.temp }}/hugo_cache
           HUGO_ENVIRONMENT: production
-          TZ: America/Los_Angeles
+          TZ: Europe/Germany
         run: ./build_website.sh -d
