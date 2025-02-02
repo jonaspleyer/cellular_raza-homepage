@@ -7,6 +7,8 @@ math: true
 In this introduction we will describe the basic way of using `cellular_raza`.
 We assume that the reader is already somewhat familiar with the Rust programming language and has
 installed the [cargo](https://doc.rust-lang.org/cargo/) package manager.
+You can find instructions for its installation at
+[www.rust-lang.org/tools/install](https://www.rust-lang.org/tools/install).
 
 ## Simulation Code
 
