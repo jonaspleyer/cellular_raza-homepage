@@ -20,7 +20,7 @@ cd my-new-project
 
 Afterwards add `cellular_raza` as a dependency.
 ```bash
-cargo add cellular_raza serde rand rand_chacha num
+cargo add cellular_raza@0.1 num@0.4 rand@0.8 rand_chacha@0.3 serde@1
 ```
 
 Afterwards, we have the following structure of files.
