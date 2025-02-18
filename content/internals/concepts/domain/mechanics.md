@@ -7,8 +7,8 @@ math: true
 
 ## Mechanics
 
-The [`Mechanics`](../cell/mechanics) concept of the cell is accompanied by a
-[`SubDomainMechanics`](/cellular).
+The [`Mechanics`](../cell/mechanics) concept of the cell is accompanied by the
+[`SubDomainMechanics`](/cellular) trait for the domain.
 It is responsible for applying boundary conditions to cells with the `apply_boundary` method.
 This is often utilized to model finite enclosures with reflective boundary conditions.
 
