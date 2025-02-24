@@ -11,6 +11,22 @@ We are working towards this goal and will report our progress.
 
 ## Pre-1.0 Releases
 
+### cellular_raza 0.2.0
+[_23rd February 2025_](git_diff-0.2.0-incremental.diff)
+
+- Implemented `__getitem__` for
+  [`CellIdentifier`](/docs/cellar_raza_core/backend/chili/struct.CellIdentifier.html) such that it
+  can be used as a python tuple.
+- Update slogan and CITATION.cff
+- Restructured [`prelude`](/docs/cellular_raza/prelude) exports and adapt examples
+- Add examples for homepage `cellular_raza-examples/homepage-training`
+- First steps: experimental CUDA code for cara backend
+- Remove const-generic parameters for
+  [`MiePotential`](/docs/cellular_raza_building_blocks/struct.MiePotential.html)
+- Started to modularize proc-macros for generating simulation steps to take custom update functions
+- Add more `pyo3` methods to building blocks
+- New guide on how to create [python bindings](/guides/python-bindings)
+
 ### cellular_raza 0.1.6
 [_21st November 2024_](git_diff-0.1.6-incremental.diff)
 
