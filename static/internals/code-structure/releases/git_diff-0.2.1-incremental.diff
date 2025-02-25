@@ -1,0 +1,22 @@
+ .github/workflows/reuse.yml                        |   2 +-
+ CITATION.cff                                       |   2 +-
+ Cargo.toml                                         |   2 +-
+ cellular_raza-benchmarks/Cargo.toml                |   2 +-
+ cellular_raza-building-blocks/Cargo.toml           |   2 +-
+ .../src/cell_building_blocks/bacterial_rods.rs     |   8 +-
+ .../src/cell_building_blocks/interaction.rs        |  19 ++-
+ .../src/cell_building_blocks/mechanics.rs          | 157 ++++++++++-----------
+ cellular_raza-concepts-derive/src/domain.rs        |  12 +-
+ cellular_raza-concepts/Cargo.toml                  |   2 +-
+ cellular_raza-concepts/src/domain.rs               |  17 ++-
+ cellular_raza-concepts/src/lib.rs                  |   3 +-
+ cellular_raza-core-proc-macro/src/lib.rs           |   1 -
+ cellular_raza-core/Cargo.toml                      |   6 +-
+ cellular_raza-core/build.rs                        |  11 +-
+ cellular_raza-examples/cellular_raza-template      |   2 +-
+ cellular_raza-examples/cellular_raza-template-pyo3 |   2 +-
+ cellular_raza/Cargo.toml                           |   7 +-
+ cellular_raza/logos/Infos.txt                      |   2 +
+ publish.sh                                         |  14 ++
+ update_version.sh                                  |   6 +
+ 21 files changed, 149 insertions(+), 130 deletions(-)

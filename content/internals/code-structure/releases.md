@@ -11,6 +11,10 @@ We are working towards this goal and will report our progress.
 
 ## Pre-1.0 Releases
 
+### cellular_raza 0.2.1
+[_25th February 2025_](git_diff-0.2.1-incremental.diff)
+- Fix documentation build failure introduced in [0.2.0](#cellular_raza-020)
+
 ### cellular_raza 0.2.0
 [_23rd February 2025_](git_diff-0.2.0-incremental.diff)
 
