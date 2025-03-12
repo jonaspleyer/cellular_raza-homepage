@@ -11,6 +11,13 @@ We are working towards this goal and will report our progress.
 
 ## Pre-1.0 Releases
 
+### cellular_raza 0.2.2
+[_12th March 2025_](git_diff-0.2.2-incremental.diff)
+
+- Bump rust edition to `2024`
+- completely reworked [`bacterial-branching`](/showcase/bacterial-branching) example
+- update `bincode` dependency to `2.0`
+
 ### cellular_raza 0.2.1
 [_25th February 2025_](git_diff-0.2.1-incremental.diff)
 - Fix documentation build failure introduced in [0.2.0](#cellular_raza-020)
