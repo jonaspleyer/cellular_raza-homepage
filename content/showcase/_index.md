@@ -19,7 +19,7 @@ title: Showcase
     {{<
         card link="bacterial-branching"
         title="Bacterial Branching Patterns"
-        image="/showcase/bacterial-branching/bacteria_cells_at_iter_0000088000.png"
+        image="/showcase/bacterial-branching/cells_at_iter_0000060200.png"
         subtitle="A growth model of _Bacillus Subtilis_ which forms spatial patterns."
     >}}
     {{<
