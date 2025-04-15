@@ -1,0 +1,12 @@
+ CITATION.cff                                       |  2 +-
+ Cargo.toml                                         |  2 +-
+ cellular_raza-benchmarks/Cargo.toml                |  2 +-
+ cellular_raza-building-blocks/Cargo.toml           |  2 +-
+ .../plot_bound_lennard_jones.html                  | 60 -------------
+ .../cell_building_blocks/plot_morse_potential.html | 99 ----------------------
+ cellular_raza-concepts/Cargo.toml                  |  2 +-
+ cellular_raza-core/Cargo.toml                      |  4 +-
+ cellular_raza-core/src/backend/cara/mod.rs         |  2 +-
+ cellular_raza/Cargo.toml                           |  6 +-
+ update_version.sh                                  |  4 +-
+ 11 files changed, 13 insertions(+), 172 deletions(-)
