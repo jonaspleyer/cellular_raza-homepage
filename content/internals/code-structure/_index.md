@@ -53,6 +53,7 @@ internal use have been refactored and published as individually standing crates.
 | [`approx-derive`](https://crates.io/crates/approx-derive) | Derive macros for `AbsDiffEq` and `RelativeEq` of the [`approx`](https://crates.io/crates/approx) crate. | Testing |
 | [`circ_buffer`](https://crates.io/crates/circ_buffer) | A `no_std` statically allocated ring-buffer with optional [`serde`](https://serde.rs) support. | Save increments for a [multistep solver](https://en.wikipedia.org/wiki/Linear_multistep_method). |
 | [`crate2bib`](https://github.com/jonaspleyer/crate2bib/) | Convert crates to bibligraphy entries. | Writing texts/publishing in general. |
+| [`short_default`](https://github.com/jonaspleyer/short_default) | Use shorthand notation for creating structs with default values. | See [`cr_bayesian_optim`](https://github.com/jonaspleyer/cr_bayesian_optim) |
 | [`spatial-decomposition`](https://github.com/jonaspleyer/spatial-decomposition) | Split apart `2D` simulation domains such that they can be processed in parallel. | Experimental usage in [`CartesianCuboid2D`](/docs/cellular_raza_building_blocks/struct.CartesianCuboid.html) |
 | [`uniquevec`](https://crates.io/crates/uniquevec) | A `Vec`-like datastructure which only contains unique entries. It is `no_std` and makes no use of unsafe code. | Specify multiple [`StorageOption`](/docs/cellular_raza_core/storage/enum.StorageOption.html) in correct priority without duplicates. |
 
