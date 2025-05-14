@@ -11,6 +11,15 @@ We are working towards this goal and will report our progress.
 
 ## Pre-1.0 Releases
 
+### cellular_raza 0.2.4
+[_01st May 2025_](git_diff-0.2.4-incremental.diff)
+
+- Fix `pyo3` testing for template submodules
+- Cleanup old code
+- Add `plotters` feature
+- Add implementations for traits of [`approxim`](https://github.com/jonaspleyer/approxim) crate
+- Add diffusion domain to [building-blocks](/docs/cellular_raza_building_blocks/)
+
 ### cellular_raza 0.2.3
 [_13th March 2025_](git_diff-0.2.3-incremental.diff)
 
