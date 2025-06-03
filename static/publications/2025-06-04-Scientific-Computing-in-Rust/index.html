@@ -1,0 +1,637 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>cellular_raza - Agent-based Modeling from a Clean Slate</title>
+
+		<link rel="stylesheet" href="../2024-02-05-think-like-a-cell/dist/reset.css">
+		<link rel="stylesheet" href="../2024-02-05-think-like-a-cell/dist/reveal.css">
+		<link rel="stylesheet" href="../2024-02-05-think-like-a-cell/cellular_raza-theme.css">
+		<link rel="stylesheet" href="../2024-02-05-think-like-a-cell/columns.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="../2024-02-05-think-like-a-cell/plugin/highlight/nordic.css"> </head>
+	<body>
+		<div class="reveal">
+      <div>
+        <div style="
+          margin-top: 0;
+          width: 100%;
+          height: 2em;
+          font-size: 0.75em;
+          display: grid;
+          grid-template-columns: 20% 60% 20%;
+        ">
+          <div style="margin: 0.5em;">
+            Jonas Pleyer
+          </div>
+          <div style="text-align: center; margin: 0.5em;">
+            <a href="https://cellular-raza.com/publications">
+              <img src="media/cellular_raza_dark_mode.svg" style="height: 1.5em; display: inline; vertical-align: middle; margin: 0;">
+            </a>
+            - Cellular Agent-based Modeling from a Clean Slate
+          </div>
+          <div style="margin: 0.5em; text-align: right;">
+            04/06/2025
+          </div>
+        </div>
+      </div>
+			<div class="slides">
+        <section>
+          <img src="media/cellular_raza_dark_mode.svg">
+          <h2>cellular Agent-based Modeling</h2>
+          <h2>from a Clean Slate</h2>
+					<br>
+					<h4>04/06/2025</h4>
+					<h4>Jonas Pleyer</h4>
+          <img src="media/JonasPleyer-edited.jpeg" style="border-radius: 50%; height: 6em;">
+        </section>
+        <section data-markdown data-auto-animate>
+          <textarea data-template>
+            <h2>Agent-based Modeling</h2>
+
+            - Model Individual Agents (i.e. biological cells)<!-- .element: class="fragment" -->
+            - Behaviour of individual agents $\Rightarrow$ Emergent collective phenomena<!-- .element: class="fragment" -->
+            - Describe spatial phenomena such as self-organization<!-- .element: class="fragment" -->
+
+            ---
+
+            <h2>Agent-based Modeling</h2>
+            <div style="display: grid; grid-template-columns: 1fr 5fr 1fr;">
+                <div class="fragment" data-fragment-index="1">
+                    <br>
+                    <br>
+                    <img src="media/mechanics.png">
+                </div>
+                <div class="fragment" data-fragment-index="1"">
+
+            ## Cellular Properties
+
+            | Property | Examples |
+            |---|---|
+            | Mechanics | Stochastic Motion, Chemotaxis |
+            | Forces | Collision, Friction, Adhesion |
+            | Intracellular Dynamics | Reaction Networks, Metabolics |
+            | Cycle | Division, Death, Differentiation |
+
+            </div>
+            <div></div>
+            <div class="fragment" data-fragment-index="2">
+                <br>
+                <br>
+                <img src="media/cells_at_iter_0000028000.png" style="border-radius: 10px;">
+            </div>
+            <div class="fragment" data-fragment-index="2">
+
+            ## Domain Properties
+            | Property | Examples |
+            |---|---|
+            | Physical Shape | Petri Dish, Mother-Machine |
+            | <p style="width: 9em;">Fluid-Dynamics</p> | Diffusion, Flow |
+            | Custom | External control of cells |
+
+            </div>
+            <div></div>
+            </div>
+
+            </textarea>
+        </section>
+        <section data-markdown data-separator-vertical="----">
+          <textarea data-template>
+
+            <br>
+            <div>
+              <img src="media/cellular_raza_dark_mode.svg" style="height: 3em;">
+            </div>
+
+            <div style="display: grid; grid-template-columns: 65% 35%;">
+                <div class="fragment">
+
+            ## Goals
+            - Distinguish abstract `concepts` & implementation<br>
+                $\Rightarrow$ Flexibility in model design
+            - Fine-grained control over parameters
+            - Combine predefined `building-blocks`
+                - Allow users to construct their own
+            - Multiple backends possible
+
+                </div>
+                <div class="fragment">
+                    Dependency structure
+                    <img width="100%" src="media/cellular_raza-dependency-graph.png">
+                </div>
+            </div>
+
+            <br>
+            <div class="fragment">
+
+            ## Etymology
+
+            `cellular_raza` = cell + tabula rasa ("from a clean slate")
+
+            </div>
+
+            ----
+
+            ## Techniques
+
+            <div style="display: grid; grid-template-columns: 60% 40%;">
+                <div>
+
+            - Domain decomposition
+              - Split simulation domain into multiple subdomains
+              - Execute upate steps in parallel
+              - Possible due to locality of interactions
+            - Storage Manager
+              - Export parts or store complete simulation
+              - xml, json or sled (embedded) database
+
+                </div>
+                <img src="media/spatial-decomposition-square-10.png">
+            </div>
+
+            ---
+
+            ## High-Level Concepts = generic Traits
+
+            <div style="display: grid; grid-template-columns: 50% 50%;">
+
+            <p class="fragment" data-fragment-index="1">Physical Interaction</p>
+            <p class="fragment" data-fragment-index="2">Cell Cycle</p>
+
+            <div class="fragment" data-fragment-index="1">
+
+            ```rust
+            pub trait Interaction<Pos, Vel, Force, Inf = ()> {
+                /// Exchange custom information between Agents
+                fn get_interaction_information(&self) -> Inf;
+
+                /// Calculate forces acting between agents
+                fn calculate_force_between(
+                    &self,
+                    own_pos: &Pos,
+                    own_vel: &Vel,
+                    ext_pos: &Pos,
+                    ext_vel: &Vel,
+                    ext_info: &Inf,
+                ) -> Result<(Force, Force), CalcError>;
+            }
+            ```
+
+            <div class="fragment" data-fragment-index="3">
+
+            $\Rightarrow$ Allows for Flexibility<br>
+            $\Rightarrow$ Retains performance
+
+            </div>
+
+            </div>
+            <div class="fragment" data-fragment-index="2">
+
+            ```rust
+            pub trait Cycle<Cell = Self, Float = f64> {
+                /// Custom update function to modify the cell
+                /// Returns event for Division, Death, etc.
+                fn update_cycle(
+                    rng: &mut ChaCha8Rng,
+                    dt: &Float,
+                    cell: &mut Cell,
+                ) -> Option<CycleEvent>;
+
+                fn divide(
+                    rng: &mut ChaCha8Rng,
+                    cell: &mut Cell
+                ) -> Result<Cell, DivisionError>;
+
+                fn update_conditional_phased_death(
+                    rng: &mut ChaCha8Rng,
+                    dt: &Float,
+                    cell: &mut Cell,
+                ) -> Result<bool, DeathError> {
+                    Ok(true)
+                }
+            }
+            ```
+
+            </div>
+            </div>
+
+            ----
+
+            ## Mechanics
+            ```rust
+            pub trait Mechanics<Pos, Vel, For, Float = f64> {
+              fn pos(&self) -> Pos;
+              fn velocity(&self) -> Vel;
+              fn set_pos(&mut self, pos: &Pos);
+              fn set_velocity(&mut self, velocity: &Vel);
+              fn calculate_increment(&self, force: For) -> Result<(Pos, Vel), CalcError>;
+            }
+            ```
+
+            | Name | Dim | | | Equations |
+            | --- |:---:| ---:|:--- | --- |
+            | `Brownian` | 1, 2, 3 | $\dot{\vec{x}}$ | $=$ | $-\frac{D}{k_B T}\nabla V(x) + \sqrt{2D}R(t)$ |
+            | `Langevin` | 1, 2, 3 | $M \ddot{\mathbf{X}}$ | $=$ | $- \mathbf{\nabla} U(\mathbf{X})$ <br> $- \gamma M\dot{\mathbf{X}} + \sqrt{2 M \gamma k_{\rm B} T}\mathbf{R}(t)$ |
+            | `NewtonDamped` | 1, 2, 3 | $m \ddot{\vec{x}}$ | $=$ | $\vec{F} - \lambda \dot{\vec{x}}$ |
+            | `VertexMechanics` | 2 | | | <p style="color: rgba(250, 250, 250, 0.5);" >(Too much space needed)</p> |
+
+            ----
+
+            ## Forces
+            ```rust
+            pub trait Interaction<Pos, Vel, Force, Inf = ()> {
+
+              fn get_interaction_information(&self) -> Inf;
+
+              fn calculate_force_between(
+                  &self,
+                  own_pos: &Pos,
+                  own_vel: &Vel,
+                  ext_pos: &Pos,
+                  ext_vel: &Vel,
+                  ext_info: &Inf
+              ) -> Option<Result<Force, CalcError>>;
+            }
+            ```
+
+            | Name | Dim | Equations |
+            | --- |:---:|:---:|
+            | `BoundLennardJones` | 1, 2, 3 | $U(r) = 4\epsilon\left[ \left(\frac{\sigma}{r}\right)^{12} - \left(\frac{\sigma}{r}\right)^6\right]$ <br> $V(r)=\min(U(r), \beta)\theta(r-\xi)$ |
+            | `BacteriaReactions` | 2 | $\vec{z} = \vec{x_1} - \vec{x_2} \hspace{1cm} r = \|\|\vec{z}\|\|$ <br> $\sigma = \frac{r}{r_1+r_2} \hspace{1.375cm} q=0.2$ <br> $\vec{F} = \epsilon \frac{1+q}{q+\sigma} \theta(\sigma - 1) \frac{1}{r}\vec{z}$ |
+
+            ----
+
+            ## Cellular Reactions
+
+            ```rust
+            pub trait CellularReactions<CI, CE = CI> {
+              fn get_intracellular(&self) -> CI;
+
+              fn set_intracellular(&mut self, concentration_vector: CI);
+
+              fn calculate_intra_and_extracellular_reaction_increment(
+                  &self,
+                  internal_concentration_vector: &CI,
+                  external_concentration_vector: &CE
+              ) -> Result<(CI, CE), CalcError>;
+            }
+            ```
+
+            | Name | Equations |
+            | --- | --- |
+            | `BacteriaReactions` | $\dot{V_c} = \frac{u}{1+\nu_I [I]} \sigma [R]V_c$ <br> $\dot{[R]} = \sum\limits_c -\frac{u}{1+\nu_I [I]} \frac{V_c}{V_D} [R] \delta(x-x_c) + D_R\Delta [R]$ <br> $\dot{[I]} = \sum\limits_c b\frac{V_c}{V_D}\delta(x-x_c) + D_I\Delta [I]$ |
+            | `NoReactions` | |
+
+            ----
+
+            ## Cycle
+
+            <div style="display: grid; grid-template-columns: 50% 50%;">
+
+              ```rust
+              pub trait Cycle<Cell, Float = f64> {
+
+                fn update_cycle(
+                    rng: &mut ChaCha8Rng,
+                    dt: &Float,
+                    cell: &mut Cell
+                ) -> Option<CycleEvent>;
+
+                fn divide(
+                    rng: &mut ChaCha8Rng,
+                    cell: &mut Cell
+                ) -> Result\<Cell, DivisionError>;
+              ```
+
+              ```rust
+                // Default method
+                // Can be overwritten
+                fn update_conditional_phased_death(
+                  rng: &mut ChaCha8Rng,
+                  dt: &Float,
+                  cell: &mut Cell
+                ) -> Result<bool, DeathError> {
+                  Ok(true)
+                }
+              }
+              ```
+
+            </div>
+
+            Usually implemented individually for every new Cell-Agent.
+            <div class="fragment">
+
+              ### Example
+              ```rust
+              impl Cycle<Cell> for Cell {
+                  fn update_cycle(rng: &mut ChaCha8Rng, dt: &f64, cell: &mut Cell) -> Option<CycleEvent> {
+                      // Increase the current age of the cell
+                      cell.current_age += dt;
+
+                      // If the cell is older than the current age, return a division event
+                      if cell.current_age > cell.maximum_age {
+                          return Some(CycleEvent::Division)
+                      }
+                      None
+                  }
+                  // ...
+              }
+              ```
+
+            </div>
+
+            ----
+
+            ## Physical Domain
+
+            <div style="display: grid; grid-template-columns: 50% 50%;">
+
+              #### Domain
+
+              #### Subdomain
+
+              ```rust
+              pub trait Domain<C, S> {
+                type SubDomainIndex;
+                type VoxelIndex;
+
+                fn get_all_voxel_indices(
+                  &self
+                ) -> Vec<Self::VoxelIndex>;
+              ```
+
+              ```rust
+              pub trait SubDomain<C> {
+                type VoxelIndex;
+
+                fn get_voxel_index_of(
+                    &self,
+                    cell: &C
+                ) -> Result<Self::VoxelIndex, BoundaryError>;
+              ```
+
+              ```rust
+                fn decompose(
+                  self,
+                  n_subdomains: NonZeroUsize,
+                  cells: Vec<C>
+                ) -> Result<
+                  DecomposedDomain<Self::SubDomainIndex, S, C>,
+                  DecomposeError
+                >
+                  where S: SubDomain<C>;
+              }
+              ```
+              ```rust
+                fn get_neighbor_voxel_indices(
+                  &self,
+                  voxel_index: &Self::VoxelIndex
+                ) -> Vec<Self::VoxelIndex>;
+
+                fn apply_boundary(
+                  &self,
+                  cell: &mut C
+                ) -> Result<(), BoundaryError>;
+
+                fn get_all_indices(
+                  &self
+                ) -> Vec<Self::VoxelIndex>;
+              }
+              ```
+
+            </div>
+
+            | Name | Dim | Description |
+            | --- |:---:| --- |
+            | `CartesianCuboid` | 1, 2, 3 | Cuboid $[a_0, b_0] \times \dots \times [a_d, b_d] \sub \mathbb{R}^d$ <br> with reflective boundary conditions. |
+
+
+            ---
+
+            ## Working with cellular_raza
+
+            <div style="display: grid; grid-template-columns: 35% 65%;">
+
+            <h4 class="fragment" data-fragment-index="1">Derive Macros</h4>
+            <h4 class="fragment" data-fragment-index="2">Running a Simulation</h2>
+
+            <div class="fragment" data-fragment-index="1">
+
+            ```rust
+            // Custom derive macro allows to
+            // re-use existing building blocks
+            #[derive(
+                CellAgent,
+                Clone,
+                Deserialize,
+                Serialize
+            )]
+            struct Agent {
+                #[Mechanics]
+                mechanics: Langevin2D,
+                #[Interaction]
+                interaction: MorsePotential,
+            }
+            ```
+
+            ```rust
+            // Derive macro for domain
+            #[derive(Domain)]
+            struct DerivedDomain {
+                #[Base]
+                base: MyDomain,
+            }
+            ```
+
+            </div><div class="fragment" data-fragment-index="2">
+
+            ```rust
+            // Assign (individual) parameters to agents
+            let cells = (0..n_cells).map(|n|
+                Agent {
+                    mechanics: Langevin2D {..},
+                    interaction: MorsePotential {...},
+                }
+            );
+
+            // Set parameters for domain, time and storage
+            let domain = CartesianCuboid::from_boundaries_and_n_voxels(..)?;
+            let time = FixedStepsize::from_partial_save_interval(..)?;
+            let storage = StorageBuilder::new();
+
+            let settings = Settings {
+                n_threads,
+                time,
+                storage,
+                show_progressbar: true,
+            };
+
+            run_simulation!(
+                domain: domain,
+                agents: cells,
+                settings: settings,
+                aspects: [Mechanics, Interaction]
+            )?;
+            ```
+
+            </div>
+            </div>
+
+          </textarea>
+        </section>
+        <section><section>
+            <br>
+            <div style="display: grid; grid-template-columns: 60% 40%;">
+            <div>
+                <h2>Bacterial Branching</h2>
+                <video controls>
+                    <source src="../../showcase/bacterial-branching/movie.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div>
+            <ul style="margin-top: 3em;">
+                <li>Initially placed in center square</li>
+                <li>Bacteria consume nutrients, grow and divide</li>
+                <lib></lib>
+            </ul>
+            <a href="https://cellular-raza.com/showcase/bacterial-branching/">
+                https://cellular-raza.com/showcase/bacterial-branching
+            </a>
+            </div>
+        </div>
+        </section>
+        <section>
+            <br>
+          <div style="display: grid; grid-template-columns: 60% 40%;">
+            <div>
+                <h2>Cell Sorting</h2>
+                <video controls>
+                    <source src="../../showcase/cell_sorting/movie.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div>
+            <ul style="margin-top: 3em;">
+                <li>Species-specific interaction</li>
+                <li>Only 4 Parameters:<br>
+                    Radius $r$, Damping $\lambda$,
+                    Interaction Range $\sigma$,
+                    Potential Strength $V_0$
+                </li>
+            </ul>
+            <a href="https://cellular-raza.com/showcase/cell-sorting/">
+                https://cellular-raza.com/showcase/cell-sorting
+            </a>
+            </div>
+        </div>
+        </section></section>
+        <section>
+            <br>
+          <div style="display: grid; grid-template-columns: 60% 40%;">
+            <div>
+                <h2>Bacterial Rods</h2>
+                <video controls>
+                    <source src="../../showcase/bacterial-rods/movie.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div>
+            <ul style="margin-top: 3em;">
+                <li>Species-specific interaction</li>
+                <li>Only 4 Parameters:<br>
+                    Radius $r$, Damping $\lambda$,
+                    Interaction Range $\sigma$,
+                    Potential Strength $V_0$
+                </li>
+            </ul>
+            <a href="https://cellular-raza.com/showcase/bacterial-rods/">
+                https://cellular-raza.com/showcase/bacterial-rods
+            </a>
+            </div>
+        </div>
+        </section>
+        <section><section>
+          <h2>Performance</h2>
+          <div style="display: grid; grid-template-columns: 50% 50%;">
+            <img src="../../benchmarks/thread_scaling.png" style="display: inline; margin: 0; width: 100%;">
+            <img src="../../benchmarks/sim-size-scaling.png" style="display: inline; margin: 0; width: 100%;">
+          </div>
+        </section>
+        <section>
+            <h2>Documentation</h2>
+            <iframe
+                src="https://cellular-raza.com/docs/cellular_raza_concepts"
+                style="width: 1200px; height: 1000px;"
+            ></iframe>
+        </section></section>
+        <section>
+            <div style="display: grid; grid-template-columns: 50% 50%;">
+                <div>
+                    <a href="https://github.com/jonaspleyer/crate2bib">
+                        github.com/jonaspleyer/crate2bib
+                    </a>
+                    <br style="margin-bottom: 0.5em;">
+                    <iframe
+                        src="https://jonaspleyer.github.io/crate2bib/"
+                        style="width: 600px; height: 1000px;"
+                    ></iframe>
+                </div>
+                <div>
+                    <a href="https://github.com/jonaspleyer/vtk-rs">
+                        github.com/jonaspleyer/vtk-rs
+                    </a>
+                    <br style="margin-bottom: 0.5em;">
+                    <iframe
+                        src="https://docs.rs/vtk-rs/0.2.0/vtk_rs/"
+                        style="width: 600px; height: 1000px;"
+                    ></iframe>
+                </div>
+        </section>
+        <section>
+            <h4>Thanks for Listening</h4>
+            <img src="media/JonasPleyer-edited.jpeg" style="border-radius: 50%; height: 6em;">
+            <p>I am open to work at the end of the year.</p>
+        </section>
+
+		<script src="../2024-02-05-think-like-a-cell/dist/reveal.js"></script>
+		<script src="../2024-02-05-think-like-a-cell/plugin/notes/notes.js"></script>
+		<script src="../2024-02-05-think-like-a-cell/plugin/markdown/markdown.js"></script>
+		<script src="../2024-02-05-think-like-a-cell/plugin/highlight/highlight.js"></script>
+		<script src="../2024-02-05-think-like-a-cell/plugin/math/math.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				width: 1600,
+				height: 1200,
+
+				navigationMode: "grid",
+
+				slideNumber: 'c/t',
+
+				katex: {
+					version: 'latest',
+					delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "\\(", right: "\\)", display: false},
+            {left: "\\begin{equation}", right: "\\end{equation}", display: true},
+            {left: "\\begin{align}", right: "\\end{align}", display: true},
+            {left: "\\begin{alignat}", right: "\\end{alignat}", display: true},
+            {left: "\\begin{gather}", right: "\\end{gather}", display: true},
+            {left: "\\begin{CD}", right: "\\end{CD}", display: true},
+            {left: "\\[", right: "\\]", display: true},
+            {left: "$", right: "$", display: false},
+          ],
+					ignoredTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+				},
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
+			});
+		</script>
+	</body>
+</html>
