@@ -11,6 +11,12 @@ If you want to cite us now, please use our git repository:
 
 ## 2025
 
+Pleyer, J.
+(2025).
+[cellular_raza: cellular agent-based modeling from a clean slate](2025-06-04-Scientific-Computing-in-Rust)
+At the [Scientific Computing in Rust](https://scientificcomputing.rs/2025/talks/pleyer.html)
+conference.
+
 <!-- ??.??.2025<br>
 cellular_raza - Cellular Agent-based Modeling from a clean slate [](2024-joss) -->
 
