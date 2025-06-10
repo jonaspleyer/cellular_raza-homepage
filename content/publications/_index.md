@@ -3,22 +3,38 @@ title: Publications
 prev: /
 ---
 
-[![JOSS Status](https://joss.theoj.org/papers/7a0a13c37e57776edc21132f518ef36a/status.svg)](https://joss.theoj.org/papers/7a0a13c37e57776edc21132f518ef36a)
-We are eagerly moving forwards to get `cellular_raza` published.
-If you want to cite us now, please use our git repository:
+`cellular_raza` has been published in the Journal of Open Source Software
+[joss.theoj.org/papers/10.21105/joss.07723](https://joss.theoj.org/papers/10.21105/joss.07723).
+You can use the following BibTex entry to cite it.
 
-[github.com/jonaspleyer/cellular_raza](https://github.com/jonaspleyer/cellular_raza)
+```bibtex
+@article{Pleyer2025,
+    doi = {10.21105/joss.07723},
+    url = {https://doi.org/10.21105/joss.07723},
+    year = {2025},
+    publisher = {The Open Journal},
+    volume = {10},
+    number = {110},
+    pages = {7723},
+    author = {Jonas Pleyer and Christian Fleck},
+    title = {cellular_raza: Cellular Agent-based Modeling from a Clean Slate},
+    journal = {Journal of Open Source Software}
+}
+```
 
 ## 2025
+
+Pleyer, J. and C. Fleck,
+"cellular_raza: Cellular Agent-based Modeling from a Clean Slate"
+Journal of Open Source Software,
+June 10th, 2025.
+doi: [joss.theoj.org/papers/10.21105/joss.07723](https://joss.theoj.org/papers/10.21105/joss.07723).
 
 Pleyer, J.
 (2025).
 [cellular_raza: cellular agent-based modeling from a clean slate](2025-06-04-Scientific-Computing-in-Rust)
 At the [Scientific Computing in Rust](https://scientificcomputing.rs/2025/talks/pleyer.html)
 conference.
-
-<!-- ??.??.2025<br>
-cellular_raza - Cellular Agent-based Modeling from a clean slate [](2024-joss) -->
 
 M. Licheva et al.,
 “Phase separation of initiation hubs on cargo is a trigger switch for selective autophagy,”
