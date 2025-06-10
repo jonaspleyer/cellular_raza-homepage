@@ -25,6 +25,7 @@ You can use the following BibTex entry to cite it.
 ## 2025
 
 Pleyer, J. and C. Fleck,
+(2025)
 "cellular_raza: Cellular Agent-based Modeling from a Clean Slate"
 Journal of Open Source Software,
 June 10th, 2025.
@@ -32,9 +33,10 @@ doi: [joss.theoj.org/papers/10.21105/joss.07723](https://joss.theoj.org/papers/1
 
 Pleyer, J.
 (2025).
-[cellular_raza: cellular agent-based modeling from a clean slate](2025-06-04-Scientific-Computing-in-Rust)
+"cellular_raza: cellular agent-based modeling from a clean slate"
 At the [Scientific Computing in Rust](https://scientificcomputing.rs/2025/talks/pleyer.html)
-conference.
+conference ([Youtube](https://www.youtube.com/watch?v=3q40ozzQ6gE),
+[Slides](2025-06-04-Scientific-Computing-in-Rust)).
 
 M. Licheva et al.,
 “Phase separation of initiation hubs on cargo is a trigger switch for selective autophagy,”
