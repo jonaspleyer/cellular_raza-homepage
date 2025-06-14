@@ -54,9 +54,33 @@ parameter and behaviour introduced.
     >}}
 {{< /cards >}}
 
-<br>
+## Talk at [Scientific Computing in Rust](https://scientificcomputing.rs/)
 
 {{< youtube 3q40ozzQ6gE >}}
+
+## Cite Us
+
+Pleyer, J. and C. Fleck,
+(2025)
+"cellular_raza: Cellular Agent-based Modeling from a Clean Slate"
+Journal of Open Source Software,
+June 10th, 2025.
+doi: [joss.theoj.org/papers/10.21105/joss.07723](https://joss.theoj.org/papers/10.21105/joss.07723).
+
+```bibtex
+@article{Pleyer2025,
+    doi = {10.21105/joss.07723},
+    url = {https://doi.org/10.21105/joss.07723},
+    year = {2025},
+    publisher = {The Open Journal},
+    volume = {10},
+    number = {110},
+    pages = {7723},
+    author = {Jonas Pleyer and Christian Fleck},
+    title = {cellular_raza: Cellular Agent-based Modeling from a Clean Slate},
+    journal = {Journal of Open Source Software}
+}
+```
 
 ## Explore
 <!-- TODO this ist just a copy-and-pase and should possibly be automated-->
