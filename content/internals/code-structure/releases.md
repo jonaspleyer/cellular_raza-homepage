@@ -11,6 +11,25 @@ We are working towards this goal and will report our progress.
 
 ## Pre-1.0 Releases
 
+### cellular_raza 0.3.0
+[_05th August 2025_](git_diff-0.3.0-incremental.diff)
+
+- Unify and extend functionality of
+  [`CellIdentifier`](/docs/cellular_raza_concepts/enum.CellIdentifier.html)
+- Removed legacy Domains in favor of single generic
+  [`CartesianCuboid`](/docs/cellular_raza_building_blocks/struct.CartesianCuboid.html)
+- Derive implementations of [`approxim`](https://docs.rs/approxim)
+- Improve deserialization speed of
+  [`FileBasedStorage`](/docs/cellular_raza_core/storage/trait.FileBasedStorage.html)
+- Added more benchmarks
+- Some small performance improvements
+    - Calculation of forces in subdomain internally
+    - Inline more derived functions and helper functions in [`chili`](/internals/backends/chili)
+      backend.
+- Split `Interaction` and `InteractionInformation` trait.
+    - This is mostly backwards-compatible as the derive attribute `#[Interaction]` still derives
+      both of these new traits.
+
 ### cellular_raza 0.2.4
 [_01st May 2025_](git_diff-0.2.4-incremental.diff)
 
