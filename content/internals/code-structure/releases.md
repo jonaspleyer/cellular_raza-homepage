@@ -11,7 +11,22 @@ We are working towards this goal and will report our progress.
 
 ## Pre-1.0 Releases
 
-### cellular_raza 0.3.0
+### cellular_raza 0.3.2
+[_17th September 2025_](git_diff-0.3.2-incremental.diff)
+
+- Allow to set description of progressbar
+    - Migrate from `show_progressbar` to simply `progressbar`
+- Update dependencies
+
+### cellular_raza 0.3.1
+[_10th September 2025_](git_diff-0.3.1-incremental.diff)
+
+- Update dependencies
+- Implement constructor to use
+  [`VoxelPlainIndex`](/docs/cellular_raza_core/backend/chili/struct.VoxelPlainIndex.html) in Python
+  API
+
+## cellular_raza 0.3.0
 [_05th August 2025_](git_diff-0.3.0-incremental.diff)
 
 - Unify and extend functionality of
@@ -55,7 +70,7 @@ We are working towards this goal and will report our progress.
 [_25th February 2025_](git_diff-0.2.1-incremental.diff)
 - Fix documentation build failure introduced in [0.2.0](#cellular_raza-020)
 
-### cellular_raza 0.2.0
+## cellular_raza 0.2.0
 [_23rd February 2025_](git_diff-0.2.0-incremental.diff)
 
 - Implemented `__getitem__` for
@@ -143,7 +158,7 @@ We are working towards this goal and will report our progress.
   numbers in order to support multiple fission
 - Removed unused `cellular_raza-building_blocks::prelude`
 
-### cellular_raza 0.1.0
+## cellular_raza 0.1.0
 [_28th August 2024 🎉 2 Year Anniversary 🎉_](git_diff-0.1.0-incremental.diff)
 - Changed calculation of random contribution in `Mechanics` trait
     - Improved stochastic motion testing for Brownian and Langevin dynamics
@@ -156,7 +171,6 @@ We are working towards this goal and will report our progress.
     - First experimentation with error handlers
 - Rename some trait functions and variables from `neighbour` to `neighbor`
 
-## Pre-0.1 Releases
 ### cellular_raza 0.0.13
 [_30th July 2024_](git_diff-0.0.13-incremental.diff)
 - Advanced testing for contact reactions and solvers
