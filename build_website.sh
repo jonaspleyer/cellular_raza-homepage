@@ -17,7 +17,7 @@ generate_docs() {
     cargo clean --doc
 
     for target in ${TARGETS[@]}; do
-        cargo +nightly-2025-02-01 rustdoc \
+        cargo +nightly-2025-06-01 rustdoc \
             -p $target \
             --all-features -- --cfg docsrs --theme $CWD/static/hextra.css \
             --default-theme hextra \
