@@ -29,7 +29,7 @@ parameter and behaviour introduced.
         subtitle="A mechanical model of elongated bacteria such as _E.Coli_ growing inside a narrow box."
     >}}
     {{<
-        card link="bacterial-branching"
+        card link="/showcase/bacterial-branching"
         title="Bacterial Branching Patterns"
         image="/showcase/bacterial-branching/cells_at_iter_0000060200.png"
         subtitle="A growth model of _Bacillus Subtilis_ which forms spatial patterns."
