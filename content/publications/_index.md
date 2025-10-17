@@ -26,6 +26,13 @@ You can use the following BibTex entry to cite it.
 
 Pleyer, J. and C. Fleck,
 (2025)
+"cellular_raza – Novel Flexibility in Design of Agent-Based Models in Cellular Systems"
+Proceedings of the 9th bwHPC Symposium 2023,
+2nd October 2025,
+doi: [doi.org/10.25521/maconf.2025.1027](https://doi.org/10.25521/maconf.2025.1027)
+
+Pleyer, J. and C. Fleck,
+(2025)
 "cellular_raza: Cellular Agent-based Modeling from a Clean Slate"
 Journal of Open Source Software,
 June 10th, 2025.
