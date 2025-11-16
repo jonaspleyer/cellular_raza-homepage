@@ -77,7 +77,7 @@ doi: [joss.theoj.org/papers/10.21105/joss.07723](https://joss.theoj.org/papers/1
     number = {110},
     pages = {7723},
     author = {Jonas Pleyer and Christian Fleck},
-    title = {cellular_raza: Cellular Agent-based Modeling from a Clean Slate},
+    title = {cellular\_raza: Cellular Agent-based Modeling from a Clean Slate},
     journal = {Journal of Open Source Software}
 }
 ```

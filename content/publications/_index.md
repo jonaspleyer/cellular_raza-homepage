@@ -17,7 +17,7 @@ You can use the following BibTex entry to cite it.
     number = {110},
     pages = {7723},
     author = {Jonas Pleyer and Christian Fleck},
-    title = {cellular_raza: Cellular Agent-based Modeling from a Clean Slate},
+    title = {cellular\_raza: Cellular Agent-based Modeling from a Clean Slate},
     journal = {Journal of Open Source Software}
 }
 ```
