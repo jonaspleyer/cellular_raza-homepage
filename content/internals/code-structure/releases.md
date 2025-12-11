@@ -11,6 +11,19 @@ We are working towards this goal and will report our progress.
 
 ## Pre-1.0 Releases
 
+### cellular_raza 0.4.1
+[_11th December 2025_](git_diff-0.4.1-incremental.diff)
+- Change order in which boundary conditions are applied by `run_simulation` macro
+    - This ensures that cells are within the domain when other update functions are invoked
+- Remove codegen for deprecated nvidia devices
+- Add configuration options for bacterial branching example
+
+### cellualr_raza 0.4.0
+[_29 Sep 2025_](git_diff-0.4.0-incremental.diff)
+- Default time stepper can now also store initial state
+- Migrate pool model to [separate repository](https://github.com/polinagaindrik/pool_model_paper)
+- Update dependencies
+
 ### cellular_raza 0.3.2
 [_17th September 2025_](git_diff-0.3.2-incremental.diff)
 
