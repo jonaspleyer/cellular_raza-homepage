@@ -1,0 +1,52 @@
+ .github/workflows/generate_tests.py                |   2 +-
+ ...st_beta_macos-13.yml => test_beta_macos-15.yml} |   6 +-
+ ...htly_macos-13.yml => test_nightly_macos-15.yml} |   6 +-
+ ...table_macos-13.yml => test_stable_macos-15.yml} |   6 +-
+ Cargo.toml                                         |   3 +-
+ README.md                                          |  26 ++-
+ cellular_raza-benchmarks/Cargo.toml                |   4 +-
+ cellular_raza-building-blocks/Cargo.toml           |   2 +-
+ .../src/domains/cartesian_cuboid_n.rs              |   2 +-
+ cellular_raza-concepts/Cargo.toml                  |   2 +-
+ cellular_raza-concepts/tests/derive_cell_agent.rs  |   6 +-
+ cellular_raza-core-proc-macro/src/run_sim.rs       |   2 +-
+ cellular_raza-core/Cargo.toml                      |   8 +-
+ cellular_raza-core/build.rs                        |  15 --
+ .../src/backend/chili/aux_storage.rs               |   4 +-
+ .../bacterial_branching/src/main.rs                |  29 ++-
+ .../collision-detection/Cargo.toml                 |  18 ++
+ .../collision-detection/src/main.rs                | 220 +++++++++++++++++++++
+ cellular_raza-examples/gen_readme.md               |  19 --
+ .../homepage-training/src/lib.rs                   |   2 +-
+ .../immersed_boundary/Cargo.toml                   |   2 +-
+ cellular_raza-examples/puzzle/src/main.rs          |  10 +-
+ cellular_raza/Cargo.toml                           |   6 +-
+ cellular_raza/README.md                            |  26 ++-
+ update_version.sh                                  |   4 +-
+ 25 files changed, 333 insertions(+), 97 deletions(-)
+ .github/workflows/generate_tests.py                |   2 +-
+ ...st_beta_macos-13.yml => test_beta_macos-15.yml} |   6 +-
+ ...htly_macos-13.yml => test_nightly_macos-15.yml} |   6 +-
+ ...table_macos-13.yml => test_stable_macos-15.yml} |   6 +-
+ Cargo.toml                                         |   3 +-
+ README.md                                          |  28 ++-
+ cellular_raza-benchmarks/Cargo.toml                |   4 +-
+ cellular_raza-building-blocks/Cargo.toml           |   2 +-
+ .../src/domains/cartesian_cuboid_n.rs              |   2 +-
+ cellular_raza-concepts/Cargo.toml                  |   2 +-
+ cellular_raza-concepts/tests/derive_cell_agent.rs  |   6 +-
+ cellular_raza-core-proc-macro/src/run_sim.rs       |   2 +-
+ cellular_raza-core/Cargo.toml                      |   8 +-
+ cellular_raza-core/build.rs                        |  15 --
+ .../src/backend/chili/aux_storage.rs               |   4 +-
+ .../bacterial_branching/src/main.rs                |  29 ++-
+ .../collision-detection/Cargo.toml                 |  18 ++
+ .../collision-detection/src/main.rs                | 220 +++++++++++++++++++++
+ cellular_raza-examples/gen_readme.md               |  19 --
+ .../homepage-training/src/lib.rs                   |   2 +-
+ .../immersed_boundary/Cargo.toml                   |   2 +-
+ cellular_raza-examples/puzzle/src/main.rs          |  10 +-
+ cellular_raza/Cargo.toml                           |   6 +-
+ cellular_raza/README.md                            |  28 ++-
+ update_version.sh                                  |   4 +-
+ 25 files changed, 335 insertions(+), 99 deletions(-)
