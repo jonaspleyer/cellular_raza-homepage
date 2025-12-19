@@ -11,6 +11,10 @@ We are working towards this goal and will report our progress.
 
 ## Pre-1.0 Releases
 
+## cellular_raza 0.5.0
+[_19th December 2025_](git_diff-0.5.0-incremental.diff)
+- Create new `NeighborSensing` aspect from previous `Interaction` aspect
+
 ### cellular_raza 0.4.1
 [_11th December 2025_](git_diff-0.4.1-incremental.diff)
 - Change order in which boundary conditions are applied by `run_simulation` macro
